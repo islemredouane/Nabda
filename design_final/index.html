@@ -534,6 +534,7 @@ img { filter: none !important; }
 
   // ── Helper: check if onboarding is complete ──
   window.isOnboardingDone = function() {
+    if (localStorage.getItem('nabda_is_admin') === 'true') return true;
     try {
       var p = JSON.parse(localStorage.getItem('nabda_profile'));
       return p && p.onboardingComplete === true;
@@ -547,14 +548,24 @@ img { filter: none !important; }
       localStorage.setItem('nabda_logged_in', 'true');
       localStorage.setItem('nabda_user_id', session.user.id);
       localStorage.setItem('nabda_user_email', session.user.email);
+      const isAdmin = (session.user.email === 'admin@nabda.app');
+      localStorage.setItem('nabda_is_admin', isAdmin ? 'true' : 'false');
+      if (typeof updateAdminNavLinkVisibility === 'function') updateAdminNavLinkVisibility();
+      
       var hasProfile = isOnboardingDone();
       if (typeof navigate === 'function') {
-        navigate(hasProfile ? 'home' : 'onboarding');
+        if (isAdmin) {
+          navigate('admin');
+        } else {
+          navigate(hasProfile ? 'home' : 'onboarding');
+        }
       }
     } else if (event === 'SIGNED_OUT') {
       localStorage.removeItem('nabda_logged_in');
       localStorage.removeItem('nabda_user_id');
       localStorage.removeItem('nabda_user_email');
+      localStorage.removeItem('nabda_is_admin');
+      if (typeof updateAdminNavLinkVisibility === 'function') updateAdminNavLinkVisibility();
       if (typeof navigate === 'function') navigate('auth');
     }
   });
@@ -596,6 +607,10 @@ img { filter: none !important; }
        class="nav-link" style="padding:7px 15px;border-radius:8px;font-family:Inter;font-size:13px;letter-spacing:.01em;display:flex;align-items:center;gap:6px">
       <span style="width:6px;height:6px;background:#4be277;border-radius:50%;flex-shrink:0;animation:nabdaDot 2s ease-in-out infinite"></span>
       Nabda AI
+    </a>
+    <a href="#" id="nav-link-admin" data-page="admin" onclick="navigate('admin');return false;"
+       class="nav-link" style="padding:7px 15px;border-radius:8px;font-family:Inter;font-size:13px;letter-spacing:.01em;display:none;color:#ffb95f;border:1px dashed rgba(255,185,95,0.4)">
+      Admin
     </a>
   </div>
 
@@ -2393,6 +2408,15 @@ function expChangePage(delta) {
                     onmouseout="this.style.boxShadow='0 8px 30px rgba(75,226,119,.28)';this.style.transform='translateY(0)'">
               Se Connecter
             </button>
+            
+            <!-- Admin Login Button -->
+            <button type="button" id="admin-btn" onclick="handleAdminLogin()" class="px-6 py-4 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-2"
+                    style="background:rgba(255,185,95,0.1);border:1px solid #ffb95f;color:#ffb95f;cursor:pointer;font-family:Inter;font-size:15px;box-shadow:0 8px 30px rgba(255,185,95,.08);margin-top:4px"
+                    onmouseover="this.style.background='rgba(255,185,95,0.2)';this.style.boxShadow='0 10px 40px rgba(255,185,95,.2)';this.style.transform='translateY(-2px)'"
+                    onmouseout="this.style.background='rgba(255,185,95,0.1)';this.style.boxShadow='0 8px 30px rgba(255,185,95,.08)';this.style.transform='translateY(0)'">
+              <span class="material-symbols-outlined" style="font-size:20px;font-variation-settings:'FILL' 1">admin_panel_settings</span>
+              Accès Administrateur
+            </button>
           </form>
 
           <!-- Divider -->
@@ -2437,6 +2461,209 @@ function expChangePage(delta) {
   </div>
 </div>
 <!-- end page-auth -->
+
+
+<!-- ===================== PAGE: ADMIN ===================== -->
+<div id="page-admin" class="page" style="display:none;min-height:calc(100vh - 64px);background:#0a0f0a;position:relative;overflow:hidden">
+  <!-- Glowing Blur Blobs in the far background of the whole page -->
+  <div style="position:absolute;top:10%;left:25%;width:400px;height:400px;background:radial-gradient(circle,rgba(255,185,95,0.08) 0%,transparent 70%);pointer-events:none;filter:blur(50px);z-index:0"></div>
+  <div style="position:absolute;bottom:20%;right:15%;width:350px;height:350px;background:radial-gradient(circle,rgba(75,226,119,0.06) 0%,transparent 70%);pointer-events:none;filter:blur(50px);z-index:0"></div>
+
+  <!-- Header -->
+  <div style="padding:40px 48px 24px;position:relative;z-index:10">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="ed-sparkle" style="font-size:16px;color:#ffb95f">&#10022;</span>
+          <span style="font-size:10px;font-weight:700;font-family:Inter;color:#ffb95f;letter-spacing:.1em;text-transform:uppercase">Espace d'Administration Nabda</span>
+        </div>
+        <h1 class="ed-title" style="font-size:clamp(44px,6vw,70px);color:#f0fdf4;margin:0;line-height:.88">
+          DASHBOARD<br><span style="color:#4be277">ADMIN</span>
+        </h1>
+      </div>
+      <div>
+        <button onclick="logout();return false;" class="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-red-500/30 bg-red-950/20 text-red-400 hover:bg-red-900/30 hover:border-red-400/50 transition-all font-bold text-sm cursor-pointer"
+                style="font-family:Inter">
+          <span class="material-symbols-outlined" style="font-size:18px">logout</span>
+          Déconnexion
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Grid -->
+  <div class="px-8 lg:px-12 pb-16 relative z-10" style="font-family:Inter">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:32px;align-items:start">
+      
+      <!-- Create Event Form (Glass Container) -->
+      <div style="background:rgba(17,26,17,0.45);border:1px solid rgba(31,47,31,0.8);border-radius:24px;padding:32px;backdrop-filter:blur(20px);box-shadow:0 20px 50px rgba(0,0,0,0.5)">
+        <h2 style="font-family:Cairo;font-size:24px;font-weight:800;color:#f0fdf4;margin-top:0;margin-bottom:24px;display:flex;align-items:center;gap:10px">
+          <span class="material-symbols-outlined" style="color:#4be277">add_circle</span>
+          Créer un événement
+        </h2>
+        
+        <form id="admin-event-form" onsubmit="handleCreateEvent(event)" style="display:flex;flex-direction:column;gap:20px">
+          
+          <!-- Title -->
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <label style="font-size:11px;font-weight:700;color:#86efac;letter-spacing:.08em;text-transform:uppercase">Titre de l'événement</label>
+            <div style="background:rgba(16,21,15,0.6);border:1px solid #1f2f1f;border-radius:12px;padding:12px 16px">
+              <input type="text" id="ev-title-input" required placeholder="Ex: Grand Reboisement du Chréa" style="background:transparent;border:none;outline:none;color:#dfe4db;font-size:14px;width:100%" oninput="updateLivePreview()"/>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <label style="font-size:11px;font-weight:700;color:#86efac;letter-spacing:.08em;text-transform:uppercase">Description</label>
+            <div style="background:rgba(16,21,15,0.6);border:1px solid #1f2f1f;border-radius:12px;padding:12px 16px">
+              <textarea id="ev-desc-input" required rows="3" placeholder="Description de l'activité, prérequis..." style="background:transparent;border:none;outline:none;color:#dfe4db;font-size:14px;width:100%;resize:none" oninput="updateLivePreview()"></textarea>
+            </div>
+          </div>
+
+          <!-- Row: Category & Wilaya -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <!-- Category -->
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label style="font-size:11px;font-weight:700;color:#86efac;letter-spacing:.08em;text-transform:uppercase">Catégorie</label>
+              <div style="background:rgba(16,21,15,0.6);border:1px solid #1f2f1f;border-radius:12px;padding:12px 16px">
+                <select id="ev-cat-input" style="background:transparent;border:none;outline:none;color:#dfe4db;font-size:14px;width:100%;cursor:pointer" onchange="updateLivePreview()">
+                  <option value="sport" style="background:#0a0f0a">Sport</option>
+                  <option value="cultural" style="background:#0a0f0a">Culture</option>
+                  <option value="workshop" style="background:#0a0f0a">Atelier</option>
+                  <option value="volunteer" style="background:#0a0f0a" selected>Bénévolat</option>
+                  <option value="program" style="background:#0a0f0a">Formation</option>
+                  <option value="event" style="background:#0a0f0a">Événement</option>
+                  <option value="tech" style="background:#0a0f0a">Tech</option>
+                  <option value="health" style="background:#0a0f0a">Santé</option>
+                </select>
+              </div>
+            </div>
+            <!-- Wilaya -->
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label style="font-size:11px;font-weight:700;color:#86efac;letter-spacing:.08em;text-transform:uppercase">Wilaya</label>
+              <div style="background:rgba(16,21,15,0.6);border:1px solid #1f2f1f;border-radius:12px;padding:12px 16px">
+                <input type="text" id="ev-wilaya-input" required placeholder="Ex: Blida" style="background:transparent;border:none;outline:none;color:#dfe4db;font-size:14px;width:100%" oninput="updateLivePreview()"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row: Center & DNA points -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <!-- Center -->
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label style="font-size:11px;font-weight:700;color:#86efac;letter-spacing:.08em;text-transform:uppercase">Lieu / Centre</label>
+              <div style="background:rgba(16,21,15,0.6);border:1px solid #1f2f1f;border-radius:12px;padding:12px 16px">
+                <input type="text" id="ev-center-input" required placeholder="Ex: Forêt du Chréa" style="background:transparent;border:none;outline:none;color:#dfe4db;font-size:14px;width:100%" oninput="updateLivePreview()"/>
+              </div>
+            </div>
+            <!-- DNA Reward -->
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label style="font-size:11px;font-weight:700;color:#86efac;letter-spacing:.08em;text-transform:uppercase">Points DNA</label>
+              <div style="background:rgba(16,21,15,0.6);border:1px solid #1f2f1f;border-radius:12px;padding:12px 16px">
+                <input type="number" id="ev-dna-input" required min="10" max="1000" value="150" style="background:transparent;border:none;outline:none;color:#dfe4db;font-size:14px;width:100%" oninput="updateLivePreview()"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row: Date & Spots -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <!-- Date -->
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label style="font-size:11px;font-weight:700;color:#86efac;letter-spacing:.08em;text-transform:uppercase">Date de début</label>
+              <div style="background:rgba(16,21,15,0.6);border:1px solid #1f2f1f;border-radius:12px;padding:12px 16px">
+                <input type="date" id="ev-date-input" required style="background:transparent;border:none;outline:none;color:#dfe4db;font-size:14px;width:100%;color-scheme:dark" onchange="updateLivePreview()"/>
+              </div>
+            </div>
+            <!-- Spots -->
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <label style="font-size:11px;font-weight:700;color:#86efac;letter-spacing:.08em;text-transform:uppercase">Nombre de Places</label>
+              <div style="background:rgba(16,21,15,0.6);border:1px solid #1f2f1f;border-radius:12px;padding:12px 16px">
+                <input type="number" id="ev-spots-input" required min="5" value="50" style="background:transparent;border:none;outline:none;color:#dfe4db;font-size:14px;width:100%" oninput="updateLivePreview()"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row: Price (Free/Paid) -->
+          <div style="display:flex;align-items:center;gap:12px;background:rgba(16,21,15,0.4);border:1px solid #1f2f1f;border-radius:12px;padding:12px 16px">
+            <input type="checkbox" id="ev-free-input" checked style="width:18px;height:18px;accent-color:#4be277;cursor:pointer" onchange="updateLivePreview()"/>
+            <label for="ev-free-input" style="font-size:13px;color:#dfe4db;cursor:pointer;user-select:none">Cet événement est 100% gratuit</label>
+          </div>
+
+          <!-- Photo Upload (Optional) -->
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <label style="font-size:11px;font-weight:700;color:#86efac;letter-spacing:.08em;text-transform:uppercase">Photo de l'événement (Optionnelle)</label>
+            <div style="border:2px dashed #1f2f1f;border-radius:14px;padding:20px;text-align:center;background:rgba(16,21,15,0.3);position:relative;cursor:pointer;transition:border-color .3s" 
+                 onmouseover="this.style.borderColor='rgba(75,226,119,0.4)'" onmouseout="this.style.borderColor='#1f2f1f'">
+              <span class="material-symbols-outlined" style="font-size:32px;color:#6b8f6b;margin-bottom:8px">add_photo_alternate</span>
+              <p style="font-size:12px;color:#bccbb9;margin:0">Glissez-déposez ou cliquez pour ajouter une photo</p>
+              <input type="file" id="ev-photo-input" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer" onchange="handleImageSelect(event)"/>
+            </div>
+            <div id="ev-photo-preview-container" style="display:none;align-items:center;gap:12px;margin-top:8px;background:rgba(20,30,20,0.5);border:1px solid rgba(75,226,119,0.2);border-radius:12px;padding:8px 12px">
+              <div id="ev-photo-thumbnail" style="width:48px;height:48px;border-radius:8px;background-size:cover;background-position:center;border:1px solid #1f2f1f"></div>
+              <div style="flex:1;overflow:hidden">
+                <p id="ev-photo-filename" style="font-size:12px;color:#dfe4db;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">image.jpg</p>
+                <button type="button" onclick="clearSelectedImage()" style="font-size:11px;color:#ffb95f;background:none;border:none;padding:0;cursor:pointer;font-weight:600">Supprimer</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="admin-submit-btn" class="px-6 py-4 rounded-xl font-bold transition-all duration-300"
+                  style="background:#4be277;color:#003915;border:none;cursor:pointer;font-family:Inter;font-size:15px;box-shadow:0 8px 30px rgba(75,226,119,.28);margin-top:10px"
+                  onmouseover="this.style.boxShadow='0 10px 40px rgba(75,226,119,.5)';this.style.transform='translateY(-2px)'"
+                  onmouseout="this.style.boxShadow='0 8px 30px rgba(75,226,119,.28)';this.style.transform='translateY(0)'">
+            Poster l'événement
+          </button>
+        </form>
+      </div>
+
+      <!-- Preview Column -->
+      <div style="position:sticky;top:96px;display:flex;flex-direction:column;gap:24px">
+        
+        <div>
+          <h2 style="font-family:Cairo;font-size:18px;font-weight:800;color:#ffb95f;margin:0 0 16px;display:flex;align-items:center;gap:8px">
+            <span class="material-symbols-outlined" style="font-size:22px">visibility</span>
+            Aperçu de la carte
+          </h2>
+          
+          <!-- Live Preview card (replicating explore card style) -->
+          <div id="live-preview-card-wrap" style="width:100%;max-width:380px">
+            <!-- Card content will be injected by JS -->
+          </div>
+        </div>
+
+        <div style="background:rgba(255,185,95,0.04);border:1px solid rgba(255,185,95,0.12);border-radius:20px;padding:24px;max-width:380px">
+          <h3 style="font-family:Cairo;font-size:15px;font-weight:700;color:#ffb95f;margin:0 0 8px;display:flex;align-items:center;gap:6px">
+            <span class="material-symbols-outlined" style="font-size:18px">info</span>
+            Note de l'administrateur
+          </h3>
+          <p style="font-size:12px;color:#bccbb9;line-height:1.5;margin:0">
+            Dès que vous soumettez le formulaire, l'événement est directement envoyé dans la base de données <strong>Supabase</strong>. Il sera instantanément visible sur la page <strong>Explorer</strong> et sur la <strong>Carte interactive</strong> de Nabda pour tous les utilisateurs.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Divider -->
+    <div style="margin:48px 0;height:1px;background:#1f2f1f"></div>
+
+    <!-- Manage / View Events Section -->
+    <div>
+      <h2 style="font-family:Cairo;font-size:24px;font-weight:800;color:#f0fdf4;margin-top:0;margin-bottom:24px;display:flex;align-items:center;gap:10px">
+        <span class="material-symbols-outlined" style="color:#4be277">list_alt</span>
+        Événements personnalisés (Supabase)
+      </h2>
+      
+      <div id="admin-events-list-wrap" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Rendered list of supabase events with quick delete -->
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- end page-admin -->
 
 
 
@@ -2548,8 +2775,8 @@ function _applyInlineTheme(isDark) {
 // ================================================================
 // NABDA SPA ROUTER
 // ================================================================
-const PAGES = ['home','explore','map','assistant','profile','onboarding','auth'];
-const PAGE_TITLES = {home:'Accueil',explore:'Explorer',map:'Carte',assistant:'Nabda AI',profile:'Profil',onboarding:'',auth:'Connexion'};
+const PAGES = ['home','explore','map','assistant','profile','onboarding','auth','admin'];
+const PAGE_TITLES = {home:'Accueil',explore:'Explorer',map:'Carte',assistant:'Nabda AI',profile:'Profil',onboarding:'',auth:'Connexion',admin:'Dashboard Admin'};
 
 // ================================================================
 // NABDA AUTH PAGE JS & GLOBAL ROUTING HELPERS
@@ -2626,6 +2853,367 @@ async function handleForgotPassword() {
     showAuthMessage(err.message || 'Erreur lors de l\'envoi.', 'error');
   }
 }
+
+// ================================================================
+// NABDA ADMIN INTERFACE JS
+// ================================================================
+window.updateAdminNavLinkVisibility = function() {
+  const isAdmin = localStorage.getItem('nabda_is_admin') === 'true';
+  const navLinkAdmin = document.getElementById('nav-link-admin');
+  if (navLinkAdmin) {
+    navLinkAdmin.style.display = isAdmin ? 'inline-block' : 'none';
+  }
+};
+
+window.handleAdminLogin = async function() {
+  const adminEmail = 'admin@nabda.app';
+  var btn = document.getElementById('admin-btn');
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'Connexion immédiate...';
+    btn.style.opacity = '0.7';
+  }
+  
+  // Instant local authentication bypass (Bypass Supabase Auth rate limits)
+  localStorage.setItem('nabda_logged_in', 'true');
+  localStorage.setItem('nabda_is_admin', 'true');
+  localStorage.setItem('nabda_user_id', 'admin-bypass-uuid-123456');
+  localStorage.setItem('nabda_user_email', adminEmail);
+  
+  if (!localStorage.getItem('nabda_profile')) {
+    localStorage.setItem('nabda_profile', JSON.stringify({ onboardingComplete: true, displayName: 'Administrateur Nabda' }));
+  }
+  
+  updateAdminNavLinkVisibility();
+  showAuthMessage('Connexion Administrateur immédiate réussie !', 'success');
+  navigate('admin');
+  
+  if (btn) {
+    btn.disabled = false;
+    btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:20px;font-variation-settings:\'FILL\' 1">admin_panel_settings</span>Accès Administrateur';
+    btn.style.opacity = '1';
+  }
+};
+
+window.selectedImageFile = null;
+window.selectedImageBase64 = null;
+
+window.handleImageSelect = function(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  window.selectedImageFile = file;
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    window.selectedImageBase64 = e.target.result;
+    document.getElementById('ev-photo-thumbnail').style.backgroundImage = 'url(' + e.target.result + ')';
+    document.getElementById('ev-photo-filename').textContent = file.name;
+    document.getElementById('ev-photo-preview-container').style.display = 'flex';
+    updateLivePreview();
+  };
+  reader.readAsDataURL(file);
+};
+
+window.clearSelectedImage = function() {
+  window.selectedImageFile = null;
+  window.selectedImageBase64 = null;
+  var input = document.getElementById('ev-photo-input');
+  if (input) input.value = '';
+  var container = document.getElementById('ev-photo-preview-container');
+  if (container) container.style.display = 'none';
+  updateLivePreview();
+};
+
+window.updateLivePreview = function() {
+  const title = document.getElementById('ev-title-input').value.trim() || "Titre de l'événement";
+  const desc = document.getElementById('ev-desc-input').value.trim() || "Description de l'activité...";
+  const cat = document.getElementById('ev-cat-input').value || "volunteer";
+  const wilaya = document.getElementById('ev-wilaya-input').value.trim() || "Alger";
+  const center = document.getElementById('ev-center-input').value.trim() || "Centre de Jeunesse";
+  const dna = document.getElementById('ev-dna-input').value || "150";
+  const rawDate = document.getElementById('ev-date-input').value;
+  const isFree = document.getElementById('ev-free-input').checked;
+  
+  let dateFormatted = "Date non spécifiée";
+  if (rawDate) {
+    const parts = rawDate.split('-');
+    if (parts.length === 3) {
+      const d = new Date(parts[0], parts[1] - 1, parts[2]);
+      dateFormatted = d.toLocaleDateString('fr-FR', {day:'numeric',month:'long',year:'numeric'});
+    }
+  }
+  
+  const c = EXP_CAT_COLORS[cat] || '#22c55e';
+  const lbl = EXP_CAT_LABELS[cat] || cat;
+  const emoji = EXP_CAT_EMOJI[cat] || '';
+  const dnaScore = Math.min(99, Math.round(dna / 6));
+  
+  let img = window.selectedImageBase64 || EXP_STOCK_IMGS[0];
+  
+  const cardHtml = `<div class="group" style="border-radius:16px;overflow:hidden;border:1px solid #1f2f1f;background:#111a11;display:flex;flex-direction:column;pointer-events:none">
+    <div style="height:200px;overflow:hidden;position:relative">
+      <img src="${img}" alt="Preview" style="width:100%;height:100%;object-fit:cover"/>
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,10,.75) 0%,transparent 55%)"></div>
+      <div style="position:absolute;top:12px;left:12px;background:${c}cc;backdrop-filter:blur(6px);color:#fff;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;font-family:Inter">${emoji} ${lbl}</div>
+      <div style="position:absolute;top:12px;right:12px;background:#22c55e;color:#003915;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;font-family:Inter">DNA ${dnaScore}%</div>
+      <div style="position:absolute;bottom:10px;left:14px">
+        <span style="background:${isFree?'#22c55e20':'#f59e0b20'};color:${isFree?'#4be277':'#f59e0b'};border:1px solid ${isFree?'#4be27740':'#f59e0b40'};padding:2px 9px;border-radius:999px;font-size:10px;font-weight:700;font-family:Inter">${isFree?'GRATUIT':'PAYANT'}</span>
+      </div>
+    </div>
+    <div style="padding:16px 18px;flex:1;display:flex;flex-direction:column;gap:8px">
+      <h3 style="font-family:Cairo;font-size:18px;font-weight:700;color:#f0fdf4;margin:0;line-height:1.3">${title}</h3>
+      <div style="display:flex;gap:14px;font-size:12px;color:#86efac;font-family:Inter;flex-wrap:wrap">
+        <span>📍 ${wilaya} ${center ? ' · ' + center : ''}</span>
+        <span>📅 ${dateFormatted}</span>
+      </div>
+      <div style="margin-top:auto;padding-top:10px;border-top:1px solid #1f2f1f;display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <span style="font-size:13px;font-weight:700;color:#ffb95f;font-family:Inter">+${dna} DNA</span>
+        </div>
+        <button style="background:linear-gradient(135deg,#22c55e,#16a34a);color:#003915;border:none;padding:7px 18px;border-radius:8px;font-size:12px;font-weight:700;font-family:Inter">S'inscrire →</button>
+      </div>
+    </div>
+  </div>`;
+    
+  var wrap = document.getElementById('live-preview-card-wrap');
+  if (wrap) wrap.innerHTML = cardHtml;
+};
+
+const WILAYA_COORDS = {
+  "alger": {lat: 36.7538, lng: 3.0588},
+  "oran": {lat: 35.6969, lng: -0.6331},
+  "tipaza": {lat: 36.5894, lng: 2.4476},
+  "tizi ouzou": {lat: 36.7169, lng: 4.0497},
+  "constantine": {lat: 36.3650, lng: 6.6147},
+  "setif": {lat: 36.1898, lng: 5.4108},
+  "annaba": {lat: 36.9000, lng: 7.7667},
+  "blida": {lat: 36.4700, lng: 2.8300},
+  "bejaia": {lat: 36.7515, lng: 5.0560},
+  "biskra": {lat: 34.8500, lng: 5.7333},
+  "ghardaia": {lat: 32.4800, lng: 3.6700},
+  "tamanrasset": {lat: 22.7851, lng: 5.5228}
+};
+
+window.getWilayaCoords = function(wilayaName) {
+  const name = (wilayaName || "").toLowerCase().trim();
+  const base = WILAYA_COORDS[name] || {lat: 36.7538, lng: 3.0588};
+  return {
+    lat: base.lat + (Math.random() - 0.5) * 0.015,
+    lng: base.lng + (Math.random() - 0.5) * 0.015
+  };
+};
+
+window.uploadEventPhoto = async function(photoFile) {
+  if (!photoFile) return null;
+  try {
+    const fileExt = photoFile.name.split('.').pop();
+    const fileName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
+    const filePath = `events/${fileName}`;
+    
+    const { data, error } = await _sb.storage
+      .from('event-photos')
+      .upload(filePath, photoFile, {
+        cacheControl: '3600',
+        upsert: false
+      });
+      
+    if (error) throw error;
+    
+    const { data: publicUrlData } = _sb.storage.from('event-photos').getPublicUrl(filePath);
+    return publicUrlData.publicUrl;
+  } catch (err) {
+    console.warn('[Supabase Storage error, bucket might not exist or be public]', err);
+    return null;
+  }
+};
+
+window.handleCreateEvent = async function(e) {
+  if (e) e.preventDefault();
+  
+  const btn = document.getElementById('admin-submit-btn');
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'Enregistrement de l\'événement...';
+    btn.style.opacity = '0.7';
+  }
+  
+  try {
+    const title = document.getElementById('ev-title-input').value.trim();
+    const desc = document.getElementById('ev-desc-input').value.trim();
+    const cat = document.getElementById('ev-cat-input').value;
+    const wilaya = document.getElementById('ev-wilaya-input').value.trim();
+    const center = document.getElementById('ev-center-input').value.trim();
+    const dna = document.getElementById('ev-dna-input').value;
+    const rawDate = document.getElementById('ev-date-input').value;
+    const isFree = document.getElementById('ev-free-input').checked;
+    const spots = document.getElementById('ev-spots-input').value;
+    
+    let photoUrl = "";
+    if (window.selectedImageFile) {
+      showAuthMessage('Téléchargement de la photo...', 'success');
+      photoUrl = await uploadEventPhoto(window.selectedImageFile);
+    }
+    
+    const coords = getWilayaCoords(wilaya);
+    
+    const eventData = {
+      title: title,
+      description: desc,
+      category: cat,
+      start_date: rawDate ? new Date(rawDate).toISOString() : new Date().toISOString(),
+      max_participants: parseInt(spots) || 50,
+      current_participants: 0,
+      is_active: true,
+      lat: coords.lat,
+      lng: coords.lng,
+      wilaya: wilaya,
+      center: center,
+      dna_reward: parseInt(dna) || 150,
+      is_free: isFree,
+      image_url: photoUrl || ""
+    };
+    
+    let dbSuccess = false;
+    try {
+      const { data, error } = await _sb.from('events').insert(eventData).select();
+      if (error) throw error;
+      dbSuccess = true;
+    } catch (dbErr) {
+      console.warn('[Create Event Database Warning]', dbErr);
+    }
+    
+    if (dbSuccess) {
+      showAuthMessage('Événement créé avec succès dans la base de données !', 'success');
+    } else {
+      // Fallback: Store locally in localStorage
+      const localId = 'local_' + Math.random().toString(36).substring(2, 15);
+      const localEvent = {
+        id: localId,
+        title: title,
+        cat: cat,
+        lat: coords.lat,
+        lng: coords.lng,
+        wilaya: wilaya,
+        date: rawDate ? new Date(rawDate).toLocaleDateString('fr-FR', {day:'numeric',month:'long',year:'numeric'}) : new Date().toLocaleDateString('fr-FR'),
+        spots: parseInt(spots) || 50,
+        free: isFree,
+        dna: parseInt(dna) || 150,
+        center: center,
+        desc: desc,
+        image_url: window.selectedImageBase64 || photoUrl || EXP_STOCK_IMGS[0]
+      };
+      
+      let localEvents = JSON.parse(localStorage.getItem('nabda_local_events') || '[]');
+      localEvents.push(localEvent);
+      localStorage.setItem('nabda_local_events', JSON.stringify(localEvents));
+      
+      // Add immediately to MAP_EVENTS memory
+      if (typeof MAP_EVENTS !== 'undefined') {
+        MAP_EVENTS.push(localEvent);
+      }
+      
+      showAuthMessage('Événement créé localement avec succès !', 'success');
+    }
+    
+    // Reset form & states
+    document.getElementById('admin-event-form').reset();
+    clearSelectedImage();
+    
+    // Refresh global events list
+    await loadEventsFromSupabase();
+    
+    // Refresh admin list below form
+    renderAdminEventsList();
+  } catch (err) {
+    console.error('[Create Event Error]', err);
+    showAuthMessage('Erreur de création: ' + (err.message || 'Erreur inconnue'), 'error');
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = "Poster l'événement";
+      btn.style.opacity = '1';
+    }
+  }
+};
+
+window.renderAdminEventsList = function() {
+  const wrap = document.getElementById('admin-events-list-wrap');
+  if (!wrap) return;
+  
+  if (typeof MAP_EVENTS === 'undefined' || MAP_EVENTS.length === 0) {
+    wrap.innerHTML = '<p style="color:#bccbb9;font-size:14px;grid-column:1/-1">Aucun événement disponible.</p>';
+    return;
+  }
+  
+  // Display only custom events created in Supabase (we distinguish them because their ID is a UUID string, not a small integer)
+  const supabaseEvents = MAP_EVENTS.filter(e => typeof e.id === 'string' && e.id.length > 8);
+  
+  if (supabaseEvents.length === 0) {
+    wrap.innerHTML = '<p style="color:#bccbb9;font-size:14px;grid-column:1/-1;background:rgba(20,30,20,0.3);border:1px solid #1f2f1f;padding:24px;border-radius:16px;text-align:center">Aucun événement personnalisé dans la base de données. Utilisez le formulaire ci-dessus pour en ajouter un.</p>';
+    return;
+  }
+  
+  wrap.innerHTML = supabaseEvents.map(function(ev) {
+    var c = EXP_CAT_COLORS[ev.cat] || '#22c55e';
+    var lbl = EXP_CAT_LABELS[ev.cat] || ev.cat;
+    var emoji = EXP_CAT_EMOJI[ev.cat] || '';
+    
+    return `<div style="background:rgba(17,26,17,0.4);border:1px solid #1f2f1f;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:all .3s" onmouseover="this.style.borderColor='rgba(75,226,119,0.3)'" onmouseout="this.style.borderColor='#1f2f1f'">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <span style="background:${c}cc;color:#fff;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700">${emoji} ${lbl}</span>
+        <button onclick="handleDeleteEvent('${ev.id}')" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:#ef4444;border-radius:8px;padding:4px 8px;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;transition:all .2s" onmouseover="this.style.background='rgba(239,68,68,0.2)'" onmouseout="this.style.background='rgba(239,68,68,0.1)'">
+          <span class="material-symbols-outlined" style="font-size:14px">delete</span>
+          Supprimer
+        </button>
+      </div>
+      <h3 style="font-size:16px;font-weight:700;color:#f0fdf4;margin:0">${ev.title}</h3>
+      <p style="font-size:12px;color:#bccbb9;margin:0;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${ev.desc}</p>
+      <div style="margin-top:auto;display:flex;justify-content:space-between;font-size:11px;color:#86efac;padding-top:10px;border-top:1px solid #1f2f1f">
+        <span>📍 ${ev.wilaya}</span>
+        <span>📅 ${ev.date}</span>
+      </div>
+    </div>`;
+  }).join('');
+};
+
+window.handleDeleteEvent = async function(id) {
+  if (!confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')) return;
+  
+  if (typeof id === 'string' && id.startsWith('local_')) {
+    let localEvents = JSON.parse(localStorage.getItem('nabda_local_events') || '[]');
+    localEvents = localEvents.filter(e => e.id !== id);
+    localStorage.setItem('nabda_local_events', JSON.stringify(localEvents));
+    
+    if (typeof MAP_EVENTS !== 'undefined') {
+      MAP_EVENTS = MAP_EVENTS.filter(e => e.id !== id);
+    }
+    
+    showAuthMessage('Événement local supprimé !', 'success');
+    renderAdminEventsList();
+    if (typeof renderMapMarkers === 'function') renderMapMarkers();
+    return;
+  }
+  
+  try {
+    const { error } = await _sb.from('events').delete().eq('id', id);
+    if (error) throw error;
+    
+    showAuthMessage('Événement supprimé !', 'success');
+    await loadEventsFromSupabase();
+    renderAdminEventsList();
+  } catch (err) {
+    console.error('[Delete Event Error]', err);
+    showAuthMessage('Erreur de suppression: ' + (err.message || 'Erreur inconnue'), 'error');
+  }
+};
+
+// Hook admin navigation visibility after definition
+setTimeout(function() {
+  if (typeof updateAdminNavLinkVisibility === 'function') {
+    updateAdminNavLinkVisibility();
+  }
+}, 500);
 
 function showAuthMessage(msg, type) {
   var existing = document.getElementById('auth-toast');
@@ -2835,11 +3423,15 @@ async function getCurrentUser() {
 
 function navigate(pageId) {
   const isLoggedIn = localStorage.getItem('nabda_logged_in') === 'true';
+  const isAdmin = localStorage.getItem('nabda_is_admin') === 'true';
   const hasProfile = isOnboardingDone();
   
   // Strict User Journey Routing
   if (!isLoggedIn) {
     pageId = 'auth';
+  } else if (isAdmin) {
+    // Admins bypass onboarding
+    if (pageId === 'onboarding') pageId = 'admin';
   } else if (!hasProfile && pageId !== 'onboarding') {
     pageId = 'onboarding';
   }
@@ -2874,6 +3466,18 @@ function navigate(pageId) {
   // ── Auto-render explore grid when navigating to explore ──
   if (pageId === 'explore') { setTimeout(function(){ if(typeof renderExpGrid==='function'){ expActiveCat='all'; expFreeOnly=false; expPaidOnly=false; if(document.getElementById('exp-search')) document.getElementById('exp-search').value=''; renderExpGrid(); expCat('all'); } }, 100); }
   
+  // ── Auto-render admin dashboard when navigating to admin ──
+  if (pageId === 'admin') {
+    setTimeout(function() {
+      if (typeof renderAdminEventsList === 'function') {
+        renderAdminEventsList();
+      }
+      if (typeof updateLivePreview === 'function') {
+        updateLivePreview();
+      }
+    }, 100);
+  }
+
   // Update nav active states
   updateNav(pageId);
   
@@ -2885,10 +3489,13 @@ function navigate(pageId) {
   const navControls = document.getElementById('top-nav-controls');
   if (navLinks) navLinks.style.display = isLoggedIn ? 'flex' : 'none';
   if (navControls) navControls.style.display = isLoggedIn ? 'flex' : 'none';
+  if (typeof updateAdminNavLinkVisibility === 'function') {
+    updateAdminNavLinkVisibility();
+  }
   
-  // Hide footer on full-height pages and auth page
+  // Hide footer on full-height pages, auth page, and admin page
   var footer = document.getElementById('global-footer');
-  if (footer) footer.style.display = (pageId==='map'||pageId==='assistant'||pageId==='auth') ? 'none' : 'flex';
+  if (footer) footer.style.display = (pageId==='map'||pageId==='assistant'||pageId==='auth'||pageId==='admin') ? 'none' : 'flex';
   
   // Scroll to top (except assistant)
   if (!isAssistant) window.scrollTo(0,0);
@@ -3643,17 +4250,33 @@ async function loadEventsFromSupabase() {
           free:    ev.is_free !== false,
           dna:     ev.dna_reward || 100,
           center:  ev.center || '',
-          desc:    ev.description || ''
+          desc:    ev.description || '',
+          image_url: ev.image_url || ev.photo_url || ''
         };
       });
       console.log('[Supabase] Loaded ' + data.length + ' events from DB');
-      if (typeof renderMapMarkers === 'function') renderMapMarkers();
     } else {
       console.log('[Supabase] No events in DB — using fallback data');
+      MAP_EVENTS = MAP_EVENTS_FALLBACK.slice();
     }
   } catch(err) {
     console.warn('[Supabase] Events fetch failed, using fallback:', err.message);
+    MAP_EVENTS = MAP_EVENTS_FALLBACK.slice();
   }
+
+  // Load and merge local events from localStorage
+  try {
+    const localEvents = JSON.parse(localStorage.getItem('nabda_local_events') || '[]');
+    localEvents.forEach(function(ev) {
+      if (!MAP_EVENTS.find(e => String(e.id) === String(ev.id))) {
+        MAP_EVENTS.push(ev);
+      }
+    });
+  } catch(e) {
+    console.warn('[Local Events Load Warning]', e);
+  }
+
+  if (typeof renderMapMarkers === 'function') renderMapMarkers();
 }
 loadEventsFromSupabase()
 
