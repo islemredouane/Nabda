@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Explore Catalog | Nabda</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&amp;family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline": "#869585",
+                        "on-surface": "#dfe4db",
+                        "inverse-on-surface": "#2c322c",
+                        "error-container": "#93000a",
+                        "text-muted": "#86efac",
+                        "tertiary-fixed": "#ffdad5",
+                        "surface-tint": "#4ae176",
+                        "inverse-surface": "#dfe4db",
+                        "primary-fixed-dim": "#4ae176",
+                        "on-primary-container": "#004b1e",
+                        "error": "#ffb4ab",
+                        "tertiary": "#ffb5ab",
+                        "on-background": "#dfe4db",
+                        "on-primary-fixed-variant": "#005321",
+                        "secondary-container": "#ee9800",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#653e00",
+                        "on-tertiary-fixed": "#410001",
+                        "surface-container": "#1c211b",
+                        "surface-container-high": "#262b25",
+                        "primary-fixed": "#6bff8f",
+                        "primary-container": "#22c55e",
+                        "tertiary-fixed-dim": "#ffb4a9",
+                        "tertiary-container": "#ff8b7c",
+                        "border-subtle": "#1f2f1f",
+                        "text-primary": "#f0fdf4",
+                        "surface-bright": "#353b34",
+                        "on-surface-variant": "#bccbb9",
+                        "secondary": "#ffb95f",
+                        "primary": "#4be277",
+                        "on-secondary": "#472a00",
+                        "inverse-primary": "#006e2f",
+                        "background": "#10150f",
+                        "secondary-fixed": "#ffddb8",
+                        "surface-variant": "#313630",
+                        "on-tertiary": "#60130d",
+                        "surface-dim": "#10150f",
+                        "surface-elevated": "#1a2a1a",
+                        "on-primary": "#003915",
+                        "surface-container-lowest": "#0a0f0a",
+                        "surface-container-highest": "#313630",
+                        "on-error": "#690005",
+                        "on-tertiary-container": "#76231b",
+                        "surface-container-low": "#181d17",
+                        "on-primary-fixed": "#002109",
+                        "on-tertiary-fixed-variant": "#7f2a21",
+                        "on-secondary-fixed": "#2a1700",
+                        "outline-variant": "#3d4a3d",
+                        "on-secondary-container": "#5b3800",
+                        "surface": "#111a11",
+                        "secondary-fixed-dim": "#ffb95f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "xl": "40px",
+                        "base": "4px",
+                        "margin-desktop": "32px",
+                        "md": "16px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["Cairo"],
+                        "display-lg": ["Cairo"],
+                        "label-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Cairo"],
+                        "body-md": ["Inter"],
+                        "headline-xl-mobile": ["Cairo"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Cairo"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-xl-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .activity-card-gradient {
+            background: linear-gradient(to top, rgba(10, 15, 10, 0.95) 0%, rgba(10, 15, 10, 0.4) 50%, transparent 100%);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0f0a; }
+        ::-webkit-scrollbar-thumb { background: #1f2f1f; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4be277; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary selection:text-on-primary" style="padding-top:64px">
+<!-- TOP NAVBAR WEB -->
+<nav id="top-nav" class="fixed top-0 left-0 right-0 h-16 z-50 flex items-center px-8 gap-0" style="background:rgba(17,26,17,0.97);backdrop-filter:blur(16px);border-bottom:1px solid #1f2f1f;">
+  <a href="./home.html" class="flex items-center gap-2 mr-8 shrink-0 group">
+    <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:linear-gradient(135deg,#4be277,#22c55e)">
+      <span class="material-symbols-outlined text-on-primary" style="font-size:16px;font-variation-settings:'FILL' 1">favorite</span>
+    </div>
+    <span class="font-bold text-primary" style="font-family:Cairo;font-size:20px">Nabda <span style="color:#bccbb9;font-weight:400">????</span></span>
+  </a>
+  <div class="flex items-center flex-1 gap-1">
+    
+    <a href="./home.html" class="flex items-center gap-2 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-elevated hover:text-on-surface transition-all text-label-md font-label-md">
+      <span class="material-symbols-outlined text-base" style="font-size:18px">home</span> Accueil
+    </a>
+    <a href="./explore.html" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/15 text-primary border border-primary/20 text-label-md font-label-md font-bold transition-all">
+      <span class="material-symbols-outlined text-base" style="font-size:18px">explore</span> Explorer
+    </a>
+    <a href="./map.html" class="flex items-center gap-2 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-elevated hover:text-on-surface transition-all text-label-md font-label-md">
+      <span class="material-symbols-outlined text-base" style="font-size:18px">map</span> Carte
+    </a>
+    <a href="./assistant.html" class="flex items-center gap-2 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-elevated hover:text-on-surface transition-all text-label-md font-label-md">
+      <span class="material-symbols-outlined text-base" style="font-size:18px">smart_toy</span> Nabda AI
+    </a>
+    <a href="./profile.html" class="flex items-center gap-2 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-elevated hover:text-on-surface transition-all text-label-md font-label-md">
+      <span class="material-symbols-outlined text-base" style="font-size:18px">person</span> Profil
+    </a>
+  </div>
+  <div class="flex items-center gap-3 ml-4">
+    <div class="flex items-center rounded-full overflow-hidden border border-border-subtle" style="background:#1c211b">
+      <button class="px-3 py-1 text-primary font-bold" style="font-size:11px;background:#22c55e22">FR</button>
+      <button class="px-3 py-1 text-on-surface-variant hover:text-on-surface transition-colors" style="font-size:11px">AR</button>
+      <button class="px-3 py-1 text-on-surface-variant hover:text-on-surface transition-colors" style="font-size:11px">TZ</button>
+    </div>
+    <div class="flex items-center gap-1 rounded-full border px-3 py-1" style="background:#22c55e15;border-color:#4be27730;color:#4be277">
+      <span class="material-symbols-outlined" style="font-size:14px">energy_savings_leaf</span>
+      <span style="font-size:11px;font-weight:700;font-family:Inter">2,450 DNA</span>
+    </div>
+    <button class="relative p-2 rounded-full hover:bg-surface-elevated transition-colors">
+      <span class="material-symbols-outlined text-on-surface-variant" style="font-size:20px">notifications</span>
+      <span class="absolute rounded-full" style="top:6px;right:6px;width:8px;height:8px;background:#ffb95f"></span>
+    </button>
+    <a href="./profile.html" class="flex items-center gap-2 hover:bg-surface-elevated px-2 py-1 rounded-lg transition-all">
+      <div class="rounded-full flex items-center justify-center border font-bold shrink-0" style="width:34px;height:34px;background:linear-gradient(135deg,#22c55e,#0f2d14);border-color:#4be27750;color:#003915;font-size:12px;font-family:Inter">AY</div>
+      <span class="hidden xl:block text-on-surface-variant" style="font-size:11px">Algerian Youth</span>
+    </a>
+  </div>
+</nav>
+
+<!-- Top Navigation Bar -->
+<header class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 sticky top-0 z-50 bg-background border-b border-border-subtle">
+<div class="flex items-center gap-md">
+<span class="text-headline-lg font-headline-lg font-bold text-primary">Nabda</span>
+</div>
+<div class="hidden md:flex items-center bg-surface-container-low rounded-full px-md py-xs border border-border-subtle w-96">
+<span class="material-symbols-outlined text-on-surface-variant text-body-md" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-full text-on-surface placeholder:text-on-surface-variant" placeholder="Search activities..." type="text"/>
+</div>
+<div class="flex items-center gap-md">
+<span class="hidden md:block text-label-md font-label-md text-primary bg-primary-container/10 px-sm py-xs rounded-full border border-primary/20">2,450 DNA</span>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-elevated p-sm rounded-full transition-colors" data-icon="favorite">favorite</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-elevated p-sm rounded-full transition-colors" data-icon="notifications">notifications</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow p-margin-mobile md:p-margin-desktop bg-background">
+<div class="flex flex-col md:flex-row gap-lg">
+<!-- Filter Sidebar -->
+<aside class="w-full md:w-72 shrink-0 space-y-lg">
+<div class="flex items-center justify-between">
+<h2 class="text-headline-md font-headline-md text-primary">Filters</h2>
+<button class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors">Clear All</button>
+</div>
+<!-- Wilaya Filter -->
+<div class="space-y-sm">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Wilaya</label>
+<select class="w-full bg-surface-container border border-border-subtle rounded-lg px-md py-sm text-on-surface focus:ring-1 focus:ring-primary outline-none appearance-none">
+<option>All Algeria</option>
+<option>16 - Algiers</option>
+<option>31 - Oran</option>
+<option>25 - Constantine</option>
+<option>30 - Ouargla</option>
+</select>
+</div>
+<!-- Category Filter -->
+<div class="space-y-sm">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Category</label>
+<div class="flex flex-wrap gap-xs">
+<button class="bg-primary text-on-primary text-label-md px-md py-xs rounded-full">All</button>
+<button class="bg-surface-elevated border border-border-subtle text-on-surface text-label-md px-md py-xs rounded-full hover:border-primary transition-colors">Sport</button>
+<button class="bg-surface-elevated border border-border-subtle text-on-surface text-label-md px-md py-xs rounded-full hover:border-primary transition-colors">Culture</button>
+<button class="bg-surface-elevated border border-border-subtle text-on-surface text-label-md px-md py-xs rounded-full hover:border-primary transition-colors">Environment</button>
+<button class="bg-surface-elevated border border-border-subtle text-on-surface text-label-md px-md py-xs rounded-full hover:border-primary transition-colors">Tech</button>
+</div>
+</div>
+<!-- Pricing Filter -->
+<div class="space-y-sm">
+<label class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Pricing</label>
+<div class="flex gap-sm">
+<label class="flex-1 flex items-center justify-center border border-border-subtle rounded-lg py-sm cursor-pointer hover:border-primary transition-colors bg-surface-elevated has-[:checked]:bg-primary-container has-[:checked]:text-on-primary-container">
+<input checked="" class="hidden" type="checkbox"/>
+<span class="text-label-md font-label-md">Free</span>
+</label>
+<label class="flex-1 flex items-center justify-center border border-border-subtle rounded-lg py-sm cursor-pointer hover:border-primary transition-colors bg-surface-elevated">
+<input class="hidden" type="checkbox"/>
+<span class="text-label-md font-label-md">Paid</span>
+</label>
+</div>
+</div>
+<!-- DNA Score / Progress -->
+<div class="p-md bg-surface border border-border-subtle rounded-xl">
+<div class="flex justify-between items-center mb-xs">
+<span class="text-label-md font-label-md text-on-surface-variant">Recommended DNA Match</span>
+<span class="text-label-md font-label-md text-primary">80%+</span>
+</div>
+<div class="h-2 w-full bg-surface-elevated rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[80%]"></div>
+</div>
+<p class="mt-sm text-body-sm text-on-surface-variant">Showing activities aligned with your eco-profile.</p>
+</div>
+</aside>
+<!-- Grid & Catalog -->
+<div class="flex-grow space-y-lg">
+<!-- Catalog Header & Sort -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md">
+<div>
+<h1 class="text-headline-xl font-headline-xl text-primary">Explore Activities</h1>
+<p class="text-body-md text-on-surface-variant">Discover over 120 ODEJ activities happening near you.</p>
+</div>
+<div class="flex items-center gap-sm">
+<span class="text-label-md font-label-md text-on-surface-variant whitespace-nowrap">Sort by:</span>
+<select class="bg-surface-container border border-border-subtle rounded-lg px-md py-sm text-on-surface focus:ring-1 focus:ring-primary outline-none">
+<option>DNA Match</option>
+<option>Date (Soonest)</option>
+<option>Distance</option>
+<option>Most Popular</option>
+</select>
+</div>
+</div>
+<!-- Bento Grid Catalog -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+<!-- Activity Card 1 -->
+<div class="group relative overflow-hidden rounded-xl border border-border-subtle bg-surface hover:scale-[1.01] transition-all cursor-pointer">
+<div class="aspect-[4/5] relative">
+<img alt="Yoga Algiers" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A group of diverse Algerian youth practicing outdoor sunrise yoga on a sleek, dark green terrace overlooking the historic Algiers skyline. The lighting is golden and high-contrast, emphasizing the tranquil yet high-performance atmosphere. The image is styled in a corporate modern eco-minimalist aesthetic with deep blacks and vibrant green accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLlhxLtTcbcFzvDnMNl3s4b8E6X1ojQA_WDospRW7phiHCSF7u8wimqoTD_0Uu6W6dTxIk_SANXomWKDTE7h2pPBxk3uu5aR-W4IzFUl1ouycDRNcQwosXgxqMAmVYUIYnrbTZ3twS1w9GK_s_IUSBqYX0LfyZUAgfANWybg_eNMb0bs_OyEZDEdhedyyLY9FcTTtFLT-TkbXIYA_TX7psqZKUOSKerbENvboLs-5YYMMGLIwWnsY83A5lleu4-Z-b56owXiLmI7WV"/>
+<div class="absolute inset-0 activity-card-gradient"></div>
+<div class="absolute top-md right-md bg-secondary-container text-on-secondary-container px-sm py-xs rounded text-label-md font-bold">DNA 98%</div>
+<div class="absolute bottom-0 left-0 p-md w-full">
+<div class="flex gap-xs mb-xs">
+<span class="bg-primary/20 text-primary border border-primary/40 px-xs py-1 rounded text-[10px] uppercase font-bold tracking-tighter">Sport</span>
+<span class="bg-surface-elevated text-on-surface px-xs py-1 rounded text-[10px] uppercase font-bold tracking-tighter">Free</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-text-primary leading-tight">Sunset Terrace Yoga</h3>
+<p class="text-body-sm text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" data-icon="location_on">location_on</span> ODEJ El Biar, Algiers
+                                    </p>
+</div>
+</div>
+</div>
+<!-- Activity Card 2 -->
+<div class="group relative overflow-hidden rounded-xl border border-border-subtle bg-surface hover:scale-[1.01] transition-all cursor-pointer">
+<div class="aspect-[4/5] relative">
+<img alt="Coding Hackathon" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Close up of a programmer's hands typing on a high-end mechanical keyboard in a dimly lit, high-tech lab. Code is reflected on the screen in vibrant neon green. The room is filled with dark shadows and minimalist furniture, creating a mood of focused, technological excellence. The scene embodies a high-contrast dark theme with an eco-modern soul." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfgPi6O4G-ZsgvCwur0V6HYTtsW0_slsBspl1bkBj8tQ7ymWFbx1tnRxWX5ITfo2wpgLh_jmXrIrVPsm2XrQkszC6HcfUJNqOeVDIrpP-Hc4ZFFShV2sWfe0VCE6m7ImEwkThmwEvsR8MeDRy0LJI23XmRwzxABKqMEmL-FoIqF_TA4cY8OT-06NYfGcscMl4Hvp0AcVa2_uYV1pzE7vMuJrbrx1P4tpl0sAAzsFBtqVE0ROeZSzmbbRyJGTE8zIuiahfOEL4tLzAO"/>
+<div class="absolute inset-0 activity-card-gradient"></div>
+<div class="absolute top-md right-md bg-primary text-on-primary px-sm py-xs rounded text-label-md font-bold">DNA 82%</div>
+<div class="absolute bottom-0 left-0 p-md w-full">
+<div class="flex gap-xs mb-xs">
+<span class="bg-primary/20 text-primary border border-primary/40 px-xs py-1 rounded text-[10px] uppercase font-bold tracking-tighter">Tech</span>
+<span class="bg-surface-elevated text-on-surface px-xs py-1 rounded text-[10px] uppercase font-bold tracking-tighter">200 DA</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-text-primary leading-tight">Eco-Coding Hackathon</h3>
+<p class="text-body-sm text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" data-icon="calendar_today">calendar_today</span> Oct 15 • 09:00 AM
+                                    </p>
+</div>
+</div>
+</div>
+<!-- Activity Card 3 -->
+<div class="group relative overflow-hidden rounded-xl border border-border-subtle bg-surface hover:scale-[1.01] transition-all cursor-pointer">
+<div class="aspect-[4/5] relative">
+<img alt="Painting Workshop" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="An artist painting an abstract mural of Algerian flora using organic, sustainable paints in a bright, modern studio. The artist is using deep forest greens and earthen browns. The lighting is soft and natural, emphasizing the organic vitality and heritage-focused mood. The composition is asymmetric and sophisticated, reflecting a premium eco-minimalist UI aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuChCtfS2ZnlN5NwKgCZVz2V4tRwWc5XWP2tk9ndzggHnEariz07tMSegMy9N3vKj5UbNnErvbhixTXiNB4sq_orUXazK3RyhCrObANw9wY2US9XTdWoUDcRt05VY03AuNBqotWbF1Qh6MqZxWghxuDzqv3ijOnl5AO_SLkdgSUwwhw5pl44VNi9rJNwaXOcSz1_XdnVe-_1mLxYoaac0OAdJ8Yc7cNKz9E_KpuYqWo-B7IvOXmhtEf_hGv2xxbcYEUQI4whyYfM5n95"/>
+<div class="absolute inset-0 activity-card-gradient"></div>
+<div class="absolute top-md right-md bg-surface-container-highest text-on-surface px-sm py-xs rounded text-label-md font-bold">DNA 65%</div>
+<div class="absolute bottom-0 left-0 p-md w-full">
+<div class="flex gap-xs mb-xs">
+<span class="bg-primary/20 text-primary border border-primary/40 px-xs py-1 rounded text-[10px] uppercase font-bold tracking-tighter">Culture</span>
+<span class="bg-surface-elevated text-on-surface px-xs py-1 rounded text-[10px] uppercase font-bold tracking-tighter">Free</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-text-primary leading-tight">Sahara Mural Workshop</h3>
+<p class="text-body-sm text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" data-icon="distance">distance</span> 2.4 km away
+                                    </p>
+</div>
+</div>
+</div>
+<!-- Activity Card 4 -->
+<div class="group relative overflow-hidden rounded-xl border border-border-subtle bg-surface hover:scale-[1.01] transition-all cursor-pointer">
+<div class="aspect-[4/5] relative">
+<img alt="Futsal" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A dynamic shot of a futsal match at night under sharp, cool stadium lights in Oran. The players are captured in motion, blurring slightly to convey speed and energy. The court is a dark, high-contrast surface. The palette is dominated by deep blacks and vibrant action-oriented lighting, aligning with the Algerian pulse and energetic eco-mandate." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBH1NyFlZb9cOkyqZlTIdM2f5U0OxGeFRFyyqla3z4PuK0jLpIEeXjMUqyWNiD2_C-9CyuFZEI9jhDVHVeKGd2QVfs3u5bldMvzpWfYjpu4EY6kB52X8Z8DNj-14Fa7VdS1_lOVd3vnJSRKn9FTghBcnXgobi-eCqYu6qdW87fxcpqCxOzMrjJbQVgLWhVxE9o9SrmvmTAruiD28zhRxTJNqzSJQ1-0YqSxUm4elyVn66rewpYulNlN0D_GxuFKTPhupA4jdtC43ZM"/>
+<div class="absolute inset-0 activity-card-gradient"></div>
+<div class="absolute top-md right-md bg-primary text-on-primary px-sm py-xs rounded text-label-md font-bold">DNA 92%</div>
+<div class="absolute bottom-0 left-0 p-md w-full">
+<div class="flex gap-xs mb-xs">
+<span class="bg-primary/20 text-primary border border-primary/40 px-xs py-1 rounded text-[10px] uppercase font-bold tracking-tighter">Sport</span>
+<span class="bg-surface-elevated text-on-surface px-xs py-1 rounded text-[10px] uppercase font-bold tracking-tighter">Free</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-text-primary leading-tight">Midnight Futsal League</h3>
+<p class="text-body-sm text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" data-icon="location_on">location_on</span> ODEJ Akid Lotfi, Oran
+                                    </p>
+</div>
+</div>
+</div>
+<!-- Activity Card 5 -->
+<div class="group relative overflow-hidden rounded-xl border border-border-subtle bg-surface hover:scale-[1.01] transition-all cursor-pointer">
+<div class="aspect-[4/5] relative">
+<img alt="Library" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A sleek, minimalist modern library interior in Constantine with towering shelves and glass partitions. The space is illuminated by integrated LED strips in a soft green hue. The atmosphere is quiet, intellectual, and premium. The design features sharp lines and a high-contrast dark palette, perfectly capturing a tech-forward yet heritage-rooted cultural space." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBE7bxo7lbQ4L_Xx-Kqn_sWzYsVVu5QkQ2YTMZnjeuDdScG7sBhLczn6-M2AoDFs05ReQE7JnAmFiCbvz-VVfcJWX4efpGNCaquXfwq_ICy5zuIQj8SQwHmCtEPAvkeDYJa1RyZ-P0WPzLsLZ7EfdyfI_1x30O57Q4kTIffS4sh0osqZubucOpEpvRkCw5etrreWabRnxKPw6fujNhQM2SN_z1h6TaYYfYRLh7yfAYNiq5MRCYYg411qWCos3ZfhyNU72hzaANQkh_v"/>
+<div class="absolute inset-0 activity-card-gradient"></div>
+<div class="absolute top-md right-md bg-surface-container-highest text-on-surface px-sm py-xs rounded text-label-md font-bold">DNA 40%</div>
+<div class="absolute bottom-0 left-0 p-md w-full">
+<div class="flex gap-xs mb-xs">
+<span class="bg-primary/20 text-primary border border-primary/40 px-xs py-1 rounded text-[10px] uppercase font-bold tracking-tighter">Education</span>
+<span class="bg-surface-elevated text-on-surface px-xs py-1 rounded text-[10px] uppercase font-bold tracking-tighter">Free</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-text-primary leading-tight">Digital Archive Seminar</h3>
+<p class="text-body-sm text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" data-icon="schedule">schedule</span> Tommorow • 14:00
+                                    </p>
+</div>
+</div>
+</div>
+<!-- Activity Card 6 -->
+<div class="group relative overflow-hidden rounded-xl border border-border-subtle bg-surface hover:scale-[1.01] transition-all cursor-pointer">
+<div class="aspect-[4/5] relative">
+<img alt="Garden" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A community urban gardening project in Tipaza, showing lush green plants being tended by enthusiastic youth. The Mediterranean sea is visible in the background under a clear, bright sky. The aesthetic is vibrant and organic, using high-energy green tones against a clean, modern framework. The lighting is sunny and optimistic, signifying growth and ecological vitality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8axxInQttOozN8rEP7MaC67I7HUwqMXYFRHKOXUqWXpLSCpN7gxO36Xp-OrYs1dsx0MKv4hy2pKaiZMyOGXQAu38LDBtCnFD_hyqq4dIumQ5HcNBIsFTYQLEgqDIROran-NbK_G6KoezmC78VnD-esbfG3Zz2edWp5nGD4JwozW7rEjrlZTRPIabjYeRusL1cuLr0u8S4JFg8jN6C99DVGGUCrzLOFMSIbRf9ET2VbmQmJk99xl2R0Xh7uV87GQ9KX4Gi-Pomer6k"/>
+<div class="absolute inset-0 activity-card-gradient"></div>
+<div class="absolute top-md right-md bg-primary text-on-primary px-sm py-xs rounded text-label-md font-bold">DNA 88%</div>
+<div class="absolute bottom-0 left-0 p-md w-full">
+<div class="flex gap-xs mb-xs">
+<span class="bg-primary/20 text-primary border border-primary/40 px-xs py-1 rounded text-[10px] uppercase font-bold tracking-tighter">Eco</span>
+<span class="bg-surface-elevated text-on-surface px-xs py-1 rounded text-[10px] uppercase font-bold tracking-tighter">Free</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-text-primary leading-tight">Coastal Reforestation</h3>
+<p class="text-body-sm text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" data-icon="eco">eco</span> Earn 50 DNA
+                                    </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-center gap-md py-xl">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-border-subtle hover:bg-surface-elevated transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<div class="flex gap-sm">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-on-primary font-bold">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-border-subtle hover:bg-surface-elevated transition-colors">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-border-subtle hover:bg-surface-elevated transition-colors">3</button>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-border-subtle hover:bg-surface-elevated transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+<!-- Footer -->
+<footer class="w-full py-md px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-sm bg-surface-container-lowest border-t border-border-subtle ">
+<div class="flex items-center gap-md">
+<span class="text-label-md font-label-md font-bold text-primary">Nabda</span>
+<span class="text-body-sm text-on-surface-variant">© 2024 Nabda Eco-Navigator</span>
+</div>
+<div class="flex flex-wrap justify-center gap-md">
+<a class="text-secondary font-bold text-label-md hover:text-primary transition-colors" href="#">Carbon Badge: 0.04kg CO2 Saved</a>
+<a class="text-on-surface-variant text-label-md hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant text-label-md hover:text-primary transition-colors" href="#">Terms of Service</a>
+</div>
+</footer>
+<script>
+        // Micro-interaction: Active Card Scaling
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1.01)';
+            });
+        });
+
+        // Atmospheric Scroll Effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-lg', 'bg-opacity-90', 'backdrop-blur-md');
+            } else {
+                header.classList.remove('shadow-lg', 'bg-opacity-90', 'backdrop-blur-md');
+            }
+        });
+    </script>
+</body></html>

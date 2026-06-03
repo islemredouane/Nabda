@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nabda Profile - Eco-Navigator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&amp;family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #10150f;
+            color: #dfe4db;
+            font-family: 'Inter', sans-serif;
+        }
+        .dna-gradient {
+            background: linear-gradient(180deg, rgba(74, 225, 118, 0.1) 0%, rgba(16, 21, 15, 0) 100%);
+        }
+        .glass-card {
+            background: rgba(17, 26, 17, 0.8);
+            backdrop-filter: blur(8px);
+        }
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .animate-pulse-soft {
+            animation: pulse-soft 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline": "#869585",
+                    "on-surface": "#dfe4db",
+                    "inverse-on-surface": "#2c322c",
+                    "error-container": "#93000a",
+                    "text-muted": "#86efac",
+                    "tertiary-fixed": "#ffdad5",
+                    "surface-tint": "#4ae176",
+                    "inverse-surface": "#dfe4db",
+                    "primary-fixed-dim": "#4ae176",
+                    "on-primary-container": "#004b1e",
+                    "error": "#ffb4ab",
+                    "tertiary": "#ffb5ab",
+                    "on-background": "#dfe4db",
+                    "on-primary-fixed-variant": "#005321",
+                    "secondary-container": "#ee9800",
+                    "on-error-container": "#ffdad6",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "on-tertiary-fixed": "#410001",
+                    "surface-container": "#1c211b",
+                    "surface-container-high": "#262b25",
+                    "primary-fixed": "#6bff8f",
+                    "primary-container": "#22c55e",
+                    "tertiary-fixed-dim": "#ffb4a9",
+                    "tertiary-container": "#ff8b7c",
+                    "border-subtle": "#1f2f1f",
+                    "text-primary": "#f0fdf4",
+                    "surface-bright": "#353b34",
+                    "on-surface-variant": "#bccbb9",
+                    "secondary": "#ffb95f",
+                    "primary": "#4be277",
+                    "on-secondary": "#472a00",
+                    "inverse-primary": "#006e2f",
+                    "background": "#10150f",
+                    "secondary-fixed": "#ffddb8",
+                    "surface-variant": "#313630",
+                    "on-tertiary": "#60130d",
+                    "surface-dim": "#10150f",
+                    "surface-elevated": "#1a2a1a",
+                    "on-primary": "#003915",
+                    "surface-container-lowest": "#0a0f0a",
+                    "surface-container-highest": "#313630",
+                    "on-error": "#690005",
+                    "on-tertiary-container": "#76231b",
+                    "surface-container-low": "#181d17",
+                    "on-primary-fixed": "#002109",
+                    "on-tertiary-fixed-variant": "#7f2a21",
+                    "on-secondary-fixed": "#2a1700",
+                    "outline-variant": "#3d4a3d",
+                    "on-secondary-container": "#5b3800",
+                    "surface": "#111a11",
+                    "secondary-fixed-dim": "#ffb95f"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "xs": "4px",
+                    "sm": "8px",
+                    "lg": "24px",
+                    "xl": "40px",
+                    "base": "4px",
+                    "margin-desktop": "32px",
+                    "md": "16px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "headline-xl": ["Cairo"],
+                    "display-lg": ["Cairo"],
+                    "label-md": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-md": ["Cairo"],
+                    "body-md": ["Inter"],
+                    "headline-xl-mobile": ["Cairo"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Cairo"]
+            },
+            "fontSize": {
+                    "headline-xl": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-xl-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background text-on-surface overflow-x-hidden">
+<!-- TOP NAVBAR WEB -->
+<nav id="top-nav" class="fixed top-0 left-0 right-0 h-16 z-50 flex items-center px-8 gap-0" style="background:rgba(17,26,17,0.97);backdrop-filter:blur(16px);border-bottom:1px solid #1f2f1f;">
+  <a href="./home.html" class="flex items-center gap-2 mr-8 shrink-0 group">
+    <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:linear-gradient(135deg,#4be277,#22c55e)">
+      <span class="material-symbols-outlined text-on-primary" style="font-size:16px;font-variation-settings:'FILL' 1">favorite</span>
+    </div>
+    <span class="font-bold text-primary" style="font-family:Cairo;font-size:20px">Nabda <span style="color:#bccbb9;font-weight:400">????</span></span>
+  </a>
+  <div class="flex items-center flex-1 gap-1">
+    
+    <a href="./home.html" class="flex items-center gap-2 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-elevated hover:text-on-surface transition-all text-label-md font-label-md">
+      <span class="material-symbols-outlined text-base" style="font-size:18px">home</span> Accueil
+    </a>
+    <a href="./explore.html" class="flex items-center gap-2 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-elevated hover:text-on-surface transition-all text-label-md font-label-md">
+      <span class="material-symbols-outlined text-base" style="font-size:18px">explore</span> Explorer
+    </a>
+    <a href="./map.html" class="flex items-center gap-2 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-elevated hover:text-on-surface transition-all text-label-md font-label-md">
+      <span class="material-symbols-outlined text-base" style="font-size:18px">map</span> Carte
+    </a>
+    <a href="./assistant.html" class="flex items-center gap-2 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-elevated hover:text-on-surface transition-all text-label-md font-label-md">
+      <span class="material-symbols-outlined text-base" style="font-size:18px">smart_toy</span> Nabda AI
+    </a>
+    <a href="./profile.html" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/15 text-primary border border-primary/20 text-label-md font-label-md font-bold transition-all">
+      <span class="material-symbols-outlined text-base" style="font-size:18px">person</span> Profil
+    </a>
+  </div>
+  <div class="flex items-center gap-3 ml-4">
+    <div class="flex items-center rounded-full overflow-hidden border border-border-subtle" style="background:#1c211b">
+      <button class="px-3 py-1 text-primary font-bold" style="font-size:11px;background:#22c55e22">FR</button>
+      <button class="px-3 py-1 text-on-surface-variant hover:text-on-surface transition-colors" style="font-size:11px">AR</button>
+      <button class="px-3 py-1 text-on-surface-variant hover:text-on-surface transition-colors" style="font-size:11px">TZ</button>
+    </div>
+    <div class="flex items-center gap-1 rounded-full border px-3 py-1" style="background:#22c55e15;border-color:#4be27730;color:#4be277">
+      <span class="material-symbols-outlined" style="font-size:14px">energy_savings_leaf</span>
+      <span style="font-size:11px;font-weight:700;font-family:Inter">2,450 DNA</span>
+    </div>
+    <button class="relative p-2 rounded-full hover:bg-surface-elevated transition-colors">
+      <span class="material-symbols-outlined text-on-surface-variant" style="font-size:20px">notifications</span>
+      <span class="absolute rounded-full" style="top:6px;right:6px;width:8px;height:8px;background:#ffb95f"></span>
+    </button>
+    <a href="./profile.html" class="flex items-center gap-2 hover:bg-surface-elevated px-2 py-1 rounded-lg transition-all">
+      <div class="rounded-full flex items-center justify-center border font-bold shrink-0" style="width:34px;height:34px;background:linear-gradient(135deg,#22c55e,#0f2d14);border-color:#4be27750;color:#003915;font-size:12px;font-family:Inter">AY</div>
+      <span class="hidden xl:block text-on-surface-variant" style="font-size:11px">Algerian Youth</span>
+    </a>
+  </div>
+</nav>
+
+<!-- TopNavBar -->
+<header class="bg-background dark:bg-background border-b border-border-subtle flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 sticky top-0 z-50">
+<div class="flex items-center gap-md">
+<span class="text-headline-lg font-headline-lg font-bold text-primary dark:text-primary">Nabda</span>
+</div>
+<div class="hidden md:flex flex-1 max-w-md mx-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg pl-xl py-xs text-body-sm focus:ring-1 focus:ring-primary" placeholder="Search eco-initiatives..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden sm:flex items-center gap-xs px-sm py-xs bg-surface-elevated rounded-full">
+<span class="text-label-md font-label-md text-primary">2,450 DNA</span>
+</div>
+<div class="flex items-center gap-sm">
+<button class="hover:bg-surface-elevated dark:hover:bg-surface-elevated transition-colors p-xs rounded-full">
+<span class="material-symbols-outlined text-on-surface-variant">favorite</span>
+</button>
+<button class="hover:bg-surface-elevated dark:hover:bg-surface-elevated transition-colors p-xs rounded-full relative">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-secondary rounded-full"></span>
+</button>
+</div>
+</div>
+</header>
+<div class="flex min-h-screen">
+<!-- SideNavBar (Desktop) -->
+<aside class="hidden md:flex flex-col h-screen fixed left-0 top-0 py-lg px-md gap-lg z-40 bg-surface dark:bg-surface border-r border-border-subtle w-64 pt-24">
+<div class="flex flex-col gap-xs mb-lg">
+<div class="w-16 h-16 rounded-2xl bg-primary-container flex items-center justify-center mb-sm overflow-hidden border-2 border-primary">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A professional and sleek portrait of a young Algerian tech enthusiast in a high-contrast cinematic setting. The lighting is dramatic and moody, dominated by deep shadows and vibrant emerald green highlights that reflect an eco-tech aesthetic. The style is modern, sharp, and clean, capturing a sense of visionary leadership and ecological focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB78Fn4WVujY0bLlleHoEhwH5CWMWHmy_0kzzrbnQnUW0QtyvShyEGowniDXJor5BOmGGmtf2FE3sg80ArnnFhE7ktsXABH3E5pvskcONFhH82LcdgQNXX7Z173ufZmio3SSM3aNrHUWZHsZjpLbc54-vaSo0zoe9jd_TYpr1lwwNfq9gtxkNryQDyAt3GkSDifuQ7EpCItWG5CEyFwhYDFCYpMFTyRDrqyIUbmdqda5ZY13tZB4Zc4Kom0kaVO88Q5WO6EeTAipTpy"/>
+</div>
+<h2 class="text-headline-md font-headline-md text-on-surface">Algerian Youth</h2>
+<p class="text-label-md font-label-md text-primary">Eco-Navigator</p>
+</div>
+<nav class="flex flex-col gap-sm">
+<a class="flex items-center gap-md text-on-surface-variant dark:text-on-surface-variant px-md py-sm hover:bg-surface-elevated transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-on-surface-variant px-md py-sm hover:bg-surface-elevated transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-label-md text-label-md">Explore</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-on-surface-variant px-md py-sm hover:bg-surface-elevated transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="font-label-md text-label-md">Map</span>
+</a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-on-surface-variant px-md py-sm hover:bg-surface-elevated transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-label-md text-label-md">Assistant</span>
+</a>
+<a class="flex items-center gap-md bg-primary-container dark:bg-primary-container text-on-primary-container dark:text-on-primary-container rounded-lg px-md py-sm" href="#">
+<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</nav>
+<div class="mt-auto">
+<button class="w-full py-md bg-primary text-on-primary rounded-xl font-bold flex items-center justify-center gap-sm hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">add_circle</span>
+                    Join Mission
+                </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1  p-margin-mobile md:p-margin-desktop dna-gradient">
+<!-- User Hero Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg mb-xl">
+<!-- DNA Profile Card -->
+<div class="lg:col-span-2 glass-card border border-border-subtle rounded-xl p-lg relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-lg">
+<div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface">Your DNA Pulse</h1>
+<p class="text-body-md text-on-surface-variant">Level 14 • Advanced Eco-Steward</p>
+</div>
+<div class="text-right">
+<span class="text-display-lg font-display-lg text-primary block">2,450</span>
+<span class="text-label-md font-label-md text-secondary tracking-widest uppercase">Nabda Points</span>
+</div>
+</div>
+<!-- Skill Progress Bars -->
+<div class="space-y-md">
+<div>
+<div class="flex justify-between mb-xs">
+<span class="text-label-md font-label-md">Reforestation Logic</span>
+<span class="text-label-md font-label-md text-primary">82%</span>
+</div>
+<div class="h-2 bg-surface-elevated rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-1000 ease-out" style="width: 82%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-xs">
+<span class="text-label-md font-label-md">Water Wisdom</span>
+<span class="text-label-md font-label-md text-primary">45%</span>
+</div>
+<div class="h-2 bg-surface-elevated rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-1000 ease-out" style="width: 45%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-xs">
+<span class="text-label-md font-label-md">Carbon Footprint Reduction</span>
+<span class="text-label-md font-label-md text-primary">94%</span>
+</div>
+<div class="h-2 bg-surface-elevated rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-1000 ease-out" style="width: 94%;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Wilaya Leaderboard Mini -->
+<div class="bg-surface-container border border-border-subtle rounded-xl p-lg">
+<h3 class="text-headline-md font-headline-md mb-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary">leaderboard</span>
+                        Wilaya Leaderboard
+                    </h3>
+<div class="space-y-sm">
+<div class="flex items-center justify-between p-sm bg-surface-elevated rounded-lg border border-primary/20">
+<div class="flex items-center gap-md">
+<span class="text-label-md font-bold text-primary">1</span>
+<span class="text-body-sm font-bold">Algiers</span>
+</div>
+<span class="text-label-md font-label-md">1.2M DNA</span>
+</div>
+<div class="flex items-center justify-between p-sm hover:bg-surface-elevated/50 rounded-lg transition-colors">
+<div class="flex items-center gap-md">
+<span class="text-label-md text-on-surface-variant">2</span>
+<span class="text-body-sm">Oran</span>
+</div>
+<span class="text-label-md">890k DNA</span>
+</div>
+<div class="flex items-center justify-between p-sm hover:bg-surface-elevated/50 rounded-lg transition-colors">
+<div class="flex items-center gap-md">
+<span class="text-label-md text-on-surface-variant">3</span>
+<span class="text-body-sm">Constantine</span>
+</div>
+<span class="text-label-md">750k DNA</span>
+</div>
+<div class="flex items-center justify-between p-sm bg-primary/10 rounded-lg border border-primary/30 mt-md">
+<div class="flex items-center gap-md">
+<span class="text-label-md font-bold text-primary">12</span>
+<span class="text-body-sm font-bold">You (Béjaïa)</span>
+</div>
+<span class="text-label-md font-bold">342k DNA</span>
+</div>
+</div>
+<button class="w-full mt-lg text-center text-label-md text-on-surface-variant hover:text-primary transition-colors">View full leaderboard</button>
+</div>
+</div>
+<!-- Bento Grid: Badges & Activities -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<!-- Badge Grid -->
+<div class="md:col-span-1 glass-card border border-border-subtle rounded-xl p-lg">
+<h3 class="text-headline-md font-headline-md mb-lg">Milestones</h3>
+<div class="grid grid-cols-3 gap-md">
+<div class="flex flex-col items-center gap-xs">
+<div class="w-full aspect-square rounded-full bg-surface-container-highest border border-primary/40 flex items-center justify-center group cursor-help">
+<span class="material-symbols-outlined text-primary text-3xl transition-transform group-hover:scale-110" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<span class="text-[10px] text-center font-label-md opacity-80 uppercase tracking-tighter">Registration</span>
+</div>
+<div class="flex flex-col items-center gap-xs">
+<div class="w-full aspect-square rounded-full bg-surface-container-highest border border-secondary/40 flex items-center justify-center group cursor-help">
+<span class="material-symbols-outlined text-secondary text-3xl transition-transform group-hover:scale-110" data-icon="eco" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+<span class="text-[10px] text-center font-label-md opacity-80 uppercase tracking-tighter">Tree Planter</span>
+</div>
+<div class="flex flex-col items-center gap-xs">
+<div class="w-full aspect-square rounded-full bg-surface-container-highest border border-outline-variant flex items-center justify-center group opacity-40">
+<span class="material-symbols-outlined text-on-surface-variant text-3xl" data-icon="workspace_premium">workspace_premium</span>
+</div>
+<span class="text-[10px] text-center font-label-md opacity-40 uppercase tracking-tighter">DNA Master</span>
+</div>
+<div class="flex flex-col items-center gap-xs">
+<div class="w-full aspect-square rounded-full bg-surface-container-highest border border-primary/40 flex items-center justify-center group cursor-help">
+<span class="material-symbols-outlined text-primary text-3xl transition-transform group-hover:scale-110" data-icon="electric_bolt" style="font-variation-settings: 'FILL' 1;">electric_bolt</span>
+</div>
+<span class="text-[10px] text-center font-label-md opacity-80 uppercase tracking-tighter">Energy Saver</span>
+</div>
+<div class="flex flex-col items-center gap-xs">
+<div class="w-full aspect-square rounded-full bg-surface-container-highest border border-primary/40 flex items-center justify-center group cursor-help">
+<span class="material-symbols-outlined text-primary text-3xl transition-transform group-hover:scale-110" data-icon="groups" style="font-variation-settings: 'FILL' 1;">groups</span>
+</div>
+<span class="text-[10px] text-center font-label-md opacity-80 uppercase tracking-tighter">Team Lead</span>
+</div>
+<div class="flex flex-col items-center gap-xs">
+<div class="w-full aspect-square rounded-full bg-surface-container-highest border border-outline-variant flex items-center justify-center group opacity-40">
+<span class="material-symbols-outlined text-on-surface-variant text-3xl" data-icon="water_drop">water_drop</span>
+</div>
+<span class="text-[10px] text-center font-label-md opacity-40 uppercase tracking-tighter">Hydration Hero</span>
+</div>
+</div>
+</div>
+<!-- Recent Activities -->
+<div class="md:col-span-2 glass-card border border-border-subtle rounded-xl p-lg">
+<div class="flex justify-between items-center mb-lg">
+<h3 class="text-headline-md font-headline-md">Registered Activities</h3>
+<span class="text-label-md font-label-md text-primary bg-primary/10 px-sm py-xs rounded-full">6 Ongoing</span>
+</div>
+<div class="space-y-md">
+<!-- Activity Card -->
+<div class="flex gap-md p-md bg-surface rounded-xl border border-border-subtle hover:border-primary/50 transition-colors group">
+<div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+<img alt="Activity" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="A lush green reforestation project site in the Algerian mountains at sunrise. The soft morning light illuminates young saplings being planted by volunteers. The atmosphere is hopeful and focused, with a deep green and earthy color palette. The style is high-contrast, professional environmental photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgS1fzVRQqGo6zzYL_y21sm5UAPMnGEn7Yx4szqBw__nrR3DWy_wYhFfVPFY5J9xUp4WEz7ZMjg3ZYyQwbSV6QNFKIkPMn2sh9B1R7IRpXc57GiUsnOFsK2FOdlLoLEHkqgE4wVu-7ueCmos6NIy119_tlaXC7aZkHGJscbkLIO-V3Xm0P6jOKZryFjqWrmXgLVR3PwN1wux4RmL3S4PV2Lhxd1bNV_Q7trlYVzKFhJlF6490iqaK7crJUPzcrtwtOVMgc9qHXEWCE"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between">
+<h4 class="text-body-md font-bold">Chréa Reforestation Mission</h4>
+<span class="text-label-md text-primary">+500 DNA</span>
+</div>
+<p class="text-body-sm text-on-surface-variant line-clamp-1">Planting 50 Cedar trees in the national park buffer zone.</p>
+<div class="flex items-center gap-sm mt-sm">
+<span class="text-[10px] px-xs py-0.5 rounded border border-outline text-outline uppercase tracking-wider">Fieldwork</span>
+<span class="text-label-md text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                                        Oct 24, 2024
+                                    </span>
+</div>
+</div>
+</div>
+<!-- Activity Card 2 -->
+<div class="flex gap-md p-md bg-surface rounded-xl border border-border-subtle hover:border-primary/50 transition-colors group">
+<div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+<img alt="Activity" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="A futuristic solar energy workshop in a modern tech hub. Young students are interacting with sleek solar panels and digital monitoring screens. High-contrast lighting with primary green accents creates an advanced, educational atmosphere. The style is corporate-modern with an eco-tech focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3I5F3LQYqGatGTlF1GbMymUqsvRxV2suo5KJBBhDU-zL5NYaC5nKg_kBs6h7MAgk78qdJQ88xtRLF0wfbClX9P7ACAILQlrK4cepa5-WAKjCtd8aoaRCEbpoDZav66Jzj1qy36yN6c6-NRNUjVpt4FriEMBI7IITrWBK68DDyCusIvU2vb359kO6ifKsNSxKKkdk6SH4xaxrWttEftm5dQonyvm_tGNxnfsdZzPb-6knE9VFnv0IWV6fSdT7NalbD_ce0zu45_cSl"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between">
+<h4 class="text-body-md font-bold">Solar Logic Workshop</h4>
+<span class="text-label-md text-primary">+200 DNA</span>
+</div>
+<p class="text-body-sm text-on-surface-variant line-clamp-1">Digital certification for small-scale photovoltaic systems.</p>
+<div class="flex items-center gap-sm mt-sm">
+<span class="text-[10px] px-xs py-0.5 rounded border border-outline text-outline uppercase tracking-wider">Digital</span>
+<span class="text-label-md text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                                        Oct 20, 2024
+                                    </span>
+</div>
+</div>
+</div>
+<!-- Activity Card 3 -->
+<div class="flex gap-md p-md bg-surface rounded-xl border border-border-subtle hover:border-primary/50 transition-colors group">
+<div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+<img alt="Activity" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="A clean, minimalist coast line cleaning operation. Volunteers in eco-branded vests are picking up litter from a pristine Mediterranean beach in Algeria. The lighting is bright and airy, with high-energy blue and green tones. The mood is proactive and clean." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyfhDVY1XTGhEuzHaiGFK3ocn4llKf3Y7z-q5gNgvtM5JDOoARDJW8BEFO-v5rfp5-e_Bm1kRSQf9SzWm2Ms2oyCtwdJXIcMGDAZGpbriHI42lZMAu-yrYEoSDxqrzPKnNWz0ttnqpMEztk9kvEhsfiiluSEkOniZf1Os62Wg8p-6OxHE2AneMzKHkZ-F19i8d-df0Mtput0hDIqPk-tDuvmIdS9ZPLQ_vpT-Ugn6jU-FXkIz1SJe809wNxuaZ0rs2NJu6cb75yY38"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between">
+<h4 class="text-body-md font-bold">Blue Horizon Cleanup</h4>
+<span class="text-label-md text-primary">+150 DNA</span>
+</div>
+<p class="text-body-sm text-on-surface-variant line-clamp-1">Coastal plastic retrieval and waste categorisation.</p>
+<div class="flex items-center gap-sm mt-sm">
+<span class="text-[10px] px-xs py-0.5 rounded border border-outline text-outline uppercase tracking-wider">Community</span>
+<span class="text-label-md text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+                                        Oct 15, 2024
+                                    </span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="w-full py-md px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-sm bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-border-subtle mt-xl">
+<div class="flex flex-col items-center md:items-start gap-xs">
+<span class="text-label-md font-label-md font-bold text-primary dark:text-primary">Nabda Eco-Navigator</span>
+<p class="text-body-sm font-body-sm text-on-surface-variant opacity-80">© 2024 Nabda Eco-Navigator</p>
+</div>
+<div class="flex flex-wrap justify-center gap-md">
+<a class="text-secondary dark:text-secondary font-bold text-label-md font-label-md hover:text-primary transition-colors flex items-center gap-xs" href="#">
+<span class="material-symbols-outlined text-sm">eco</span>
+                Carbon Badge: 0.04kg CO2 Saved
+            </a>
+<a class="text-on-surface-variant dark:text-on-surface-variant text-label-md font-label-md hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant text-label-md font-label-md hover:text-primary transition-colors" href="#">Terms of Service</a>
+</div>
+</footer>
+<!-- Mobile Navigation Bar -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-surface border-t border-border-subtle flex items-center justify-around z-50 px-md">
+<a class="flex flex-col items-center gap-xs text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-[10px] font-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center gap-xs text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="text-[10px] font-label-md">Explore</span>
+</a>
+<a class="flex flex-col items-center gap-xs text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="text-[10px] font-label-md">Map</span>
+</a>
+<a class="flex flex-col items-center gap-xs text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="text-[10px] font-label-md">Bot</span>
+</a>
+<a class="flex flex-col items-center gap-xs text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="text-[10px] font-label-md">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for skill bars
+        document.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.h-full');
+            bars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 300);
+            });
+
+            // DNA Point Counter animation
+            const counter = document.querySelector('.text-display-lg');
+            let start = 2000;
+            const end = 2450;
+            const duration = 2000;
+            const stepTime = Math.abs(Math.floor(duration / (end - start)));
+            
+            const timer = setInterval(() => {
+                start += 5;
+                counter.innerText = start.toLocaleString();
+                if (start >= end) clearInterval(timer);
+            }, stepTime * 5);
+        });
+    </script>
+</body></html>

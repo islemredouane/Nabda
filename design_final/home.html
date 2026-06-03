@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nabda - Algerian Youth Eco-Navigator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&amp;family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background-color: #10150f;
+            color: #dfe4db;
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(17, 26, 17, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid #1f2f1f;
+        }
+        .pulse-glow {
+            box-shadow: 0 0 15px rgba(74, 226, 118, 0.2);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #10150f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2f1f;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline": "#869585",
+                      "on-surface": "#dfe4db",
+                      "inverse-on-surface": "#2c322c",
+                      "error-container": "#93000a",
+                      "text-muted": "#86efac",
+                      "tertiary-fixed": "#ffdad5",
+                      "surface-tint": "#4ae176",
+                      "inverse-surface": "#dfe4db",
+                      "primary-fixed-dim": "#4ae176",
+                      "on-primary-container": "#004b1e",
+                      "error": "#ffb4ab",
+                      "tertiary": "#ffb5ab",
+                      "on-background": "#dfe4db",
+                      "on-primary-fixed-variant": "#005321",
+                      "secondary-container": "#ee9800",
+                      "on-error-container": "#ffdad6",
+                      "on-secondary-fixed-variant": "#653e00",
+                      "on-tertiary-fixed": "#410001",
+                      "surface-container": "#1c211b",
+                      "surface-container-high": "#262b25",
+                      "primary-fixed": "#6bff8f",
+                      "primary-container": "#22c55e",
+                      "tertiary-fixed-dim": "#ffb4a9",
+                      "tertiary-container": "#ff8b7c",
+                      "border-subtle": "#1f2f1f",
+                      "text-primary": "#f0fdf4",
+                      "surface-bright": "#353b34",
+                      "on-surface-variant": "#bccbb9",
+                      "secondary": "#ffb95f",
+                      "primary": "#4be277",
+                      "on-secondary": "#472a00",
+                      "inverse-primary": "#006e2f",
+                      "background": "#10150f",
+                      "secondary-fixed": "#ffddb8",
+                      "surface-variant": "#313630",
+                      "on-tertiary": "#60130d",
+                      "surface-dim": "#10150f",
+                      "surface-elevated": "#1a2a1a",
+                      "on-primary": "#003915",
+                      "surface-container-lowest": "#0a0f0a",
+                      "surface-container-highest": "#313630",
+                      "on-error": "#690005",
+                      "on-tertiary-container": "#76231b",
+                      "surface-container-low": "#181d17",
+                      "on-primary-fixed": "#002109",
+                      "on-tertiary-fixed-variant": "#7f2a21",
+                      "on-secondary-fixed": "#2a1700",
+                      "outline-variant": "#3d4a3d",
+                      "on-secondary-container": "#5b3800",
+                      "surface": "#111a11",
+                      "secondary-fixed-dim": "#ffb95f"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "xs": "4px",
+                      "sm": "8px",
+                      "lg": "24px",
+                      "xl": "40px",
+                      "base": "4px",
+                      "margin-desktop": "32px",
+                      "md": "16px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "headline-xl": ["Cairo"],
+                      "display-lg": ["Cairo"],
+                      "label-md": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-md": ["Cairo"],
+                      "body-md": ["Inter"],
+                      "headline-xl-mobile": ["Cairo"],
+                      "body-lg": ["Inter"],
+                      "headline-lg": ["Cairo"]
+              },
+              "fontSize": {
+                      "headline-xl": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-xl-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="flex flex-col min-h-screen" style="padding-top:64px">
+<!-- TOP NAVBAR WEB -->
+<nav id="top-nav" class="fixed top-0 left-0 right-0 h-16 z-50 flex items-center px-8 gap-0" style="background:rgba(17,26,17,0.97);backdrop-filter:blur(16px);border-bottom:1px solid #1f2f1f;">
+  <a href="./home.html" class="flex items-center gap-2 mr-8 shrink-0 group">
+    <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:linear-gradient(135deg,#4be277,#22c55e)">
+      <span class="material-symbols-outlined text-on-primary" style="font-size:16px;font-variation-settings:'FILL' 1">favorite</span>
+    </div>
+    <span class="font-bold text-primary" style="font-family:Cairo;font-size:20px">Nabda <span style="color:#bccbb9;font-weight:400">????</span></span>
+  </a>
+  <div class="flex items-center flex-1 gap-1">
+    
+    <a href="./home.html" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/15 text-primary border border-primary/20 text-label-md font-label-md font-bold transition-all">
+      <span class="material-symbols-outlined text-base" style="font-size:18px">home</span> Accueil
+    </a>
+    <a href="./explore.html" class="flex items-center gap-2 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-elevated hover:text-on-surface transition-all text-label-md font-label-md">
+      <span class="material-symbols-outlined text-base" style="font-size:18px">explore</span> Explorer
+    </a>
+    <a href="./map.html" class="flex items-center gap-2 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-elevated hover:text-on-surface transition-all text-label-md font-label-md">
+      <span class="material-symbols-outlined text-base" style="font-size:18px">map</span> Carte
+    </a>
+    <a href="./assistant.html" class="flex items-center gap-2 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-elevated hover:text-on-surface transition-all text-label-md font-label-md">
+      <span class="material-symbols-outlined text-base" style="font-size:18px">smart_toy</span> Nabda AI
+    </a>
+    <a href="./profile.html" class="flex items-center gap-2 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-elevated hover:text-on-surface transition-all text-label-md font-label-md">
+      <span class="material-symbols-outlined text-base" style="font-size:18px">person</span> Profil
+    </a>
+  </div>
+  <div class="flex items-center gap-3 ml-4">
+    <div class="flex items-center rounded-full overflow-hidden border border-border-subtle" style="background:#1c211b">
+      <button class="px-3 py-1 text-primary font-bold" style="font-size:11px;background:#22c55e22">FR</button>
+      <button class="px-3 py-1 text-on-surface-variant hover:text-on-surface transition-colors" style="font-size:11px">AR</button>
+      <button class="px-3 py-1 text-on-surface-variant hover:text-on-surface transition-colors" style="font-size:11px">TZ</button>
+    </div>
+    <div class="flex items-center gap-1 rounded-full border px-3 py-1" style="background:#22c55e15;border-color:#4be27730;color:#4be277">
+      <span class="material-symbols-outlined" style="font-size:14px">energy_savings_leaf</span>
+      <span style="font-size:11px;font-weight:700;font-family:Inter">2,450 DNA</span>
+    </div>
+    <button class="relative p-2 rounded-full hover:bg-surface-elevated transition-colors">
+      <span class="material-symbols-outlined text-on-surface-variant" style="font-size:20px">notifications</span>
+      <span class="absolute rounded-full" style="top:6px;right:6px;width:8px;height:8px;background:#ffb95f"></span>
+    </button>
+    <a href="./profile.html" class="flex items-center gap-2 hover:bg-surface-elevated px-2 py-1 rounded-lg transition-all">
+      <div class="rounded-full flex items-center justify-center border font-bold shrink-0" style="width:34px;height:34px;background:linear-gradient(135deg,#22c55e,#0f2d14);border-color:#4be27750;color:#003915;font-size:12px;font-family:Inter">AY</div>
+      <span class="hidden xl:block text-on-surface-variant" style="font-size:11px">Algerian Youth</span>
+    </a>
+  </div>
+</nav>
+
+<!-- Main Content Canvas -->
+<main class="flex-grow  pb-8">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 sticky top-0 z-50 bg-background border-b border-border-subtle">
+<div class="flex items-center gap-md">
+<h1 class="text-headline-lg font-headline-lg font-bold text-primary">Home</h1>
+<div class="hidden md:flex bg-surface-container rounded-full px-md py-sm items-center gap-sm w-80">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-sm w-full text-on-surface" placeholder="Rechercher des missions..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-sm hover:bg-surface-elevated rounded-full transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="favorite">favorite</span>
+</button>
+<button class="p-sm hover:bg-surface-elevated rounded-full transition-colors relative">
+<span class="material-symbols-outlined text-primary" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-secondary rounded-full"></span>
+</button>
+<div class="bg-primary-container/20 text-primary px-md py-xs rounded-full border border-primary/30 flex items-center gap-xs">
+<span class="text-label-md font-bold">2,450 DNA</span>
+</div>
+</div>
+</header>
+<div class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-lg">
+<!-- Hero Welcome & MoodCheck Widget -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-lg mb-xl">
+<div class="lg:col-span-8 flex flex-col justify-center">
+<h2 class="text-headline-xl font-headline-xl text-text-primary mb-xs">صباح الخير، Marouane!</h2>
+<p class="text-body-lg text-on-surface-variant">Prêt pour votre prochaine mission écologique à Alger ?</p>
+</div>
+<!-- MoodCheck Widget -->
+<div class="lg:col-span-4 glass-card p-md rounded-xl flex flex-col gap-sm">
+<div class="flex justify-between items-center">
+<span class="text-label-md text-on-surface-variant uppercase tracking-wider">MoodCheck</span>
+<span class="material-symbols-outlined text-secondary" data-icon="bolt">bolt</span>
+</div>
+<p class="text-body-sm text-on-surface">Comment vous sentez-vous aujourd'hui ?</p>
+<div class="flex justify-between items-center gap-xs mt-sm">
+<button class="flex-1 py-sm rounded-lg bg-surface-elevated hover:bg-primary/20 transition-colors text-xl">😔</button>
+<button class="flex-1 py-sm rounded-lg bg-surface-elevated hover:bg-primary/20 transition-colors text-xl">😐</button>
+<button class="flex-1 py-sm rounded-lg bg-surface-elevated hover:bg-primary/20 transition-colors text-xl border border-primary/50">😊</button>
+<button class="flex-1 py-sm rounded-lg bg-surface-elevated hover:bg-primary/20 transition-colors text-xl">🤩</button>
+<button class="flex-1 py-sm rounded-lg bg-surface-elevated hover:bg-primary/20 transition-colors text-xl">🔥</button>
+</div>
+</div>
+</section>
+<!-- Personalized Feed Header -->
+<div class="flex items-center justify-between mb-lg">
+<div class="flex items-center gap-md">
+<h3 class="text-headline-lg font-headline-lg text-on-surface">For You</h3>
+<div class="px-sm py-1 bg-primary/10 text-primary text-[10px] rounded border border-primary/20 font-bold">DNA MATCHED</div>
+</div>
+<button class="text-label-md text-primary flex items-center gap-xs">
+                    View all <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<!-- Bento Grid Feed Items -->
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-lg">
+<!-- Featured ActivityCard -->
+<article class="md:col-span-2 md:row-span-2 group relative rounded-2xl overflow-hidden border border-border-subtle bg-surface transition-all hover:border-primary/50">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A wide panoramic shot of the beautiful Algerian coastline with lush green hills meeting the turquoise Mediterranean sea. Young Algerian volunteers are planting trees along the shore during a vibrant, high-contrast sunset. The atmosphere is energetic and purposeful, with deep greens and warm orange light reflecting the Eco-Minimalist Nabda brand aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAd9-PfQQgovrP5FZ3FI9upSxZ2V3mzquOI-JoMEUnjj7Jy0YJUdpW7gFOXtf0Yd5a9X9S7rnDdBm7NPQbWT_5rLzJQ-ZukZV-PewOb6rE-lwCXc0ndjOlEgi4UqkMVWdAGoMSc8ulibV52b98JUd2Fzd2BWrYzOJ24py84xD-cOpjIT3m10pZp7Uoj0TA540pm3af8eq7gZ-VwVpTSYK4XY_y3odc09qClFVbq3upWJBHOS2o64UoArahtGhoqPMYfuQbUpylEf0_7"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-lg w-full">
+<div class="flex gap-sm mb-md">
+<span class="bg-primary text-on-primary px-sm py-xs rounded-full text-[10px] font-bold">98% DNA MATCH</span>
+<span class="bg-surface-elevated/80 backdrop-blur-sm text-on-surface px-sm py-xs rounded-full text-[10px] font-bold">ODEJ ALGER</span>
+</div>
+<h4 class="text-headline-xl-mobile md:text-headline-lg font-bold text-white mb-sm">Nettoyage des Plages: Sidi Fredj</h4>
+<p class="text-body-sm text-on-surface-variant line-clamp-2 mb-md">Rejoignez l'équipe pour une journée d'action côtière. Gagnez 150 points DNA et impactez votre ville.</p>
+<div class="flex justify-between items-center">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full flex items-center justify-center font-bold border-2 shrink-0" style="background:linear-gradient(135deg,#4be277,#0f2d14);border-color:#10150f;color:#003915;font-size:10px">KA</div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center font-bold border-2 shrink-0" style="background:linear-gradient(135deg,#ffb95f,#0f2d14);border-color:#10150f;color:#003915;font-size:10px">RB</div>
+<div class="w-8 h-8 rounded-full flex items-center justify-center font-bold border-2 shrink-0" style="background:linear-gradient(135deg,#4ae176,#1a2a1a);border-color:#10150f;color:#003915;font-size:10px">SM</div>
+<div class="w-8 h-8 rounded-full bg-surface-elevated border-2 border-background flex items-center justify-center text-[10px] text-on-surface-variant">+42</div>
+</div>
+<button class="bg-primary text-on-primary px-lg py-sm rounded-xl font-bold active:scale-95 transition-transform">Participer</button>
+</div>
+</div>
+</article>
+<!-- ActivityCard 2 -->
+<article class="glass-card rounded-2xl overflow-hidden flex flex-col hover:border-primary/30 transition-all">
+<div class="h-40 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A futuristic sustainable office space in Algiers with vertical gardens and solar panels integrated into the architecture. The lighting is crisp and modern with a cool nocturnal green glow. Young professionals are collaborating around digital tablets in a sleek, high-tech environment. The style is premium and energy-efficient with high-contrast shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLN1PZW-QHCuf35_-YS07DJeK5_ajINDPkPbdTdR1SJRjpwcj7-UAjeH5F-MsU6JQ9eRgb91s-RgVil2XRUjTSWIOHF4rl0-v5lSgeymMnWTAT9gmTMR8EWSSOPN4RMTx-9-aRrMFIjYoMLhJRTfAc00ya8hVoIKwtqs8aMXXDSPfXWxMhOrgN0awRiy2Z7Iy3Vr0P1kajZRwBHfi_9cHL5hTHwHj-PfXq0W0QzSQJph2p7VukmZqaBm5jEgCVYdQPogFlbO9K7LB0"/>
+<div class="absolute top-sm right-sm bg-surface/80 backdrop-blur-sm p-xs rounded-lg border border-border-subtle">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="energy_savings_leaf">energy_savings_leaf</span>
+</div>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<div class="text-[10px] font-bold text-secondary mb-xs uppercase tracking-widest">Atelier Tech</div>
+<h4 class="text-headline-md font-bold text-on-surface mb-xs">Workshop: Solaire DIY</h4>
+<div class="flex items-center gap-xs text-body-sm text-on-surface-variant mb-md">
+<span class="material-symbols-outlined text-sm" data-icon="calendar_today">calendar_today</span>
+                            Demain, 14:00
+                        </div>
+<div class="mt-auto pt-sm border-t border-border-subtle flex items-center justify-between">
+<span class="text-label-md text-primary font-bold">85% Match</span>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="bookmark">bookmark</span>
+</div>
+</div>
+</article>
+<!-- DNA Activity Card -->
+<article class="bg-primary-container/10 border border-primary/20 rounded-2xl p-md flex flex-col justify-between">
+<div>
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center mb-md">
+<span class="material-symbols-outlined text-primary" data-icon="analytics">analytics</span>
+</div>
+<h4 class="text-headline-md font-bold text-on-surface">Votre Pulse (النبض)</h4>
+<p class="text-body-sm text-on-surface-variant mt-sm">Votre activité a permis d'économiser 12kg de CO2 cette semaine. ماشاء الله !</p>
+</div>
+<div class="mt-md">
+<div class="flex justify-between text-label-md mb-xs">
+<span class="text-primary">Niveau 4</span>
+<span class="text-on-surface-variant">750/1000 DNA</span>
+</div>
+<div class="h-2 w-full bg-surface-elevated rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full pulse-glow" style="width: 75%"></div>
+</div>
+</div>
+</article>
+<!-- ActivityCard 3 -->
+<article class="glass-card rounded-2xl overflow-hidden flex flex-col hover:border-primary/30 transition-all">
+<div class="h-40 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A lush urban garden in the heart of Oran with diverse native Algerian plants and flowers. A digital interface overlay shows soil moisture and plant health stats in a glowing green font. The lighting is soft morning dew with high contrast between deep leaf greens and bright floral accents. Professional photography style with shallow depth of field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgo2qBAHC0jo8-vTpfV5m2EF1Ir2abkxRGemuolO_sKoOAhm1YGVrXVqDZn3Gineb18T-vFNDXKSRl8-cBfVC1FPzY1g7nyytjMjAIvD3_sOci_X1CvubM4WRnToNfNuONI-R6RiMAPm0HmfynBJT7QEYlcYVV5dKQ_ZaIA0KXOhHJOkW9SIuQuS0nIZco0WYjg0qYsmRPc1yoRUySlHOPvZX9-D1dTDZihvSaIKPQUIryz-epILNX7cZrBIwlJe2LDzvQJzCxhfKJ"/>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<div class="text-[10px] font-bold text-primary mb-xs uppercase tracking-widest">Environnement</div>
+<h4 class="text-headline-md font-bold text-on-surface mb-xs">Urban Garden Project</h4>
+<div class="flex items-center gap-xs text-body-sm text-on-surface-variant mb-md">
+<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
+                            Oran, Centre
+                        </div>
+<div class="mt-auto pt-sm border-t border-border-subtle flex items-center justify-between">
+<span class="text-label-md text-primary font-bold">92% Match</span>
+<button class="text-primary hover:underline text-label-md">Détails</button>
+</div>
+</div>
+</article>
+<!-- Quick Stats -->
+<article class="bg-surface-elevated rounded-2xl p-md flex flex-col items-center justify-center text-center gap-sm">
+<span class="text-headline-xl font-bold text-secondary">15</span>
+<span class="text-label-md text-on-surface-variant uppercase">Missions Accomplies</span>
+<div class="w-full h-px bg-border-subtle my-xs"></div>
+<span class="text-headline-md font-bold text-primary">+250</span>
+<span class="text-label-md text-on-surface-variant uppercase">DNA cette semaine</span>
+</article>
+</div>
+</div>
+</main>
+<!-- Footer (Universal Anchor) -->
+<footer class="fixed bottom-0 left-0 left-0 right-0 z-40 bg-surface-container-lowest border-t border-border-subtle">
+<div class="w-full py-md px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-sm">
+<div class="flex items-center gap-md">
+<span class="text-label-md font-label-md font-bold text-primary">Nabda</span>
+<span class="text-label-md font-label-md text-secondary font-bold">Carbon Badge: 0.04kg CO2 Saved</span>
+</div>
+<div class="flex gap-lg">
+<a class="text-on-surface-variant text-body-sm hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant text-body-sm hover:text-primary transition-colors" href="#">Terms of Service</a>
+</div>
+<span class="text-on-surface-variant text-body-sm">© 2024 Nabda Eco-Navigator</span>
+</div>
+</footer>
+
+<script>
+        // Micro-interaction for MoodCheck
+        const moodButtons = document.querySelectorAll('.glass-card button');
+        moodButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                moodButtons.forEach(b => b.classList.remove('border', 'border-primary/50', 'bg-primary/20'));
+                btn.classList.add('border', 'border-primary/50', 'bg-primary/20');
+                
+                // Animated feedback
+                const ripple = document.createElement('div');
+                ripple.className = 'absolute inset-0 bg-primary/10 rounded-lg animate-ping';
+                btn.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 1000);
+            });
+        });
+
+        // Simple DNA bar animation on scroll
+        const dnaBar = document.querySelector('.pulse-glow');
+        if (dnaBar) {
+            window.addEventListener('scroll', () => {
+                const scrollPos = window.scrollY;
+                const opacity = Math.min(1, 0.2 + scrollPos / 500);
+                dnaBar.style.boxShadow = `0 0 ${15 * opacity}px rgba(74, 226, 118, ${0.2 * opacity})`;
+            });
+        }
+    </script>
+</body></html>

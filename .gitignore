@@ -1,0 +1,30 @@
+# Python build/dev scripts (not part of final deliverable)
+*.py
+scratch/
+design_preview/
+
+# Node / Next.js (not deployed — SPA is the deliverable)
+ecohack-app/node_modules/
+ecohack-app/.next/
+ecohack-app/out/
+
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temp files
+map_chunk.txt
