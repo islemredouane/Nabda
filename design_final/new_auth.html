@@ -1,0 +1,262 @@
+<!-- ===================== PAGE: AUTH ===================== -->
+<div id="page-auth" class="page" style="display:none;min-height:100vh;background:#0A0F0A;font-family:'Inter',sans-serif;">
+<style>
+  .auth-split { display:flex; min-height:100vh; width:100%; }
+
+  /* ── LEFT PANEL ── */
+  .auth-left {
+    flex:1; display:flex; flex-direction:column; justify-content:space-between;
+    padding:48px 56px;
+    background:
+      linear-gradient(135deg,rgba(10,15,10,.75) 0%,rgba(10,20,10,.55) 100%),
+      url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+    position:relative; overflow:hidden;
+  }
+  .auth-left::after {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(to right,rgba(10,15,10,.85) 0%,rgba(10,15,10,.2) 100%);
+    pointer-events:none;
+  }
+  .auth-left > * { position:relative; z-index:2; }
+
+  /* ── RIGHT PANEL ── */
+  .auth-right {
+    width:500px; flex-shrink:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    padding:48px 48px; background:#0e140e; position:relative; overflow:hidden;
+  }
+  .auth-right::before {
+    content:''; position:absolute; top:-120px; right:-120px;
+    width:400px; height:400px;
+    background:radial-gradient(circle,rgba(75,226,119,.07) 0%,transparent 70%);
+    pointer-events:none;
+  }
+
+  /* ── FEATURE CARD ── */
+  .auth-feat {
+    display:flex; align-items:center; gap:14px;
+    background:rgba(75,226,119,.06); border:1px solid rgba(75,226,119,.12);
+    border-radius:14px; padding:14px 16px; transition:border-color .2s;
+  }
+  .auth-feat:hover { border-color:rgba(75,226,119,.28); }
+  .auth-feat-icon {
+    width:40px; height:40px; border-radius:10px;
+    background:rgba(75,226,119,.12); display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+
+  /* ── FORM INPUTS ── */
+  .auth-field-wrap {
+    display:flex; align-items:center; gap:10px;
+    background:rgba(16,21,15,.7); border:1px solid #1f2f1f;
+    border-radius:10px; padding:0 14px; height:44px;
+    transition:border-color .25s;
+  }
+  .auth-field-wrap:focus-within { border-color:#4be27760; }
+  .auth-field-wrap input {
+    background:transparent; border:none; outline:none;
+    color:#dfe4db; width:100%; font-size:13px; font-family:Inter; height:100%;
+  }
+  .auth-field-wrap input::placeholder { color:#4d5f4d; }
+
+  /* ── TABS ── */
+  .auth-tab-active   { background:#4be277 !important; color:#003915 !important; }
+  .auth-tab-inactive { background:transparent !important; color:#6b8f6b !important; }
+
+  /* ── SUBMIT BTN ── */
+  .auth-submit {
+    width:100%; height:44px; background:#4be277; color:#003915;
+    border:none; border-radius:10px; font-weight:700; font-size:14px;
+    cursor:pointer; transition:all .2s; letter-spacing:.02em;
+    box-shadow:0 6px 24px rgba(75,226,119,.25);
+  }
+  .auth-submit:hover { background:#5ef785; box-shadow:0 8px 32px rgba(75,226,119,.35); transform:translateY(-1px); }
+
+  /* ── SOCIAL BTNS ── */
+  .auth-social {
+    flex:1; height:42px; display:flex; align-items:center; justify-content:center; gap:8px;
+    background:rgba(16,21,15,.7); border:1px solid #1f2f1f; border-radius:10px;
+    color:#bccbb9; font-size:13px; font-weight:600; font-family:Inter; cursor:pointer;
+    transition:all .2s;
+  }
+  .auth-social:hover { border-color:rgba(75,226,119,.25); color:#f0fdf4; }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:860px) {
+    .auth-split { flex-direction:column; }
+    .auth-left  { display:none; }
+    .auth-right { width:100%; padding:40px 24px; min-height:100vh; }
+  }
+</style>
+
+<div class="auth-split">
+
+  <!-- ══════════ LEFT PANEL ══════════ -->
+  <div class="auth-left">
+
+    <!-- Logo -->
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#4be277,#22c55e);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(75,226,119,.2)">
+        <span class="material-symbols-outlined" style="font-size:16px;color:#003915;font-variation-settings:'FILL' 1">auto_awesome</span>
+      </div>
+      <div>
+        <div style="font-family:'Cairo',sans-serif;font-size:20px;font-weight:900;color:#4be277;line-height:1">Nabda نبضة</div>
+        <div style="font-size:11px;color:#86efac;font-family:Inter;letter-spacing:.04em">Algeria's Youth Opportunity Navigator</div>
+      </div>
+    </div>
+
+    <!-- Headline -->
+    <div>
+      <h1 style="font-family:'Bebas Neue',Cairo,sans-serif;font-size:clamp(48px,5vw,72px);line-height:.9;color:#f0fdf4;margin:0 0 20px;letter-spacing:.02em">
+        REJOINS LA<br><span style="color:#4be277">GENERATION<br>VERTE</span>
+      </h1>
+      <p style="font-size:14px;color:#86efac;line-height:1.65;max-width:360px;margin:0;">
+        Trouve des opportunités de bénévolat, d'apprentissage et de sport, et construis ton profil d'éco-navigateur.
+      </p>
+    </div>
+
+    <!-- Feature cards -->
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="auth-feat">
+        <div class="auth-feat-icon">
+          <span class="material-symbols-outlined" style="color:#4be277;font-size:18px;font-variation-settings:'FILL' 1">auto_awesome</span>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#dfe4db;">120+ ODEJ Activities</div>
+          <div style="font-size:11px;color:#6b8f6b;margin-top:2px;">Across all 69 wilayas</div>
+        </div>
+      </div>
+      <div class="auth-feat">
+        <div class="auth-feat-icon">
+          <span class="material-symbols-outlined" style="color:#4be277;font-size:18px;font-variation-settings:'FILL' 1">biotech</span>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#dfe4db;">DNA-Powered Matching</div>
+          <div style="font-size:11px;color:#6b8f6b;margin-top:2px;">98% personalized accuracy</div>
+        </div>
+      </div>
+      <div class="auth-feat">
+        <div class="auth-feat-icon">
+          <span class="material-symbols-outlined" style="color:#4be277;font-size:18px;font-variation-settings:'FILL' 1">eco</span>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#dfe4db;">Eco-First Platform</div>
+          <div style="font-size:11px;color:#6b8f6b;margin-top:2px;">0.02g CO₂ per page load</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carbon badge -->
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span class="material-symbols-outlined" style="font-size:14px;color:#4be277;font-variation-settings:'FILL' 1">eco</span>
+      <span style="font-size:11px;color:#6b8f6b;font-family:Inter;">Carbon Badge: 0.02g CO₂ Saved</span>
+    </div>
+  </div>
+
+  <!-- ══════════ RIGHT PANEL ══════════ -->
+  <div class="auth-right">
+    <div style="width:100%;max-width:380px;position:relative;z-index:2;">
+
+      <!-- Tabs -->
+      <div style="display:flex;background:#111a11;border:1px solid #1f2f1f;border-radius:12px;padding:4px;margin-bottom:28px;gap:4px;">
+        <button id="tab-signin" onclick="setAuthTab('signin')"
+          class="auth-tab-active"
+          style="flex:1;height:36px;border-radius:9px;border:none;cursor:pointer;font-weight:700;font-size:13px;font-family:Inter;transition:all .2s;">
+          Sign In
+        </button>
+        <button id="tab-signup" onclick="setAuthTab('signup')"
+          class="auth-tab-inactive"
+          style="flex:1;height:36px;border-radius:9px;border:none;cursor:pointer;font-weight:700;font-size:13px;font-family:Inter;transition:all .2s;">
+          Create Account
+        </button>
+      </div>
+
+      <!-- Title -->
+      <h2 id="auth-title" style="font-family:'Cairo',sans-serif;font-size:26px;font-weight:800;color:#f0fdf4;margin:0 0 4px;" data-i18n="auth.welcome">Welcome back</h2>
+      <p id="auth-subtitle" style="font-size:13px;color:#6b8f6b;margin:0 0 24px;" data-i18n="auth.subtitle">Sign in to continue your eco-journey.</p>
+
+      <!-- Form -->
+      <form id="auth-form" onsubmit="handleAuthSubmit(event); return false;" style="display:flex;flex-direction:column;gap:16px;">
+
+        <!-- Name (hidden for sign-in) -->
+        <div id="field-name" style="display:none;flex-direction:column;gap:6px;">
+          <label style="font-size:10px;font-weight:700;color:#86efac;letter-spacing:.1em;text-transform:uppercase;">Full Name</label>
+          <div class="auth-field-wrap">
+            <span class="material-symbols-outlined" style="color:#4d5f4d;font-size:18px;">person</span>
+            <input type="text" id="auth-name" placeholder="Ex: Yanis Slimani"/>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <label style="font-size:10px;font-weight:700;color:#86efac;letter-spacing:.1em;text-transform:uppercase;" data-i18n="auth.email">Email</label>
+          <div class="auth-field-wrap">
+            <span class="material-symbols-outlined" style="color:#4d5f4d;font-size:18px;">mail</span>
+            <input type="email" id="auth-email" required placeholder="you@example.com"/>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <label style="font-size:10px;font-weight:700;color:#86efac;letter-spacing:.1em;text-transform:uppercase;" data-i18n="auth.pwd">Password</label>
+            <a href="#" id="auth-forgot" style="font-size:11px;font-weight:600;color:#4be277;text-decoration:none;">Forgot password?</a>
+          </div>
+          <div class="auth-field-wrap">
+            <span class="material-symbols-outlined" style="color:#4d5f4d;font-size:18px;">lock</span>
+            <input type="password" id="auth-password" required placeholder="••••••••" style="letter-spacing:3px;"/>
+            <button type="button" onclick="togglePasswordVisibility('auth-password',this)"
+              style="background:none;border:none;cursor:pointer;color:#4d5f4d;padding:0;display:flex;align-items:center;flex-shrink:0;">
+              <span class="material-symbols-outlined" style="font-size:18px;">visibility</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Confirm Password (hidden for sign-in) -->
+        <div id="field-confirm-password" style="display:none;flex-direction:column;gap:6px;">
+          <label style="font-size:10px;font-weight:700;color:#86efac;letter-spacing:.1em;text-transform:uppercase;">Confirm Password</label>
+          <div class="auth-field-wrap">
+            <span class="material-symbols-outlined" style="color:#4d5f4d;font-size:18px;">lock_reset</span>
+            <input type="password" id="auth-confirm-password" placeholder="••••••••" style="letter-spacing:3px;"/>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" id="auth-btn-submit" class="auth-submit" style="margin-top:4px;" data-i18n="auth.login_btn">
+          Sign In
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <div style="display:flex;align-items:center;gap:12px;margin:20px 0;">
+        <div style="flex:1;height:1px;background:#1a2a1a;"></div>
+        <span style="font-size:11px;color:#3d5040;" data-i18n="auth.or">or continue with</span>
+        <div style="flex:1;height:1px;background:#1a2a1a;"></div>
+      </div>
+
+      <!-- Social buttons -->
+      <div style="display:flex;gap:10px;">
+        <button class="auth-social">
+          <svg width="16" height="16" viewBox="0 0 24 24"><path d="M12.24 10.285V14.4h6.887c-.648 2.41-2.519 4.114-5.136 4.114A5.96 5.96 0 0 1 8 12.56a5.96 5.96 0 0 1 5.99-5.96c1.65 0 3.16.657 4.287 1.714l3.053-3.053C19.394 3.42 16.89 2 13.99 2 8.47 2 4 6.47 4 12s4.47 10 9.99 10c5.77 0 9.77-4.06 9.77-9.94 0-.67-.06-1.3-.18-1.775H12.24Z" fill="#4285F4"/><path d="M12 21.92c2.77 0 5.09-.92 6.78-2.48l-3.32-2.58c-.92.62-2.09.98-3.46.98-2.66 0-4.91-1.79-5.71-4.2h-3.43v2.66c1.68 3.34 5.17 5.62 9.14 5.62z" fill="#34A853"/><path d="M6.29 13.64A5.85 5.85 0 0 1 6 12c0-.58.1-1.14.29-1.64V7.7H2.86A9.92 9.92 0 0 0 2 12c0 1.61.38 3.14 1.06 4.5l3.23-2.86z" fill="#FBBC05"/><path d="M12 5.92c1.51 0 2.86.52 3.93 1.54l2.95-2.95C17.08 2.92 14.76 2 12 2 8.03 2 4.54 4.28 2.86 7.7l3.43 2.66C7.09 7.71 9.34 5.92 12 5.92z" fill="#EA4335"/></svg>
+          Google
+        </button>
+        <button class="auth-social">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#f0fdf4"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.4.07 2.38.74 3.2.8 1.22-.24 2.4-.94 3.7-.84 1.55.12 2.72.72 3.49 1.9-3.19 1.93-2.44 5.82.61 7.08-.65 1.56-1.45 3.1-3 3.94zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+          Apple
+        </button>
+      </div>
+
+      <!-- Footer -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:28px;font-size:11px;color:#2d4a2d;">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span class="material-symbols-outlined" style="font-size:12px;color:#4be277;font-variation-settings:'FILL' 1">eco</span>
+          <span>© 2024 Nabda Eco-Navigator</span>
+        </div>
+        <a href="#" style="color:#2d4a2d;text-decoration:none;">Privacy</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+<!-- end page-auth -->
+<script src="translations.js"></script>
