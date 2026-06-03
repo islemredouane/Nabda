@@ -466,16 +466,16 @@ img { filter: none !important; }
     <!-- ══ NAV LINKS (center column) ══ -->
     <div id="nav-links" style="display:flex;align-items:center;justify-content:center;gap:2px">
       <a href="#" data-page="home" onclick="navigate('home');return false;"
-         class="nav-link" style="padding:7px 15px;border-radius:8px;font-family:Inter;font-size:13px;letter-spacing:.01em" data-i18n="nav.home">
-        Accueil
+         class="nav-link" style="padding:7px 15px;border-radius:8px;font-family:Inter;font-size:13px;letter-spacing:.01em">
+        <span data-i18n="nav.home">Accueil</span>
       </a>
       <a href="#" data-page="explore" onclick="navigate('explore');return false;"
-         class="nav-link" style="padding:7px 15px;border-radius:8px;font-family:Inter;font-size:13px;letter-spacing:.01em" data-i18n="nav.explore">
-        Explorer
+         class="nav-link" style="padding:7px 15px;border-radius:8px;font-family:Inter;font-size:13px;letter-spacing:.01em">
+        <span data-i18n="nav.explore">Explorer</span>
       </a>
       <a href="#" data-page="map" onclick="navigate('map');return false;"
-         class="nav-link" style="padding:7px 15px;border-radius:8px;font-family:Inter;font-size:13px;letter-spacing:.01em" data-i18n="nav.map">
-        Carte
+         class="nav-link" style="padding:7px 15px;border-radius:8px;font-family:Inter;font-size:13px;letter-spacing:.01em">
+        <span data-i18n="nav.map">Carte</span>
       </a>
       <a href="#" data-page="assistant" onclick="navigate('assistant');return false;"
          class="nav-link" style="padding:7px 15px;border-radius:8px;font-family:Inter;font-size:13px;letter-spacing:.01em;display:flex;align-items:center;gap:6px">
@@ -2231,48 +2231,80 @@ function updateNav(activeId) {
   });
 }
 
+// === i18n Translation Engine ===
+// Inline data so it never depends on external file load order
+var i18nData = {
+  fr: {
+    'nav.home': 'Accueil', 'nav.explore': 'Explorer', 'nav.map': 'Carte',
+    'nav.assistant': 'Nabda AI', 'nav.profile': 'Profil',
+    'auth.welcome': 'Bienvenue sur Nabda', 'auth.subtitle': 'Rejoignez la communauté éco-citoyenne.',
+    'auth.email': 'Adresse Email', 'auth.pwd': 'Mot de passe',
+    'auth.login_btn': 'Se connecter', 'auth.or': 'Ou', 'auth.register_btn': 'Créer un compte',
+    'btn.history': 'VOIR MON HISTORIQUE', 'btn.search': 'Rechercher',
+    'label.dna': 'Ton solde de récompenses', 'label.today': "Gagné aujourd'hui"
+  },
+  ar: {
+    'nav.home': 'الرئيسية', 'nav.explore': 'استكشف', 'nav.map': 'الخريطة',
+    'nav.assistant': 'المساعد الذكي', 'nav.profile': 'حسابي',
+    'auth.welcome': 'مرحباً بكم في نبضة', 'auth.subtitle': 'انضم إلى مجتمع البيئة والمواطنة.',
+    'auth.email': 'البريد الإلكتروني', 'auth.pwd': 'كلمة المرور',
+    'auth.login_btn': 'تسجيل الدخول', 'auth.or': 'أو', 'auth.register_btn': 'إنشاء حساب',
+    'btn.history': 'عرض السجل', 'btn.search': 'بحث',
+    'label.dna': 'رصيد مكافآتك', 'label.today': 'كسبت اليوم'
+  },
+  tz: {
+    'nav.home': 'Axxam', 'nav.explore': 'Inadi', 'nav.map': 'Takarḍa',
+    'nav.assistant': 'Tallalt n tmusni', 'nav.profile': 'Amaɣnu',
+    'auth.welcome': 'Ansuf ɣer Nabda', 'auth.subtitle': 'Kcem ɣer temyigawt tawennadt.',
+    'auth.email': 'Imayl', 'auth.pwd': 'Awal n uffar',
+    'auth.login_btn': 'Kcem', 'auth.or': 'Neɣ', 'auth.register_btn': 'Snulfu amiḍan',
+    'btn.history': 'Wali amazray', 'btn.search': 'Nadi',
+    'label.dna': 'Akal-inek n warraz', 'label.today': 'Trebḥeḍ ass-a'
+  }
+};
+
 function setLang(lang) {
   // Persist to localStorage
   localStorage.setItem('nabda_lang', lang);
+
   // Update dropdown trigger label
   var label = document.getElementById('lang-current-label');
   if (label) label.textContent = lang.toUpperCase();
-  // Highlight active option
-  document.querySelectorAll('.lang-opt').forEach(b => {
+
+  // Highlight active lang-opt button
+  document.querySelectorAll('.lang-opt').forEach(function(b) {
     b.style.background = b.dataset.lang === lang ? 'rgba(75,226,119,.08)' : '';
   });
-  // Legacy lang-btn support (onboarding etc.)
-  document.querySelectorAll('.lang-btn').forEach(b => {
-    const active = b.dataset.lang === lang;
+
+  // Legacy lang-btn support (onboarding)
+  document.querySelectorAll('.lang-btn').forEach(function(b) {
+    var active = b.dataset.lang === lang;
     b.style.background = active ? '#22c55e22' : '';
     b.style.color = active ? '#4be277' : '';
     b.style.fontWeight = active ? '700' : '400';
   });
 
-  // Apply translations
-  if (typeof i18nData !== 'undefined' && i18nData[lang]) {
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      if (i18nData[lang][key]) {
-        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-          el.placeholder = i18nData[lang][key];
-        } else {
-          // If the element has children like icons, this replaces them, 
-          // so we only tag leaf text nodes, or use a span inside.
-          el.textContent = i18nData[lang][key];
-        }
-      }
-    });
-  }
+  // Apply translations to all [data-i18n] elements
+  var dict = i18nData[lang] || i18nData['fr'];
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    var val = dict[key];
+    if (!val) return;
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+      el.placeholder = val;
+    } else {
+      el.textContent = val;
+    }
+  });
 
-  // Handle RTL for Arabic
+  // RTL for Arabic
   if (lang === 'ar') {
-    document.documentElement.dir = 'rtl';
-    document.documentElement.lang = 'ar';
+    document.documentElement.setAttribute('dir', 'rtl');
+    document.documentElement.setAttribute('lang', 'ar');
     document.body.classList.add('rtl-mode');
   } else {
-    document.documentElement.dir = 'ltr';
-    document.documentElement.lang = lang;
+    document.documentElement.setAttribute('dir', 'ltr');
+    document.documentElement.setAttribute('lang', lang === 'tz' ? 'ber' : 'fr');
     document.body.classList.remove('rtl-mode');
   }
 }
