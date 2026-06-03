@@ -1,483 +1,446 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Nabda | Onboarding</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "outline": "#869585",
-                      "on-surface": "#dfe4db",
-                      "inverse-on-surface": "#2c322c",
-                      "error-container": "#93000a",
-                      "text-muted": "#86efac",
-                      "tertiary-fixed": "#ffdad5",
-                      "surface-tint": "#4ae176",
-                      "inverse-surface": "#dfe4db",
-                      "primary-fixed-dim": "#4ae176",
-                      "on-primary-container": "#004b1e",
-                      "error": "#ffb4ab",
-                      "tertiary": "#ffb5ab",
-                      "on-background": "#dfe4db",
-                      "on-primary-fixed-variant": "#005321",
-                      "secondary-container": "#ee9800",
-                      "on-error-container": "#ffdad6",
-                      "on-secondary-fixed-variant": "#653e00",
-                      "on-tertiary-fixed": "#410001",
-                      "surface-container": "#1c211b",
-                      "surface-container-high": "#262b25",
-                      "primary-fixed": "#6bff8f",
-                      "primary-container": "#22c55e",
-                      "tertiary-fixed-dim": "#ffb4a9",
-                      "tertiary-container": "#ff8b7c",
-                      "border-subtle": "#1f2f1f",
-                      "text-primary": "#f0fdf4",
-                      "surface-bright": "#353b34",
-                      "on-surface-variant": "#bccbb9",
-                      "secondary": "#ffb95f",
-                      "primary": "#4be277",
-                      "on-secondary": "#472a00",
-                      "inverse-primary": "#006e2f",
-                      "background": "#10150f",
-                      "secondary-fixed": "#ffddb8",
-                      "surface-variant": "#313630",
-                      "on-tertiary": "#60130d",
-                      "surface-dim": "#10150f",
-                      "surface-elevated": "#1a2a1a",
-                      "on-primary": "#003915",
-                      "surface-container-lowest": "#0a0f0a",
-                      "surface-container-highest": "#313630",
-                      "on-error": "#690005",
-                      "on-tertiary-container": "#76231b",
-                      "surface-container-low": "#181d17",
-                      "on-primary-fixed": "#002109",
-                      "on-tertiary-fixed-variant": "#7f2a21",
-                      "on-secondary-fixed": "#2a1700",
-                      "outline-variant": "#3d4a3d",
-                      "on-secondary-container": "#5b3800",
-                      "surface": "#111a11",
-                      "secondary-fixed-dim": "#ffb95f"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.25rem",
-                      "lg": "0.5rem",
-                      "xl": "0.75rem",
-                      "full": "9999px"
-              },
-              "spacing": {
-                      "gutter": "16px",
-                      "xs": "4px",
-                      "sm": "8px",
-                      "lg": "24px",
-                      "xl": "40px",
-                      "base": "4px",
-                      "margin-desktop": "32px",
-                      "md": "16px",
-                      "margin-mobile": "16px"
-              },
-              "fontFamily": {
-                      "headline-xl": ["Cairo"],
-                      "display-lg": ["Cairo"],
-                      "label-md": ["Inter"],
-                      "body-sm": ["Inter"],
-                      "headline-md": ["Cairo"],
-                      "body-md": ["Inter"],
-                      "headline-xl-mobile": ["Cairo"],
-                      "body-lg": ["Inter"],
-                      "headline-lg": ["Cairo"]
-              },
-              "fontSize": {
-                      "headline-xl": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
-                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
-                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                      "headline-xl-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
-                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                      "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
-              }
-            },
-          },
-        }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .step-transition {
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
-        }
-        .dna-bar-grow {
-            transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-        @media (min-width: 768px) {
-            .bento-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-        .glass-card {
-            background: rgba(17, 26, 17, 0.8);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(31, 47, 31, 0.5);
-        }
-        body {
-            background-color: #0a0f0a;
-            overflow-x: hidden;
-        }
-    </style>
+<html class="dark" lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Nabda | Onboarding</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      background-color: #0A0F0A;
+      color: #dfe4db;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      overflow-x: hidden;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .option-card {
+      background: rgba(20,30,20,0.6);
+      border: 1px solid rgba(75,226,119,0.1);
+      border-radius: 16px;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .option-card:hover, .option-card.active {
+      border-color: #4be277;
+      background: rgba(30,45,30,0.8);
+    }
+    .btn-continuer {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      color: #003915;
+      border: none;
+      border-radius: 14px;
+      padding: 15px 36px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(34,197,94,.3), 0 1px 0 rgba(255,255,255,.15) inset;
+      transition: transform 0.2s cubic-bezier(.34,1.56,.64,1), box-shadow 0.2s;
+    }
+    .btn-continuer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.18) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform 0.55s ease;
+    }
+    .btn-continuer:hover::before { transform: translateX(100%); }
+    .btn-continuer:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(34,197,94,.45), 0 1px 0 rgba(255,255,255,.15) inset;
+    }
+    .btn-continuer:active { transform: translateY(0) scale(.98); }
+    .btn-continuer .btn-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: rgba(0,57,21,.25);
+      border-radius: 8px;
+      transition: transform 0.2s;
+    }
+    .btn-continuer:hover .btn-arrow { transform: translateX(4px); }
+  </style>
 </head>
-<body class="text-on-background selection:bg-primary selection:text-on-primary">
-<!-- TOP NAVBAR WEB -->
-<nav id="top-nav" class="fixed top-0 left-0 right-0 h-16 z-50 flex items-center px-8 gap-0" style="background:rgba(17,26,17,0.97);backdrop-filter:blur(16px);border-bottom:1px solid #1f2f1f;">
-  <a href="./home.html" class="flex items-center gap-2 mr-8 shrink-0 group">
-    <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:linear-gradient(135deg,#4be277,#22c55e)">
-      <span class="material-symbols-outlined text-on-primary" style="font-size:16px;font-variation-settings:'FILL' 1">favorite</span>
+<body class="flex flex-col min-h-screen relative">
+  <!-- Glowing Background -->
+  <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at center, rgba(75,226,119,0.05) 0%, transparent 60%);pointer-events:none;z-index:0"></div>
+  
+  <!-- Header -->
+  <header style="position:relative;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:16px 48px;">
+    <!-- Logo -->
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div style="width:36px;height:36px;background:linear-gradient(135deg,#4be277,#1a5c2e);border-radius:10px;display:flex;align-items:center;justify-content:center;">
+        <span class="material-symbols-outlined" style="color:#0a0f0a;font-size:18px;">auto_awesome</span>
+      </div>
+      <div style="display:flex;align-items:baseline;gap:4px">
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.04em;color:#f0fdf4;line-height:1">NABDA</span>
+        <span style="font-family:'Cairo',sans-serif;font-size:24px;font-weight:900;color:#4be277;line-height:1">نبضة</span>
+      </div>
     </div>
-    <span class="font-bold text-primary" style="font-family:Cairo;font-size:20px">Nabda <span style="color:#bccbb9;font-weight:400">????</span></span>
-  </a>
-  <div class="flex items-center flex-1 gap-1">
+    <!-- Step Indicator -->
+    <div id="step-indicator" style="font-family:'Inter',sans-serif;font-size:12px;font-weight:700;color:#4be277;letter-spacing:0.1em;">
+      ETAPE 1 / 6
+    </div>
+  </header>
+
+  <!-- Progress Bar -->
+  <div style="position:absolute;top:0;left:0;width:100%;height:4px;background:rgba(31,47,31,0.5);">
+    <div id="progress-bar" style="height:100%;background:#4be277;width:16.66%;transition:width 0.4s;"></div>
+  </div>
+
+  <main class="flex-1 flex flex-col items-center justify-start pt-8 pb-16 px-8 w-full max-w-4xl mx-auto z-10">
     
-    <a href="./home.html" class="flex items-center gap-2 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-elevated hover:text-on-surface transition-all text-label-md font-label-md">
-      <span class="material-symbols-outlined text-base" style="font-size:18px">home</span> Accueil
-    </a>
-    <a href="./explore.html" class="flex items-center gap-2 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-elevated hover:text-on-surface transition-all text-label-md font-label-md">
-      <span class="material-symbols-outlined text-base" style="font-size:18px">explore</span> Explorer
-    </a>
-    <a href="./map.html" class="flex items-center gap-2 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-elevated hover:text-on-surface transition-all text-label-md font-label-md">
-      <span class="material-symbols-outlined text-base" style="font-size:18px">map</span> Carte
-    </a>
-    <a href="./assistant.html" class="flex items-center gap-2 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-elevated hover:text-on-surface transition-all text-label-md font-label-md">
-      <span class="material-symbols-outlined text-base" style="font-size:18px">smart_toy</span> Nabda AI
-    </a>
-    <a href="./profile.html" class="flex items-center gap-2 px-4 py-2 rounded-lg text-on-surface-variant hover:bg-surface-elevated hover:text-on-surface transition-all text-label-md font-label-md">
-      <span class="material-symbols-outlined text-base" style="font-size:18px">person</span> Profil
-    </a>
-  </div>
-  <div class="flex items-center gap-3 ml-4">
-    <div class="flex items-center rounded-full overflow-hidden border border-border-subtle" style="background:#1c211b">
-      <button class="px-3 py-1 text-primary font-bold" style="font-size:11px;background:#22c55e22">FR</button>
-      <button class="px-3 py-1 text-on-surface-variant hover:text-on-surface transition-colors" style="font-size:11px">AR</button>
-      <button class="px-3 py-1 text-on-surface-variant hover:text-on-surface transition-colors" style="font-size:11px">TZ</button>
+    <!-- STEP 1: LANGUE -->
+    <section id="step-1" style="display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:500px;">
+      <div style="display:flex;align-items:center;gap:8px;color:#4be277;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;margin-bottom:16px;">
+        <span class="material-symbols-outlined" style="font-size:16px;">auto_awesome</span>
+        BIENVENUE SUR NABDA
+        <span class="material-symbols-outlined" style="font-size:16px;">auto_awesome</span>
+      </div>
+      <h1 style="font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:0.9;margin:0 0 16px;letter-spacing:0.02em;">
+        <span style="color:#ffffff;">CHOISIS</span><br/>
+        <span style="color:#4be277;">TA LANGUE</span>
+      </h1>
+      <p style="font-size:15px;color:#bccbb9;margin-bottom:48px;">Sélectionne ta langue pour commencer le pulse.</p>
+      
+      <div style="display:flex;flex-direction:column;gap:16px;width:100%;">
+        <button onclick="nextStep(1)" class="option-card" style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:20px 24px;color:#ffffff;font-family:'Cairo',sans-serif;font-size:18px;font-weight:700;">
+          العربية
+          <span class="material-symbols-outlined" style="color:#4be277;">arrow_forward</span>
+        </button>
+        <button onclick="nextStep(1)" class="option-card" style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:20px 24px;color:#ffffff;font-family:'Inter',sans-serif;font-size:18px;font-weight:700;">
+          Français
+          <span class="material-symbols-outlined" style="color:#4be277;">arrow_forward</span>
+        </button>
+        <button onclick="nextStep(1)" class="option-card" style="display:flex;justify-content:space-between;align-items:center;width:100%;padding:20px 24px;color:#ffffff;font-family:'Inter',sans-serif;font-size:18px;font-weight:700;">
+          Tamazight
+          <span class="material-symbols-outlined" style="color:#4be277;">arrow_forward</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- STEP 2: WILAYA -->
+    <section id="step-2" style="display:none;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:800px;">
+      <h1 style="font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:0.9;margin:0 0 16px;letter-spacing:0.02em;">
+        <span style="color:#ffffff;">TA</span>
+        <span style="color:#4be277;">WILAYA</span>
+      </h1>
+      <p style="font-size:15px;color:#bccbb9;margin-bottom:32px;">Sélectionne ta wilaya pour trouver les activités près de chez toi.</p>
+      
+      <div style="display:flex;align-items:center;background:rgba(16,21,15,0.6);border:1px solid rgba(75,226,119,0.2);border-radius:16px;padding:16px 20px;width:100%;max-width:500px;margin-bottom:32px;">
+        <span class="material-symbols-outlined" style="color:#4be277;margin-right:12px;">search</span>
+        <input type="text" placeholder="Chercher une wilaya..." style="background:transparent;border:none;outline:none;color:#ffffff;width:100%;font-size:15px;font-family:'Inter',sans-serif;" />
+      </div>
+
+      <div id="wilaya-grid" style="display:grid;grid-template-columns:repeat(3, 1fr);gap:12px;width:100%;max-height:400px;overflow-y:auto;padding-right:8px;">
+        <!-- Filled by JS -->
+      </div>
+    </section>
+
+    <!-- STEP 3: AGE -->
+    <section id="step-3" style="display:none;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:600px;">
+      <h1 style="font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:0.9;margin:0 0 16px;letter-spacing:0.02em;">
+        <span style="color:#ffffff;">TON</span>
+        <span style="color:#4be277;">AGE</span>
+      </h1>
+      <p style="font-size:15px;color:#bccbb9;margin-bottom:48px;">On adapte les activités à ta tranche d'âge.</p>
+      
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;">
+        <div onclick="nextStep(3)" class="option-card" style="padding:40px;display:flex;flex-direction:column;align-items:center;gap:8px;">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:48px;color:#4be277;line-height:1;">15-18</span>
+          <span style="font-family:'Inter',sans-serif;font-size:14px;color:#bccbb9;">Lycéen</span>
+        </div>
+        <div onclick="nextStep(3)" class="option-card" style="padding:40px;display:flex;flex-direction:column;align-items:center;gap:8px;">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:48px;color:#4be277;line-height:1;">19-24</span>
+          <span style="font-family:'Inter',sans-serif;font-size:14px;color:#bccbb9;">Etudiant</span>
+        </div>
+        <div onclick="nextStep(3)" class="option-card" style="padding:40px;display:flex;flex-direction:column;align-items:center;gap:8px;">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:48px;color:#4be277;line-height:1;">25-30</span>
+          <span style="font-family:'Inter',sans-serif;font-size:14px;color:#bccbb9;">Jeune Pro</span>
+        </div>
+        <div onclick="nextStep(3)" class="option-card" style="padding:40px;display:flex;flex-direction:column;align-items:center;gap:8px;">
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:48px;color:#4be277;line-height:1;">30+</span>
+          <span style="font-family:'Inter',sans-serif;font-size:14px;color:#bccbb9;">Citoyen Actif</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 4: INTERETS -->
+    <section id="step-4" style="display:none;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:800px;">
+      <h1 style="font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:0.9;margin:0 0 16px;letter-spacing:0.02em;">
+        <span style="color:#ffffff;">TES</span>
+        <span style="color:#4be277;">INTERETS</span>
+      </h1>
+      <p style="font-size:15px;color:#bccbb9;margin-bottom:48px;">Sélectionne tout ce qui t'intéresse (plusieurs choix possible).</p>
+      
+      <div class="bento-grid" style="width:100%;margin-bottom:48px;">
+        <div onclick="toggleSelect(this)" class="option-card" style="padding:32px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+          <span class="material-symbols-outlined" style="font-size:32px;color:#a855f7;">sports_soccer</span>
+          <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:700;color:#ffffff;">Sport</span>
+        </div>
+        <div onclick="toggleSelect(this)" class="option-card" style="padding:32px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+          <span class="material-symbols-outlined" style="font-size:32px;color:#0ea5e9;">palette</span>
+          <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:700;color:#ffffff;">Culture</span>
+        </div>
+        <div onclick="toggleSelect(this)" class="option-card" style="padding:32px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+          <span class="material-symbols-outlined" style="font-size:32px;color:#f59e0b;">build</span>
+          <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:700;color:#ffffff;">Ateliers</span>
+        </div>
+        <div onclick="toggleSelect(this)" class="option-card" style="padding:32px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+          <span class="material-symbols-outlined" style="font-size:32px;color:#ec4899;">volunteer_activism</span>
+          <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:700;color:#ffffff;">Benevolat</span>
+        </div>
+        <div onclick="toggleSelect(this)" class="option-card" style="padding:32px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+          <span class="material-symbols-outlined" style="font-size:32px;color:#4ade80;">code</span>
+          <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:700;color:#ffffff;">Tech</span>
+        </div>
+        <div onclick="toggleSelect(this)" class="option-card" style="padding:32px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+          <span class="material-symbols-outlined" style="font-size:32px;color:#22c55e;">energy_savings_leaf</span>
+          <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:700;color:#ffffff;">Environnement</span>
+        </div>
+        <div onclick="toggleSelect(this)" class="option-card" style="padding:32px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+          <span class="material-symbols-outlined" style="font-size:32px;color:#f97316;">school</span>
+          <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:700;color:#ffffff;">Formation</span>
+        </div>
+        <div onclick="toggleSelect(this)" class="option-card" style="padding:32px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+          <span class="material-symbols-outlined" style="font-size:32px;color:#ef4444;">health_and_safety</span>
+          <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:700;color:#ffffff;">Sante</span>
+        </div>
+      </div>
+      
+      <button onclick="nextStep(4)" class="btn-continuer">
+        Continuer
+        <span class="btn-arrow"><span class="material-symbols-outlined" style="font-size:17px;color:#003915">arrow_forward</span></span>
+      </button>
+    </section>
+
+    <!-- STEP 5: DISPO -->
+    <section id="step-5" style="display:none;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:500px;">
+      <h1 style="font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:0.9;margin:0 0 16px;letter-spacing:0.02em;">
+        <span style="color:#ffffff;">TA</span>
+        <span style="color:#4be277;">DISPO</span>
+      </h1>
+      <p style="font-size:15px;color:#bccbb9;margin-bottom:48px;">Quand es-tu disponible pour participer ?</p>
+      
+      <div style="display:flex;flex-direction:column;gap:16px;width:100%;margin-bottom:48px;">
+        <div onclick="toggleSingle(this)" class="option-card single-select" style="display:flex;align-items:center;gap:20px;padding:24px 32px;text-align:left;">
+          <span class="material-symbols-outlined" style="color:#4be277;font-size:28px;">weekend</span>
+          <div>
+            <div style="font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:#ffffff;margin-bottom:4px;">Weekends</div>
+            <div style="font-family:'Inter',sans-serif;font-size:13px;color:#bccbb9;">Idéal pour les étudiants</div>
+          </div>
+        </div>
+        <div onclick="toggleSingle(this)" class="option-card single-select" style="display:flex;align-items:center;gap:20px;padding:24px 32px;text-align:left;">
+          <span class="material-symbols-outlined" style="color:#4be277;font-size:28px;">nightlight</span>
+          <div>
+            <div style="font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:#ffffff;margin-bottom:4px;">Soirées</div>
+            <div style="font-family:'Inter',sans-serif;font-size:13px;color:#bccbb9;">Après le travail ou les cours</div>
+          </div>
+        </div>
+        <div onclick="toggleSingle(this)" class="option-card single-select active" style="display:flex;align-items:center;gap:20px;padding:24px 32px;text-align:left;border-color:#4be277;">
+          <span class="material-symbols-outlined" style="color:#4be277;font-size:28px;">bolt</span>
+          <div>
+            <div style="font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:#ffffff;margin-bottom:4px;">Temps plein</div>
+            <div style="font-family:'Inter',sans-serif;font-size:13px;color:#bccbb9;">Pour les missions intensives</div>
+          </div>
+        </div>
+        <div onclick="toggleSingle(this)" class="option-card single-select" style="display:flex;align-items:center;gap:20px;padding:24px 32px;text-align:left;">
+          <span class="material-symbols-outlined" style="color:#4be277;font-size:28px;">schedule</span>
+          <div>
+            <div style="font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:#ffffff;margin-bottom:4px;">Flexible</div>
+            <div style="font-family:'Inter',sans-serif;font-size:13px;color:#bccbb9;">Selon mon planning</div>
+          </div>
+        </div>
+      </div>
+      
+      <button onclick="nextStep(5)" class="btn-continuer">
+        Continuer
+        <span class="btn-arrow"><span class="material-symbols-outlined" style="font-size:17px;color:#003915">arrow_forward</span></span>
+      </button>
+    </section>
+
+    <!-- STEP 6: OBJECTIF -->
+    <section id="step-6" style="display:none;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:800px;">
+      <h1 style="font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:0.9;margin:0 0 16px;letter-spacing:0.02em;">
+        <span style="color:#ffffff;">TON</span>
+        <span style="color:#4be277;">OBJECTIF</span>
+      </h1>
+      <p style="font-size:15px;color:#bccbb9;margin-bottom:48px;">Qu'est-ce que tu veux accomplir avec Nabda ?</p>
+      
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;">
+        <div onclick="nextStep(6)" class="option-card" style="padding:40px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+          <span class="material-symbols-outlined" style="font-size:40px;color:#4be277;">school</span>
+          <span style="font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:#ffffff;">Apprendre</span>
+          <span style="font-family:'Inter',sans-serif;font-size:13px;color:#bccbb9;">Nouvelles compétences</span>
+        </div>
+        <div onclick="nextStep(6)" class="option-card" style="padding:40px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+          <span class="material-symbols-outlined" style="font-size:40px;color:#ec4899;">volunteer_activism</span>
+          <span style="font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:#ffffff;">Aider</span>
+          <span style="font-family:'Inter',sans-serif;font-size:13px;color:#bccbb9;">Contribuer à la société</span>
+        </div>
+        <div onclick="nextStep(6)" class="option-card" style="padding:40px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+          <span class="material-symbols-outlined" style="font-size:40px;color:#f59e0b;">emoji_events</span>
+          <span style="font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:#ffffff;">Performer</span>
+          <span style="font-family:'Inter',sans-serif;font-size:13px;color:#bccbb9;">Compétitions et challenges</span>
+        </div>
+        <div onclick="nextStep(6)" class="option-card" style="padding:40px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+          <span class="material-symbols-outlined" style="font-size:40px;color:#0ea5e9;">groups</span>
+          <span style="font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:#ffffff;">Socialiser</span>
+          <span style="font-family:'Inter',sans-serif;font-size:13px;color:#bccbb9;">Rencontrer des gens</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 7: FINAL (PULSE DNA) -->
+    <section id="step-7" style="display:none;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:500px;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:8px;color:#4be277;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;margin-bottom:16px;">
+        <span class="material-symbols-outlined" style="font-size:16px;">auto_awesome</span>
+        TON PROFIL DNA EST PRET !
+        <span class="material-symbols-outlined" style="font-size:16px;">auto_awesome</span>
+      </div>
+      <h1 style="font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:0.9;margin:0 0 48px;letter-spacing:0.02em;">
+        <span style="color:#ffffff;">TON</span>
+        <span style="color:#4be277;">PULSE</span><br/>
+        <span style="color:#ffffff;">DNA</span>
+      </h1>
+      
+      <!-- DNA Card -->
+      <div style="background:rgba(17,26,17,0.8);border:1px solid #1f2f1f;border-radius:24px;padding:32px;width:100%;text-align:left;margin-bottom:48px;box-shadow:0 20px 50px rgba(0,0,0,0.5);">
+        
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;">
+          <div style="display:flex;gap:16px;align-items:center;">
+            <div style="width:64px;height:64px;background:linear-gradient(135deg,#22c55e,#0f2d14);border-radius:16px;display:flex;align-items:center;justify-content:center;color:#003915;font-weight:800;font-size:24px;font-family:'Inter',sans-serif;">
+              CH
+            </div>
+            <div>
+              <div style="font-family:'Inter',sans-serif;font-size:18px;font-weight:700;color:#ffffff;margin-bottom:4px;">Nabda Chlef</div>
+              <div style="font-family:'Inter',sans-serif;font-size:12px;color:#bccbb9;margin-bottom:8px;">Eco-Navigateur · Level 1 · 19-24</div>
+              <div style="display:flex;gap:6px;">
+                <span style="background:rgba(75,226,119,0.1);color:#4be277;border:1px solid rgba(75,226,119,0.2);border-radius:20px;padding:2px 8px;font-size:10px;font-weight:700;">FR</span>
+                <span style="background:rgba(245,158,11,0.1);color:#f59e0b;border:1px solid rgba(245,158,11,0.2);border-radius:20px;padding:2px 8px;font-size:10px;font-weight:700;">19-24</span>
+                <span style="background:rgba(14,165,233,0.1);color:#0ea5e9;border:1px solid rgba(14,165,233,0.2);border-radius:20px;padding:2px 8px;font-size:10px;font-weight:700;">Chlef</span>
+              </div>
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:#4be277;line-height:1;">130</div>
+            <div style="font-family:'Inter',sans-serif;font-size:10px;font-weight:700;color:#86efac;letter-spacing:0.1em;">DNA</div>
+          </div>
+        </div>
+
+        <div style="font-family:'Inter',sans-serif;font-size:11px;font-weight:700;color:#86efac;letter-spacing:0.1em;margin-bottom:16px;">TES CENTRES D'INTERET</div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:32px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:100px;font-family:'Inter',sans-serif;font-size:12px;color:#bccbb9;">Formation</div>
+            <div style="flex:1;height:6px;background:#1f2f1f;border-radius:3px;overflow:hidden;">
+              <div style="width:80%;height:100%;background:#f97316;"></div>
+            </div>
+            <div style="font-family:'Inter',sans-serif;font-size:12px;color:#f97316;font-weight:700;">80%</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:100px;font-family:'Inter',sans-serif;font-size:12px;color:#bccbb9;">Ateliers</div>
+            <div style="flex:1;height:6px;background:#1f2f1f;border-radius:3px;overflow:hidden;">
+              <div style="width:63%;height:100%;background:#f59e0b;"></div>
+            </div>
+            <div style="font-family:'Inter',sans-serif;font-size:12px;color:#f59e0b;font-weight:700;">63%</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div style="background:rgba(31,47,31,0.4);border-radius:12px;padding:16px;">
+            <div style="font-family:'Inter',sans-serif;font-size:10px;color:#86efac;font-weight:700;letter-spacing:0.1em;margin-bottom:4px;">OBJECTIF</div>
+            <div style="font-family:'Inter',sans-serif;font-size:14px;color:#ffffff;font-weight:700;">Aider</div>
+          </div>
+          <div style="background:rgba(31,47,31,0.4);border-radius:12px;padding:16px;">
+            <div style="font-family:'Inter',sans-serif;font-size:10px;color:#86efac;font-weight:700;letter-spacing:0.1em;margin-bottom:4px;">DISPONIBILITE</div>
+            <div style="font-family:'Inter',sans-serif;font-size:14px;color:#ffffff;font-weight:700;">Temps plein</div>
+          </div>
+        </div>
+
+      </div>
+
+      <a href="home.html" style="text-decoration:none;background:#4be277;color:#003915;border-radius:30px;padding:16px 40px;font-family:'Inter',sans-serif;font-size:16px;font-weight:700;display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 30px rgba(75,226,119,.28);transition:all 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        Commencer l'aventure <span class="material-symbols-outlined">arrow_forward</span>
+      </a>
+      <div style="font-family:'Inter',sans-serif;font-size:11px;color:#86efac;margin-top:16px;">Tu peux modifier ton profil à tout moment depuis la page Profil.</div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Footer Bar -->
+  <footer style="position:fixed;bottom:0;left:0;width:100%;background:#0A0F0A;border-top:1px solid #1f2f1f;padding:16px 48px;display:flex;justify-content:space-between;align-items:center;z-index:20;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:700;color:#4be277;">Nabda</span>
+      <span style="display:flex;align-items:center;gap:4px;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;color:#f59e0b;">
+        <span class="material-symbols-outlined" style="font-size:14px;">energy_savings_leaf</span>
+        Carbon Badge: 0.04kg CO2 Saved
+      </span>
     </div>
-    <div class="flex items-center gap-1 rounded-full border px-3 py-1" style="background:#22c55e15;border-color:#4be27730;color:#4be277">
-      <span class="material-symbols-outlined" style="font-size:14px">energy_savings_leaf</span>
-      <span style="font-size:11px;font-weight:700;font-family:Inter">2,450 DNA</span>
+    <div style="display:flex;gap:24px;font-family:'Inter',sans-serif;font-size:12px;color:#bccbb9;">
+      <a href="#" style="color:#bccbb9;text-decoration:none;">Privacy Policy</a>
+      <a href="#" style="color:#bccbb9;text-decoration:none;">Terms of Service</a>
+      <span>© 2026 Nabda Eco-Navigator</span>
     </div>
-    <button class="relative p-2 rounded-full hover:bg-surface-elevated transition-colors">
-      <span class="material-symbols-outlined text-on-surface-variant" style="font-size:20px">notifications</span>
-      <span class="absolute rounded-full" style="top:6px;right:6px;width:8px;height:8px;background:#ffb95f"></span>
-    </button>
-    <a href="./profile.html" class="flex items-center gap-2 hover:bg-surface-elevated px-2 py-1 rounded-lg transition-all">
-      <div class="rounded-full flex items-center justify-center border font-bold shrink-0" style="width:34px;height:34px;background:linear-gradient(135deg,#22c55e,#0f2d14);border-color:#4be27750;color:#003915;font-size:12px;font-family:Inter">AY</div>
-      <span class="hidden xl:block text-on-surface-variant" style="font-size:11px">Algerian Youth</span>
-    </a>
-  </div>
-</nav>
+  </footer>
 
-<!-- Progress Indicator -->
-<div class="fixed top-0 left-0 w-full h-1 bg-surface-container z-50">
-<div class="h-full bg-primary transition-all duration-500 w-0" id="progress-bar"></div>
-</div>
-<!-- Main Canvas -->
-<main class="relative min-h-screen flex flex-col items-center justify-center px-margin-mobile md:px-margin-desktop py-xl">
-<header class="absolute top-md left-margin-mobile md:left-margin-desktop flex items-center gap-sm">
-<span class="text-primary font-headline-lg text-headline-lg font-bold">Nabda</span>
-</header>
-<!-- Onboarding Container -->
-<div class="w-full max-w-2xl relative overflow-hidden" id="onboarding-flow">
-<!-- Step 1: Language Picker -->
-<section class="step-transition opacity-100 translate-x-0 flex flex-col items-center text-center" id="step-1">
-<h1 class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl mb-md">Choose your language</h1>
-<p class="font-body-md text-body-md text-on-surface-variant mb-xl">Pick your preferred interface language to start the pulse.</p>
-<div class="flex flex-col gap-md w-full max-w-xs">
-<button class="w-full h-14 bg-surface border border-border-subtle rounded-xl flex items-center justify-between px-lg font-headline-md text-headline-md hover:bg-surface-elevated hover:border-primary transition-all group" onclick="nextStep(1)">
-<span>العربية</span>
-<span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
-</button>
-<button class="w-full h-14 bg-surface border border-border-subtle rounded-xl flex items-center justify-between px-lg font-headline-md text-headline-md hover:bg-surface-elevated hover:border-primary transition-all group" onclick="nextStep(1)">
-<span>Français</span>
-<span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
-</button>
-<button class="w-full h-14 bg-surface border border-border-subtle rounded-xl flex items-center justify-between px-lg font-headline-md text-headline-md hover:bg-surface-elevated hover:border-primary transition-all group" onclick="nextStep(1)">
-<span>Tamazight</span>
-<span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
-</button>
-</div>
-</section>
-<!-- Step 2: Wilaya Picker -->
-<section class="step-transition hidden opacity-0 translate-x-10 flex flex-col items-center" id="step-2">
-<h2 class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl mb-md text-center">Your Region</h2>
-<p class="font-body-md text-body-md text-on-surface-variant mb-xl text-center">Select your wilaya to find opportunities near you.</p>
-<div class="w-full grid grid-cols-2 sm:grid-cols-3 gap-sm h-96 overflow-y-auto px-xs scrollbar-hide">
-<!-- Sample Wilayas -->
-<script>
-                        const wilayas = ["01 Adrar", "02 Chlef", "03 Laghouat", "04 Oum El Bouaghi", "05 Batna", "06 Béjaïa", "07 Biskra", "08 Béchar", "09 Blida", "10 Bouira", "11 Tamanghasset", "12 Tébessa", "13 Tlemcen", "14 Tiaret", "15 Tizi Ouzou", "16 Alger", "17 Djelfa", "18 Jijel", "19 Sétif", "20 Saïda", "21 Skikda", "22 Sidi Bel Abbès", "23 Annaba", "24 Guelma", "25 Constantine", "26 Médéa", "27 Mostaganem", "28 M'Sila", "29 Mascara", "30 Ouargla", "31 Oran"];
-                        document.write(wilayas.map(w => `
-                            <button onclick="nextStep(2)" class="p-md bg-surface-container text-on-surface font-label-md text-label-md rounded-lg border border-border-subtle hover:border-primary hover:bg-surface-elevated transition-all">
-                                ${w}
-                            </button>
-                        `).join(''));
-                    </script>
-</div>
-</section>
-<!-- Step 3: Age Tiles -->
-<section class="step-transition hidden opacity-0 translate-x-10 flex flex-col items-center" id="step-3">
-<h2 class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl mb-md text-center">How old are you?</h2>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-md w-full">
-<button class="group p-xl bg-surface border border-border-subtle rounded-xl flex flex-col items-center gap-sm hover:border-primary hover:bg-surface-elevated transition-all" onclick="nextStep(3)">
-<span class="text-headline-xl font-headline-xl text-primary">15-18</span>
-<span class="text-on-surface-variant font-label-md text-label-md">High School</span>
-</button>
-<button class="group p-xl bg-surface border border-border-subtle rounded-xl flex flex-col items-center gap-sm hover:border-primary hover:bg-surface-elevated transition-all" onclick="nextStep(3)">
-<span class="text-headline-xl font-headline-xl text-primary">19-24</span>
-<span class="text-on-surface-variant font-label-md text-label-md">University Student</span>
-</button>
-<button class="group p-xl bg-surface border border-border-subtle rounded-xl flex flex-col items-center gap-sm hover:border-primary hover:bg-surface-elevated transition-all" onclick="nextStep(3)">
-<span class="text-headline-xl font-headline-xl text-primary">25-30</span>
-<span class="text-on-surface-variant font-label-md text-label-md">Young Professional</span>
-</button>
-<button class="group p-xl bg-surface border border-border-subtle rounded-xl flex flex-col items-center gap-sm hover:border-primary hover:bg-surface-elevated transition-all" onclick="nextStep(3)">
-<span class="text-headline-xl font-headline-xl text-primary">30+</span>
-<span class="text-on-surface-variant font-label-md text-label-md">Active Citizen</span>
-</button>
-</div>
-</section>
-<!-- Step 4: Interest Grid (Bento Style) -->
-<section class="step-transition hidden opacity-0 translate-x-10 flex flex-col items-center" id="step-4">
-<h2 class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl mb-md text-center">Interests</h2>
-<div class="bento-grid w-full mb-xl">
-<div class="group relative overflow-hidden rounded-xl h-32 bg-surface cursor-pointer border border-border-subtle hover:border-primary p-md flex flex-col justify-end transition-all" onclick="toggleInterest(this)">
-<span class="material-symbols-outlined text-primary mb-auto" data-icon="fitness_center">fitness_center</span>
-<span class="font-headline-md text-headline-md">Sport</span>
-</div>
-<div class="group relative overflow-hidden rounded-xl h-32 bg-surface cursor-pointer border border-border-subtle hover:border-primary p-md flex flex-col justify-end transition-all" onclick="toggleInterest(this)">
-<span class="material-symbols-outlined text-primary mb-auto" data-icon="palette">palette</span>
-<span class="font-headline-md text-headline-md">Art</span>
-</div>
-<div class="group relative overflow-hidden rounded-xl h-32 bg-surface cursor-pointer border border-border-subtle hover:border-primary p-md flex flex-col justify-end transition-all" onclick="toggleInterest(this)">
-<span class="material-symbols-outlined text-primary mb-auto" data-icon="code">code</span>
-<span class="font-headline-md text-headline-md">Tech</span>
-</div>
-<div class="group relative overflow-hidden rounded-xl h-32 bg-surface cursor-pointer border border-border-subtle hover:border-primary p-md flex flex-col justify-end transition-all" onclick="toggleInterest(this)">
-<span class="material-symbols-outlined text-primary mb-auto" data-icon="volunteer_activism">volunteer_activism</span>
-<span class="font-headline-md text-headline-md">Volontariat</span>
-</div>
-<div class="group relative overflow-hidden rounded-xl h-32 bg-surface cursor-pointer border border-border-subtle hover:border-primary p-md flex flex-col justify-end transition-all" onclick="toggleInterest(this)">
-<span class="material-symbols-outlined text-primary mb-auto" data-icon="eco">eco</span>
-<span class="font-headline-md text-headline-md">Environnement</span>
-</div>
-<div class="group relative overflow-hidden rounded-xl h-32 bg-surface cursor-pointer border border-border-subtle hover:border-primary p-md flex flex-col justify-end transition-all" onclick="toggleInterest(this)">
-<span class="material-symbols-outlined text-primary mb-auto" data-icon="school">school</span>
-<span class="font-headline-md text-headline-md">Formation</span>
-</div>
-<div class="group relative overflow-hidden rounded-xl h-32 bg-surface cursor-pointer border border-border-subtle hover:border-primary p-md flex flex-col justify-end transition-all" onclick="toggleInterest(this)">
-<span class="material-symbols-outlined text-primary mb-auto" data-icon="theater_comedy">theater_comedy</span>
-<span class="font-headline-md text-headline-md">Culture</span>
-</div>
-<div class="group relative overflow-hidden rounded-xl h-32 bg-surface cursor-pointer border border-border-subtle hover:border-primary p-md flex flex-col justify-end transition-all" onclick="toggleInterest(this)">
-<span class="material-symbols-outlined text-primary mb-auto" data-icon="health_and_safety">health_and_safety</span>
-<span class="font-headline-md text-headline-md">Santé</span>
-</div>
-</div>
-<button class="px-xl py-md bg-primary text-on-primary font-headline-md text-headline-md rounded-full hover:scale-105 transition-transform" onclick="nextStep(4)">Continue</button>
-</section>
-<!-- Step 5: Availability -->
-<section class="step-transition hidden opacity-0 translate-x-10 flex flex-col items-center" id="step-5">
-<h2 class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl mb-md text-center">Availability</h2>
-<div class="w-full flex flex-col gap-md">
-<div class="p-lg bg-surface border border-border-subtle rounded-xl flex items-center gap-md cursor-pointer hover:bg-surface-elevated" onclick="selectAvailability(this)">
-<div class="w-6 h-6 border-2 border-primary rounded-full flex items-center justify-center">
-<div class="w-3 h-3 bg-primary rounded-full opacity-0 check-dot"></div>
-</div>
-<div>
-<p class="font-headline-md text-headline-md">Weekends Only</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Ideal for students and workers.</p>
-</div>
-</div>
-<div class="p-lg bg-surface border border-border-subtle rounded-xl flex items-center gap-md cursor-pointer hover:bg-surface-elevated" onclick="selectAvailability(this)">
-<div class="w-6 h-6 border-2 border-primary rounded-full flex items-center justify-center">
-<div class="w-3 h-3 bg-primary rounded-full opacity-0 check-dot"></div>
-</div>
-<div>
-<p class="font-headline-md text-headline-md">Full Time</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Ready for intensive missions.</p>
-</div>
-</div>
-<div class="p-lg bg-surface border border-border-subtle rounded-xl flex items-center gap-md cursor-pointer hover:bg-surface-elevated" onclick="selectAvailability(this)">
-<div class="w-6 h-6 border-2 border-primary rounded-full flex items-center justify-center">
-<div class="w-3 h-3 bg-primary rounded-full opacity-0 check-dot"></div>
-</div>
-<div>
-<p class="font-headline-md text-headline-md">Flexible Hours</p>
-<p class="font-body-sm text-body-sm text-on-surface-variant">According to my schedule.</p>
-</div>
-</div>
-</div>
-<button class="mt-xl px-xl py-md bg-primary text-on-primary font-headline-md text-headline-md rounded-full hover:scale-105 transition-transform" onclick="nextStep(5)">Confirm</button>
-</section>
-<!-- Step 6: Goal -->
-<section class="step-transition hidden opacity-0 translate-x-10 flex flex-col items-center" id="step-6">
-<h2 class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl mb-md text-center">Your Mission Goal</h2>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-md w-full">
-<div class="p-lg bg-surface border border-border-subtle rounded-xl flex flex-col items-center gap-sm text-center cursor-pointer hover:border-primary" onclick="nextStep(6)">
-<span class="material-symbols-outlined text-secondary text-4xl" data-icon="military_tech">military_tech</span>
-<p class="font-label-md text-label-md uppercase tracking-widest text-secondary">Elite</p>
-<p class="font-headline-md text-headline-md">Impact Leader</p>
-</div>
-<div class="p-lg bg-surface border border-border-subtle rounded-xl flex flex-col items-center gap-sm text-center cursor-pointer hover:border-primary" onclick="nextStep(6)">
-<span class="material-symbols-outlined text-primary text-4xl" data-icon="groups">groups</span>
-<p class="font-label-md text-label-md uppercase tracking-widest text-primary">Solidarity</p>
-<p class="font-headline-md text-headline-md">Social Connector</p>
-</div>
-<div class="p-lg bg-surface border border-border-subtle rounded-xl flex flex-col items-center gap-sm text-center cursor-pointer hover:border-primary" onclick="nextStep(6)">
-<span class="material-symbols-outlined text-tertiary-container text-4xl" data-icon="lightbulb">lightbulb</span>
-<p class="font-label-md text-label-md uppercase tracking-widest text-tertiary-container">Growth</p>
-<p class="font-headline-md text-headline-md">Skill Builder</p>
-</div>
-</div>
-</section>
-<!-- Final Result: DNA Card -->
-<section class="step-transition hidden opacity-0 translate-x-10 flex flex-col items-center" id="step-final">
-<div class="glass-card w-full max-w-sm rounded-3xl p-xl flex flex-col items-center shadow-2xl">
-<div class="w-24 h-24 bg-surface-container-high rounded-full flex items-center justify-center mb-lg relative overflow-hidden">
-<img alt="User" class="w-full h-full object-cover" data-alt="A stylized minimalist vector avatar of a young Algerian person with modern clean features, set against a deep black background with soft green accent glows that reflect an eco-minimalist and high-tech digital identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnRe3ZRnjzxI3nTeTfw8M-OSVKuqxxrwhoXq6oN9y89-ibTfacz2W3e-Vdb8mdC11xMXrDbABEM4vRNpH_widWtx-WoXgOkLuTdoH963KpbT42vXpfoYGNs_DpqKAaMBGtRZtTYD98LUWTmXwZgRPJy54VWhU5U1-v2mAPBhHTcLAPcrNdBFtzO_M-1c-2fekhpqLrfqINXsLWucimxGJ0-h2_hqiijRO36qCUzbJp-FXkPzxZZBVTbKIEINS6gBFRl2JrLr5Kg7UN"/>
-<div class="absolute inset-0 bg-primary/10 animate-pulse"></div>
-</div>
-<h2 class="font-headline-xl text-headline-xl mb-xs">Your Nabda DNA</h2>
-<p class="font-body-sm text-body-sm text-on-surface-variant mb-xl">Eco-Navigator Status: Initialized</p>
-<div class="w-full space-y-md">
-<div class="space-y-xs">
-<div class="flex justify-between font-label-md text-label-md">
-<span class="text-primary">Impact Potential</span>
-<span>88%</span>
-</div>
-<div class="w-full h-2 bg-surface-elevated rounded-full overflow-hidden">
-<div class="h-full bg-primary dna-bar-grow w-0" id="dna-bar-1"></div>
-</div>
-</div>
-<div class="space-y-xs">
-<div class="flex justify-between font-label-md text-label-md">
-<span class="text-secondary">Community Pulse</span>
-<span>65%</span>
-</div>
-<div class="w-full h-2 bg-surface-elevated rounded-full overflow-hidden">
-<div class="h-full bg-secondary dna-bar-grow w-0" id="dna-bar-2"></div>
-</div>
-</div>
-<div class="space-y-xs">
-<div class="flex justify-between font-label-md text-label-md">
-<span class="text-tertiary-container">Resourcefulness</span>
-<span>92%</span>
-</div>
-<div class="w-full h-2 bg-surface-elevated rounded-full overflow-hidden">
-<div class="h-full bg-tertiary-container dna-bar-grow w-0" id="dna-bar-3"></div>
-</div>
-</div>
-</div>
-<div class="mt-xl w-full flex flex-col gap-md">
-<button class="w-full py-md bg-primary text-on-primary font-headline-md text-headline-md rounded-xl hover:scale-[1.02] active:scale-95 transition-all">Launch Dashboard</button>
-<p class="text-center font-body-sm text-body-sm text-on-surface-variant">Welcome to the future of Algeria's youth.</p>
-</div>
-</div>
-</section>
-</div>
-</main>
-<!-- Navigation Dots -->
-<div class="fixed bottom-lg left-1/2 -translate-x-1/2 flex gap-sm">
-<div class="w-2 h-2 rounded-full bg-primary transition-all duration-300" id="dot-1"></div>
-<div class="w-2 h-2 rounded-full bg-surface-container transition-all duration-300" id="dot-2"></div>
-<div class="w-2 h-2 rounded-full bg-surface-container transition-all duration-300" id="dot-3"></div>
-<div class="w-2 h-2 rounded-full bg-surface-container transition-all duration-300" id="dot-4"></div>
-<div class="w-2 h-2 rounded-full bg-surface-container transition-all duration-300" id="dot-5"></div>
-<div class="w-2 h-2 rounded-full bg-surface-container transition-all duration-300" id="dot-6"></div>
-</div>
-<script>
-        let currentStep = 1;
-        const totalSteps = 6;
+  <script>
+    const wilayas = ["01 Adrar", "02 Chlef", "03 Laghouat", "04 Oum El Bouaghi", "05 Batna", "06 Bejaia", "07 Biskra", "08 Bechar", "09 Blida", "10 Bouira", "11 Tamanghasset", "12 Tebessa", "13 Tlemcen", "14 Tiaret", "15 Tizi Ouzou", "16 Alger", "17 Djelfa", "18 Jijel", "19 Setif", "20 Saida", "21 Skikda", "22 Sidi Bel Abbes", "23 Annaba", "24 Guelma", "25 Constantine", "26 Medea", "27 Mostaganem", "28 M'Sila", "29 Mascara", "30 Ouargla", "31 Oran"];
+    
+    function initWilayas() {
+      const grid = document.getElementById('wilaya-grid');
+      let html = '';
+      wilayas.forEach(w => {
+        html += `<button onclick="nextStep(2)" class="option-card" style="padding:16px 20px;color:#bccbb9;text-align:left;font-family:'Inter',sans-serif;font-size:14px;">${w}</button>`;
+      });
+      grid.innerHTML = html;
+    }
+    initWilayas();
 
-        function updateProgress() {
-            const progress = (currentStep / totalSteps) * 100;
-            document.getElementById('progress-bar').style.width = `${progress}%`;
-            
-            // Update dots
-            for (let i = 1; i <= totalSteps; i++) {
-                const dot = document.getElementById(`dot-${i}`);
-                if (dot) {
-                    dot.classList.remove('bg-primary', 'w-6');
-                    dot.classList.add('bg-surface-container', 'w-2');
-                    if (i === currentStep) {
-                        dot.classList.add('bg-primary', 'w-6');
-                        dot.classList.remove('bg-surface-container', 'w-2');
-                    }
-                }
-            }
+    function toggleSelect(el) {
+      el.classList.toggle('active');
+    }
+
+    function toggleSingle(el) {
+      document.querySelectorAll('.single-select').forEach(card => card.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function nextStep(current) {
+      document.getElementById('step-' + current).style.display = 'none';
+      const next = current + 1;
+      const nextEl = document.getElementById('step-' + next);
+      
+      if(nextEl) {
+        nextEl.style.display = 'flex';
+        
+        if (next === 7) {
+          document.getElementById('step-indicator').innerText = `PROFIL PRET !`;
+          document.getElementById('progress-bar').style.width = `100%`;
+        } else {
+          document.getElementById('step-indicator').innerText = `ETAPE ${next} / 6`;
+          document.getElementById('progress-bar').style.width = `${(next/6)*100}%`;
         }
-
-        function nextStep(step) {
-            const currentEl = document.getElementById(`step-${step}`);
-            const nextEl = document.getElementById(step === 6 ? 'step-final' : `step-${step + 1}`);
-
-            // Transition Out
-            currentEl.classList.add('opacity-0', '-translate-x-10');
-            setTimeout(() => {
-                currentEl.classList.add('hidden');
-                
-                // Transition In
-                nextEl.classList.remove('hidden');
-                setTimeout(() => {
-                    nextEl.classList.remove('opacity-0', 'translate-x-10');
-                    nextEl.classList.add('opacity-100', 'translate-x-0');
-                    
-                    if (step === 6) {
-                        animateDNABars();
-                        document.querySelector('.fixed.bottom-lg').style.opacity = '0';
-                    }
-                }, 50);
-            }, 300);
-
-            currentStep++;
-            if (currentStep <= totalSteps) updateProgress();
-        }
-
-        function toggleInterest(el) {
-            el.classList.toggle('border-primary');
-            el.classList.toggle('bg-primary-container');
-            el.classList.toggle('text-on-primary-container');
-        }
-
-        function selectAvailability(el) {
-            // Reset others
-            document.querySelectorAll('.check-dot').forEach(dot => dot.classList.add('opacity-0'));
-            document.querySelectorAll('#step-5 .bg-surface-elevated').forEach(card => card.classList.remove('bg-surface-elevated'));
-            
-            // Select this one
-            el.classList.add('bg-surface-elevated');
-            el.querySelector('.check-dot').classList.remove('opacity-0');
-        }
-
-        function animateDNABars() {
-            setTimeout(() => {
-                document.getElementById('dna-bar-1').style.width = '88%';
-                document.getElementById('dna-bar-2').style.width = '65%';
-                document.getElementById('dna-bar-3').style.width = '92%';
-            }, 500);
-        }
-
-        // Init
-        updateProgress();
-    </script>
-</body></html>
+      }
+    }
+  </script>
+</body>
+</html>
