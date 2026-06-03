@@ -214,93 +214,130 @@ img { filter: none !important; }
     pointer-events:none;
   }
 
-  /* Detail card */
+  /* ── Card ── */
   #dna-card {
     background:rgba(11,18,11,0.97);
     border:1px solid #1f2f1f;
     border-radius:20px;
     padding:20px;
     width:240px;
-    box-shadow:0 24px 64px rgba(0,0,0,.7),0 0 0 1px rgba(75,226,119,.06);
+    box-shadow:0 24px 64px rgba(0,0,0,.7), 0 0 0 1px rgba(75,226,119,.06);
     backdrop-filter:blur(24px);
-    pointer-events:all;
-    transform:translateY(12px) scale(0.92);
+    -webkit-backdrop-filter:blur(24px);
+    pointer-events:none;               /* no clicks when hidden */
+    transform:translateY(16px) scale(0.94);
     opacity:0;
-    transition:transform .38s cubic-bezier(.34,1.4,.64,1), opacity .28s ease;
+    will-change:transform, opacity;
+    transition:
+      transform .46s cubic-bezier(.34,1.2,.64,1),
+      opacity   .32s cubic-bezier(.4,0,.2,1);
     transform-origin:bottom right;
   }
   #dna-card.open {
     transform:translateY(0) scale(1);
     opacity:1;
+    pointer-events:all;
   }
 
-  /* Main pill button */
+  /* ── Pill ── */
   #dna-pill {
     pointer-events:all;
-    display:flex;align-items:center;gap:0;
+    display:flex;
+    align-items:center;
     height:52px;
     background:#111a11;
     border:1px solid #1f2f1f;
     border-radius:999px;
     cursor:pointer;
     overflow:hidden;
-    box-shadow:0 8px 32px rgba(0,0,0,.55), 0 0 0 1px rgba(75,226,119,.08), 0 0 28px rgba(75,226,119,.12);
+    /* only transition border & shadow — no width reflow */
     transition:
-      width .45s cubic-bezier(.34,1.2,.64,1),
-      border-color .22s ease,
-      box-shadow .3s ease;
-    width:52px;
+      border-color .3s cubic-bezier(.4,0,.2,1),
+      box-shadow   .4s cubic-bezier(.4,0,.2,1);
+    box-shadow:
+      0 4px 24px rgba(0,0,0,.55),
+      0 0 0 1px rgba(75,226,119,.07),
+      0 0 22px rgba(75,226,119,.10);
+    animation:dnaGlow 3.5s ease-in-out infinite;
+    will-change:box-shadow;
   }
-  #dna-pill:hover, #dna-pill.pill-open {
-    width:172px;
+  #dna-pill:hover,
+  #dna-pill.pill-open {
     border-color:#4be27740;
-    box-shadow:0 8px 32px rgba(0,0,0,.55), 0 0 0 1px rgba(75,226,119,.12), 0 0 40px rgba(75,226,119,.22);
+    box-shadow:
+      0 4px 24px rgba(0,0,0,.55),
+      0 0 0 1px rgba(75,226,119,.14),
+      0 0 38px rgba(75,226,119,.22);
+    animation-play-state:paused;       /* pause glow, no flash */
   }
 
-  /* Icon circle inside pill */
+  /* ── Icon circle ── */
   #dna-pill .dna-icon-wrap {
     width:52px;height:52px;flex-shrink:0;
     display:flex;align-items:center;justify-content:center;
     background:linear-gradient(135deg,#4be277 0%,#22863a 100%);
     border-radius:999px;
     position:relative;z-index:1;
-    transition:transform .3s cubic-bezier(.34,1.4,.64,1);
+    transition:transform .55s cubic-bezier(.34,1.28,.64,1);
+    will-change:transform;
   }
-  #dna-pill:hover .dna-icon-wrap, #dna-pill.pill-open .dna-icon-wrap {
-    transform:rotate(-12deg) scale(1.05);
+  #dna-pill:hover .dna-icon-wrap,
+  #dna-pill.pill-open .dna-icon-wrap {
+    transform:rotate(-14deg) scale(1.07);
   }
 
-  /* Label inside pill */
-  #dna-pill .dna-label {
-    flex:1;
-    padding:0 18px 0 10px;
-    white-space:nowrap;
+  /* ── Label clip wrapper (max-width expansion — no layout reflow) ── */
+  #dna-pill .dna-label-wrap {
     overflow:hidden;
-    opacity:0;
-    transform:translateX(-8px);
-    transition:opacity .22s ease .12s, transform .3s cubic-bezier(.34,1.2,.64,1) .08s;
-    pointer-events:none;
+    max-width:0;
+    transition:max-width .55s cubic-bezier(.22,1,.36,1);
+    white-space:nowrap;
+    will-change:max-width;
   }
-  #dna-pill:hover .dna-label, #dna-pill.pill-open .dna-label {
+  #dna-pill:hover .dna-label-wrap,
+  #dna-pill.pill-open .dna-label-wrap {
+    max-width:140px;
+  }
+
+  /* ── Label content (fade + slide after clip opens) ── */
+  #dna-pill .dna-label {
+    padding:0 18px 0 12px;
+    opacity:0;
+    transform:translateX(-5px);
+    will-change:opacity, transform;
+    transition:
+      opacity   .3s ease .18s,
+      transform .42s cubic-bezier(.22,1,.36,1) .12s;
+  }
+  #dna-pill:hover .dna-label,
+  #dna-pill.pill-open .dna-label {
     opacity:1;
     transform:translateX(0);
   }
 
-  /* Row items in detail card */
+  /* ── Detail card rows ── */
   .dna-row {
     display:flex;align-items:center;justify-content:space-between;
     padding:10px 0;
     border-bottom:1px solid #141e14;
   }
-  .dna-row:last-child { border-bottom:none; padding-bottom:0; }
+  .dna-row:last-child  { border-bottom:none;padding-bottom:0; }
   .dna-row:first-child { padding-top:0; }
 
   @keyframes dnaGlow {
-    0%,100% { box-shadow:0 8px 32px rgba(0,0,0,.55), 0 0 0 1px rgba(75,226,119,.08), 0 0 28px rgba(75,226,119,.12); }
-    50%      { box-shadow:0 8px 32px rgba(0,0,0,.55), 0 0 0 1px rgba(75,226,119,.18), 0 0 48px rgba(75,226,119,.28); }
+    0%,100% {
+      box-shadow:
+        0 4px 24px rgba(0,0,0,.55),
+        0 0 0 1px rgba(75,226,119,.07),
+        0 0 22px rgba(75,226,119,.10);
+    }
+    50% {
+      box-shadow:
+        0 4px 24px rgba(0,0,0,.55),
+        0 0 0 1px rgba(75,226,119,.18),
+        0 0 46px rgba(75,226,119,.26);
+    }
   }
-  #dna-pill { animation: dnaGlow 3s ease-in-out infinite; }
-  #dna-pill:hover, #dna-pill.pill-open { animation: none; }
   /* ── end DNA Floating Widget ── */
   @keyframes pulse-soft { 0%,100%{opacity:1}50%{opacity:0.7} }
   .ai-pulse { animation: pulse-soft 2s infinite ease-in-out; }
@@ -486,6 +523,43 @@ img { filter: none !important; }
   html.light .ed-ticker-wrap { background:#16a34a; }
   html.light .ed-glass { background:rgba(255,255,255,0.92) !important; border-color:#86efac !important; }
 </style>
+
+<!-- ══ SUPABASE CLIENT ══ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+  var SUPABASE_URL  = 'https://erupgynmbgjnpqyzpwcz.supabase.co';
+  var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVydXBneW5tYmdqbnBxeXpwd2N6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0NDA2MzYsImV4cCI6MjA5NjAxNjYzNn0.TeiZrCDPEhG6mF2G2FCrQoem2eS4vTqCn_bHjbdaHpM';
+  var _sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+  console.log('[Supabase] Client initialized');
+
+  // ── Helper: check if onboarding is complete ──
+  window.isOnboardingDone = function() {
+    try {
+      var p = JSON.parse(localStorage.getItem('nabda_profile'));
+      return p && p.onboardingComplete === true;
+    } catch(e) { return false; }
+  };
+
+  // ── Auth state listener ──
+  _sb.auth.onAuthStateChange(function(event, session) {
+    console.log('[Supabase Auth]', event, session ? session.user.email : 'no session');
+    if (event === 'SIGNED_IN' && session) {
+      localStorage.setItem('nabda_logged_in', 'true');
+      localStorage.setItem('nabda_user_id', session.user.id);
+      localStorage.setItem('nabda_user_email', session.user.email);
+      var hasProfile = isOnboardingDone();
+      if (typeof navigate === 'function') {
+        navigate(hasProfile ? 'home' : 'onboarding');
+      }
+    } else if (event === 'SIGNED_OUT') {
+      localStorage.removeItem('nabda_logged_in');
+      localStorage.removeItem('nabda_user_id');
+      localStorage.removeItem('nabda_user_email');
+      if (typeof navigate === 'function') navigate('auth');
+    }
+  });
+</script>
+
 </head>
 <body class="bg-background text-on-surface" style="padding-top:64px">
 
@@ -787,7 +861,7 @@ img { filter: none !important; }
         </div>
         <h4 class="text-headline-xl-mobile font-bold text-white mb-sm" style="font-family:Cairo">Nettoyage des Plages: Sidi Fredj</h4>
         <p class="text-body-sm text-on-surface-variant mb-md">Rejoignez l'equipe. Gagnez 150 DNA et impactez votre ville.</p>
-        <button onclick="navigate('explore')" class="bg-primary text-on-primary px-lg py-sm rounded-xl font-bold active:scale-95 transition-transform">Participer</button>
+        <button onclick="openEventDetail('2ab9e4df-8549-400f-8576-7ef251aecc7c','home')" class="bg-primary text-on-primary px-lg py-sm rounded-xl font-bold active:scale-95 transition-transform">Participer</button>
       </div>
     </article>
     <!-- Card 2 -->
@@ -803,7 +877,7 @@ img { filter: none !important; }
         </div>
         <div class="mt-auto pt-sm border-t border-border-subtle flex items-center justify-between">
           <span class="text-label-md text-primary font-bold">85% Match</span>
-          <button onclick="navigate('explore')" class="text-primary hover:underline text-label-md">Voir</button>
+          <button onclick="openEventDetail('84bd0f8e-2828-4cfd-b869-0d58510f8933','home')" class="text-primary hover:underline text-label-md">Voir</button>
         </div>
       </div>
     </article>
@@ -839,7 +913,7 @@ img { filter: none !important; }
         </div>
         <div class="mt-auto pt-sm border-t border-border-subtle flex items-center justify-between">
           <span class="text-label-md text-primary font-bold">92% Match</span>
-          <button onclick="navigate('explore')" class="text-primary hover:underline text-label-md">Voir</button>
+          <button onclick="openEventDetail('2d025a19-3f26-4a55-89d2-50fbc3aec47e','home')" class="text-primary hover:underline text-label-md">Voir</button>
         </div>
       </div>
     </article>
@@ -937,14 +1011,16 @@ img { filter: none !important; }
         style="padding:5px 14px;border-radius:999px;border:1px solid #4be27760;background:#22c55e20;color:#4be277;font-size:11px;font-weight:700;font-family:Inter;cursor:pointer;white-space:nowrap">Tous</button>
       <button class="exp-cat-btn" data-cat="sport" onclick="expCat('sport')"
         style="padding:5px 14px;border-radius:999px;border:1px solid #1f2f1f;background:#1c211b;color:#bccbb9;font-size:11px;font-weight:700;font-family:Inter;cursor:pointer;white-space:nowrap">🏃 Sport</button>
-      <button class="exp-cat-btn" data-cat="culture" onclick="expCat('culture')"
+      <button class="exp-cat-btn" data-cat="cultural" onclick="expCat('cultural')"
         style="padding:5px 14px;border-radius:999px;border:1px solid #1f2f1f;background:#1c211b;color:#bccbb9;font-size:11px;font-weight:700;font-family:Inter;cursor:pointer;white-space:nowrap">🎭 Culture</button>
-      <button class="exp-cat-btn" data-cat="tech" onclick="expCat('tech')"
-        style="padding:5px 14px;border-radius:999px;border:1px solid #1f2f1f;background:#1c211b;color:#bccbb9;font-size:11px;font-weight:700;font-family:Inter;cursor:pointer;white-space:nowrap">💻 Tech</button>
-      <button class="exp-cat-btn" data-cat="environment" onclick="expCat('environment')"
-        style="padding:5px 14px;border-radius:999px;border:1px solid #1f2f1f;background:#1c211b;color:#bccbb9;font-size:11px;font-weight:700;font-family:Inter;cursor:pointer;white-space:nowrap">🌿 Eco</button>
-      <button class="exp-cat-btn" data-cat="education" onclick="expCat('education')"
-        style="padding:5px 14px;border-radius:999px;border:1px solid #1f2f1f;background:#1c211b;color:#bccbb9;font-size:11px;font-weight:700;font-family:Inter;cursor:pointer;white-space:nowrap">📚 Formation</button>
+      <button class="exp-cat-btn" data-cat="workshop" onclick="expCat('workshop')"
+        style="padding:5px 14px;border-radius:999px;border:1px solid #1f2f1f;background:#1c211b;color:#bccbb9;font-size:11px;font-weight:700;font-family:Inter;cursor:pointer;white-space:nowrap">🛠 Atelier</button>
+      <button class="exp-cat-btn" data-cat="volunteer" onclick="expCat('volunteer')"
+        style="padding:5px 14px;border-radius:999px;border:1px solid #1f2f1f;background:#1c211b;color:#bccbb9;font-size:11px;font-weight:700;font-family:Inter;cursor:pointer;white-space:nowrap">❤️ Benevolat</button>
+      <button class="exp-cat-btn" data-cat="program" onclick="expCat('program')"
+        style="padding:5px 14px;border-radius:999px;border:1px solid #1f2f1f;background:#1c211b;color:#bccbb9;font-size:11px;font-weight:700;font-family:Inter;cursor:pointer;white-space:nowrap">📋 Formation</button>
+      <button class="exp-cat-btn" data-cat="event" onclick="expCat('event')"
+        style="padding:5px 14px;border-radius:999px;border:1px solid #1f2f1f;background:#1c211b;color:#bccbb9;font-size:11px;font-weight:700;font-family:Inter;cursor:pointer;white-space:nowrap">🎉 Evenement</button>
       <!-- divider -->
       <div style="width:1px;height:22px;background:#1f2f1f;margin:0 4px"></div>
       <button id="exp-free" onclick="expToggleFree()" data-active="false"
@@ -957,205 +1033,23 @@ img { filter: none !important; }
 
   <!-- ── EVENTS GRID 3 colonnes ── -->
   <div style="padding:24px 48px">
-    <div id="exp-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
-
-<div class="group" style="border-radius:16px;overflow:hidden;border:1px solid #1f2f1f;background:#111a11;cursor:pointer;transition:border-color .2s,transform .2s;display:flex;flex-direction:column"
-  onmouseover="this.style.borderColor='#4be27750';this.style.transform='translateY(-3px)'"
-  onmouseout="this.style.borderColor='#1f2f1f';this.style.transform='translateY(0)'">
-  <div style="height:200px;overflow:hidden;position:relative">
-    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLlhxLtTcbcFzvDnMNl3s4b8E6X1ojQA_WDospRW7phiHCSF7u8wimqoTD_0Uu6W6dTxIk_SANXomWKDTE7h2pPBxk3uu5aR-W4IzFUl1ouycDRNcQwosXgxqMAmVYUIYnrbTZ3twS1w9GK_s_IUSBqYX0LfyZUAgfANWybg_eNMb0bs_OyEZDEdhedyyLY9FcTTtFLT-TkbXIYA_TX7psqZKUOSKerbENvboLs-5YYMMGLIwWnsY83A5lleu4-Z-b56owXiLmI7WV" alt="Yoga"
-      style="width:100%;height:100%;object-fit:cover;transition:transform .5s"
-      onmouseover="this.style.transform='scale(1.07)'"
-      onmouseout="this.style.transform='scale(1)'"/>
-    <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,10,.75) 0%,transparent 55%)"></div>
-    <div style="position:absolute;top:12px;left:12px;background:#8b5cf6cc;backdrop-filter:blur(6px);color:#fff;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;font-family:Inter">🏃 Sport</div>
-    <div style="position:absolute;top:12px;right:12px;background:#22c55e;color:#003915;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;font-family:Inter">DNA 98%</div>
-    <div style="position:absolute;bottom:10px;left:14px">
-      <span style="background:#22c55e20;color:#4be277;border:1px solid #4be27740;padding:2px 9px;border-radius:999px;font-size:10px;font-weight:700;font-family:Inter">GRATUIT</span>
-    </div>
-  </div>
-  <div style="padding:16px 18px;flex:1;display:flex;flex-direction:column;gap:8px">
-    <h3 style="font-family:Cairo;font-size:18px;font-weight:700;color:#f0fdf4;margin:0;line-height:1.3">Sunset Terrace Yoga</h3>
-    <div style="display:flex;gap:14px;font-size:12px;color:#86efac;font-family:Inter;flex-wrap:wrap">
-      <span>📍 Alger · El Biar</span><span>📅 Oct 12 · 06:30</span>
-    </div>
-    <div style="margin-top:auto;padding-top:10px;border-top:1px solid #1f2f1f;display:flex;align-items:center;justify-content:space-between">
-      <div>
-        <span style="font-size:11px;color:#bccbb9;font-family:Inter">30 places &nbsp;·&nbsp; </span>
-        <span style="font-size:13px;font-weight:700;color:#ffb95f;font-family:Inter">+120 DNA</span>
-      </div>
-      <button onclick="openEventDetail(1,'explore')" style="background:linear-gradient(135deg,#22c55e,#16a34a);color:#003915;border:none;padding:7px 18px;border-radius:8px;font-size:12px;font-weight:700;font-family:Inter;cursor:pointer">S'inscrire →</button>
-    </div>
-  </div>
-</div>
-
-<div class="group" style="border-radius:16px;overflow:hidden;border:1px solid #1f2f1f;background:#111a11;cursor:pointer;transition:border-color .2s,transform .2s;display:flex;flex-direction:column"
-  onmouseover="this.style.borderColor='#4be27750';this.style.transform='translateY(-3px)'"
-  onmouseout="this.style.borderColor='#1f2f1f';this.style.transform='translateY(0)'">
-  <div style="height:200px;overflow:hidden;position:relative">
-    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfgPi6O4G-ZsgvCwur0V6HYTtsW0_slsBspl1bkBj8tQ7ymWFbx1tnRxWX5ITfo2wpgLh_jmXrIrVPsm2XrQkszC6HcfUJNqOeVDIrpP-Hc4ZFFShV2sWfe0VCE6m7ImEwkThmwEvsR8MeDRy0LJI23XmRwzxABKqMEmL-FoIqF_TA4cY8OT-06NYfGcscMl4Hvp0AcVa2_uYV1pzE7vMuJrbrx1P4tpl0sAAzsFBtqVE0ROeZSzmbbRyJGTE8zIuiahfOEL4tLzAO" alt="Hackathon"
-      style="width:100%;height:100%;object-fit:cover;transition:transform .5s"
-      onmouseover="this.style.transform='scale(1.07)'"
-      onmouseout="this.style.transform='scale(1)'"/>
-    <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,10,.75) 0%,transparent 55%)"></div>
-    <div style="position:absolute;top:12px;left:12px;background:#f59e0bcc;backdrop-filter:blur(6px);color:#fff;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;font-family:Inter">💻 Tech</div>
-    <div style="position:absolute;top:12px;right:12px;background:#22c55e;color:#003915;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;font-family:Inter">DNA 82%</div>
-    <div style="position:absolute;bottom:10px;left:14px">
-      <span style="background:#f59e0b20;color:#f59e0b;border:1px solid #f59e0b40;padding:2px 9px;border-radius:999px;font-size:10px;font-weight:700;font-family:Inter">200 DA</span>
-    </div>
-  </div>
-  <div style="padding:16px 18px;flex:1;display:flex;flex-direction:column;gap:8px">
-    <h3 style="font-family:Cairo;font-size:18px;font-weight:700;color:#f0fdf4;margin:0;line-height:1.3">Eco-Coding Hackathon</h3>
-    <div style="display:flex;gap:14px;font-size:12px;color:#86efac;font-family:Inter;flex-wrap:wrap">
-      <span>📍 Constantine</span><span>📅 Oct 15 · 09:00</span>
-    </div>
-    <div style="margin-top:auto;padding-top:10px;border-top:1px solid #1f2f1f;display:flex;align-items:center;justify-content:space-between">
-      <div>
-        <span style="font-size:11px;color:#bccbb9;font-family:Inter">30 places &nbsp;·&nbsp; </span>
-        <span style="font-size:13px;font-weight:700;color:#ffb95f;font-family:Inter">+500 DNA</span>
-      </div>
-      <button onclick="openEventDetail(2,'explore')" style="background:linear-gradient(135deg,#22c55e,#16a34a);color:#003915;border:none;padding:7px 18px;border-radius:8px;font-size:12px;font-weight:700;font-family:Inter;cursor:pointer">S'inscrire →</button>
-    </div>
-  </div>
-</div>
-
-<div class="group" style="border-radius:16px;overflow:hidden;border:1px solid #1f2f1f;background:#111a11;cursor:pointer;transition:border-color .2s,transform .2s;display:flex;flex-direction:column"
-  onmouseover="this.style.borderColor='#4be27750';this.style.transform='translateY(-3px)'"
-  onmouseout="this.style.borderColor='#1f2f1f';this.style.transform='translateY(0)'">
-  <div style="height:200px;overflow:hidden;position:relative">
-    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuChCtfS2ZnlN5NwKgCZVz2V4tRwWc5XWP2tk9ndzggHnEariz07tMSegMy9N3vKj5UbNnErvbhixTXiNB4sq_orUXazK3RyhCrObANw9wY2US9XTdWoUDcRt05VY03AuNBqotWbF1Qh6MqZxWghxuDzqv3ijOnl5AO_SLkdgSUwwhw5pl44VNi9rJNwaXOcSz1_XdnVe-_1mLxYoaac0OAdJ8Yc7cNKz9E_KpuYqWo-B7IvOXmhtEf_hGv2xxbcYEUQI4whyYfM5n95" alt="Mural"
-      style="width:100%;height:100%;object-fit:cover;transition:transform .5s"
-      onmouseover="this.style.transform='scale(1.07)'"
-      onmouseout="this.style.transform='scale(1)'"/>
-    <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,10,.75) 0%,transparent 55%)"></div>
-    <div style="position:absolute;top:12px;left:12px;background:#06b6d4cc;backdrop-filter:blur(6px);color:#fff;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;font-family:Inter">🎭 Culture</div>
-    <div style="position:absolute;top:12px;right:12px;background:#262b25;color:#bccbb9;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;font-family:Inter">DNA 65%</div>
-    <div style="position:absolute;bottom:10px;left:14px">
-      <span style="background:#22c55e20;color:#4be277;border:1px solid #4be27740;padding:2px 9px;border-radius:999px;font-size:10px;font-weight:700;font-family:Inter">GRATUIT</span>
-    </div>
-  </div>
-  <div style="padding:16px 18px;flex:1;display:flex;flex-direction:column;gap:8px">
-    <h3 style="font-family:Cairo;font-size:18px;font-weight:700;color:#f0fdf4;margin:0;line-height:1.3">Sahara Mural Workshop</h3>
-    <div style="display:flex;gap:14px;font-size:12px;color:#86efac;font-family:Inter;flex-wrap:wrap">
-      <span>📍 Alger · 2.4 km</span><span>📅 Oct 18 · 10:00</span>
-    </div>
-    <div style="margin-top:auto;padding-top:10px;border-top:1px solid #1f2f1f;display:flex;align-items:center;justify-content:space-between">
-      <div>
-        <span style="font-size:11px;color:#bccbb9;font-family:Inter">20 places &nbsp;·&nbsp; </span>
-        <span style="font-size:13px;font-weight:700;color:#ffb95f;font-family:Inter">+90 DNA</span>
-      </div>
-      <button onclick="openEventDetail(3,'explore')" style="background:linear-gradient(135deg,#22c55e,#16a34a);color:#003915;border:none;padding:7px 18px;border-radius:8px;font-size:12px;font-weight:700;font-family:Inter;cursor:pointer">S'inscrire →</button>
-    </div>
-  </div>
-</div>
-
-<div class="group" style="border-radius:16px;overflow:hidden;border:1px solid #1f2f1f;background:#111a11;cursor:pointer;transition:border-color .2s,transform .2s;display:flex;flex-direction:column"
-  onmouseover="this.style.borderColor='#4be27750';this.style.transform='translateY(-3px)'"
-  onmouseout="this.style.borderColor='#1f2f1f';this.style.transform='translateY(0)'">
-  <div style="height:200px;overflow:hidden;position:relative">
-    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBH1NyFlZb9cOkyqZlTIdM2f5U0OxGeFRFyyqla3z4PuK0jLpIEeXjMUqyWNiD2_C-9CyuFZEI9jhDVHVeKGd2QVfs3u5bldMvzpWfYjpu4EY6kB52X8Z8DNj-14Fa7VdS1_lOVd3vnJSRKn9FTghBcnXgobi-eCqYu6qdW87fxcpqCxOzMrjJbQVgLWhVxE9o9SrmvmTAruiD28zhRxTJNqzSJQ1-0YqSxUm4elyVn66rewpYulNlN0D_GxuFKTPhupA4jdtC43ZM" alt="Futsal"
-      style="width:100%;height:100%;object-fit:cover;transition:transform .5s"
-      onmouseover="this.style.transform='scale(1.07)'"
-      onmouseout="this.style.transform='scale(1)'"/>
-    <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,10,.75) 0%,transparent 55%)"></div>
-    <div style="position:absolute;top:12px;left:12px;background:#8b5cf6cc;backdrop-filter:blur(6px);color:#fff;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;font-family:Inter">🏃 Sport</div>
-    <div style="position:absolute;top:12px;right:12px;background:#22c55e;color:#003915;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;font-family:Inter">DNA 92%</div>
-    <div style="position:absolute;bottom:10px;left:14px">
-      <span style="background:#22c55e20;color:#4be277;border:1px solid #4be27740;padding:2px 9px;border-radius:999px;font-size:10px;font-weight:700;font-family:Inter">GRATUIT</span>
-    </div>
-  </div>
-  <div style="padding:16px 18px;flex:1;display:flex;flex-direction:column;gap:8px">
-    <h3 style="font-family:Cairo;font-size:18px;font-weight:700;color:#f0fdf4;margin:0;line-height:1.3">Midnight Futsal League</h3>
-    <div style="display:flex;gap:14px;font-size:12px;color:#86efac;font-family:Inter;flex-wrap:wrap">
-      <span>📍 Oran</span><span>📅 Oct 20 · 20:00</span>
-    </div>
-    <div style="margin-top:auto;padding-top:10px;border-top:1px solid #1f2f1f;display:flex;align-items:center;justify-content:space-between">
-      <div>
-        <span style="font-size:11px;color:#bccbb9;font-family:Inter">40 places &nbsp;·&nbsp; </span>
-        <span style="font-size:13px;font-weight:700;color:#ffb95f;font-family:Inter">+150 DNA</span>
-      </div>
-      <button onclick="openEventDetail(4,'explore')" style="background:linear-gradient(135deg,#22c55e,#16a34a);color:#003915;border:none;padding:7px 18px;border-radius:8px;font-size:12px;font-weight:700;font-family:Inter;cursor:pointer">S'inscrire →</button>
-    </div>
-  </div>
-</div>
-
-<div class="group" style="border-radius:16px;overflow:hidden;border:1px solid #1f2f1f;background:#111a11;cursor:pointer;transition:border-color .2s,transform .2s;display:flex;flex-direction:column"
-  onmouseover="this.style.borderColor='#4be27750';this.style.transform='translateY(-3px)'"
-  onmouseout="this.style.borderColor='#1f2f1f';this.style.transform='translateY(0)'">
-  <div style="height:200px;overflow:hidden;position:relative">
-    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBE7bxo7lbQ4L_Xx-Kqn_sWzYsVVu5QkQ2YTMZnjeuDdScG7sBhLczn6-M2AoDFs05ReQE7JnAmFiCbvz-VVfcJWX4efpGNCaquXfwq_ICy5zuIQj8SQwHmCtEPAvkeDYJa1RyZ-P0WPzLsLZ7EfdyfI_1x30O57Q4kTIffS4sh0osqZubucOpEpvRkCw5etrreWabRnxKPw6fujNhQM2SN_z1h6TaYYfYRLh7yfAYNiq5MRCYYg411qWCos3ZfhyNU72hzaANQkh_v" alt="Library"
-      style="width:100%;height:100%;object-fit:cover;transition:transform .5s"
-      onmouseover="this.style.transform='scale(1.07)'"
-      onmouseout="this.style.transform='scale(1)'"/>
-    <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,10,.75) 0%,transparent 55%)"></div>
-    <div style="position:absolute;top:12px;left:12px;background:#f97316cc;backdrop-filter:blur(6px);color:#fff;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;font-family:Inter">📚 Formation</div>
-    <div style="position:absolute;top:12px;right:12px;background:#262b25;color:#bccbb9;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;font-family:Inter">DNA 40%</div>
-    <div style="position:absolute;bottom:10px;left:14px">
-      <span style="background:#22c55e20;color:#4be277;border:1px solid #4be27740;padding:2px 9px;border-radius:999px;font-size:10px;font-weight:700;font-family:Inter">GRATUIT</span>
-    </div>
-  </div>
-  <div style="padding:16px 18px;flex:1;display:flex;flex-direction:column;gap:8px">
-    <h3 style="font-family:Cairo;font-size:18px;font-weight:700;color:#f0fdf4;margin:0;line-height:1.3">Digital Archive Seminar</h3>
-    <div style="display:flex;gap:14px;font-size:12px;color:#86efac;font-family:Inter;flex-wrap:wrap">
-      <span>📍 Constantine</span><span>📅 Demain · 14:00</span>
-    </div>
-    <div style="margin-top:auto;padding-top:10px;border-top:1px solid #1f2f1f;display:flex;align-items:center;justify-content:space-between">
-      <div>
-        <span style="font-size:11px;color:#bccbb9;font-family:Inter">25 places &nbsp;·&nbsp; </span>
-        <span style="font-size:13px;font-weight:700;color:#ffb95f;font-family:Inter">+80 DNA</span>
-      </div>
-      <button onclick="openEventDetail(5,'explore')" style="background:linear-gradient(135deg,#22c55e,#16a34a);color:#003915;border:none;padding:7px 18px;border-radius:8px;font-size:12px;font-weight:700;font-family:Inter;cursor:pointer">S'inscrire →</button>
-    </div>
-  </div>
-</div>
-
-<div class="group" style="border-radius:16px;overflow:hidden;border:1px solid #1f2f1f;background:#111a11;cursor:pointer;transition:border-color .2s,transform .2s;display:flex;flex-direction:column"
-  onmouseover="this.style.borderColor='#4be27750';this.style.transform='translateY(-3px)'"
-  onmouseout="this.style.borderColor='#1f2f1f';this.style.transform='translateY(0)'">
-  <div style="height:200px;overflow:hidden;position:relative">
-    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8axxInQttOozN8rEP7MaC67I7HUwqMXYFRHKOXUqWXpLSCpN7gxO36Xp-OrYs1dsx0MKv4hy2pKaiZMyOGXQAu38LDBtCnFD_hyqq4dIumQ5HcNBIsFTYQLEgqDIROran-NbK_G6KoezmC78VnD-esbfG3Zz2edWp5nGD4JwozW7rEjrlZTRPIabjYeRusL1cuLr0u8S4JFg8jN6C99DVGGUCrzLOFMSIbRf9ET2VbmQmJk99xl2R0Xh7uV87GQ9KX4Gi-Pomer6k" alt="Reforestation"
-      style="width:100%;height:100%;object-fit:cover;transition:transform .5s"
-      onmouseover="this.style.transform='scale(1.07)'"
-      onmouseout="this.style.transform='scale(1)'"/>
-    <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,10,.75) 0%,transparent 55%)"></div>
-    <div style="position:absolute;top:12px;left:12px;background:#ec4899cc;backdrop-filter:blur(6px);color:#fff;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;font-family:Inter">❤️ Benevolat</div>
-    <div style="position:absolute;top:12px;right:12px;background:#22c55e;color:#003915;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;font-family:Inter">DNA 88%</div>
-    <div style="position:absolute;bottom:10px;left:14px">
-      <span style="background:#22c55e20;color:#4be277;border:1px solid #4be27740;padding:2px 9px;border-radius:999px;font-size:10px;font-weight:700;font-family:Inter">GRATUIT</span>
-    </div>
-  </div>
-  <div style="padding:16px 18px;flex:1;display:flex;flex-direction:column;gap:8px">
-    <h3 style="font-family:Cairo;font-size:18px;font-weight:700;color:#f0fdf4;margin:0;line-height:1.3">Reboisement Foret du Chrea</h3>
-    <div style="display:flex;gap:14px;font-size:12px;color:#86efac;font-family:Inter;flex-wrap:wrap">
-      <span>📍 Blida · Chrea</span><span>📅 5 juil · 08:00</span>
-    </div>
-    <div style="margin-top:auto;padding-top:10px;border-top:1px solid #1f2f1f;display:flex;align-items:center;justify-content:space-between">
-      <div>
-        <span style="font-size:11px;color:#bccbb9;font-family:Inter">60 places &nbsp;·&nbsp; </span>
-        <span style="font-size:13px;font-weight:700;color:#ffb95f;font-family:Inter">+300 DNA</span>
-      </div>
-      <button onclick="openEventDetail(6,'explore')" style="background:linear-gradient(135deg,#22c55e,#16a34a);color:#003915;border:none;padding:7px 18px;border-radius:8px;font-size:12px;font-weight:700;font-family:Inter;cursor:pointer">S'inscrire →</button>
-    </div>
-  </div>
-</div>
-    </div><!-- end exp-grid -->
+    <div id="exp-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px"></div><!-- end exp-grid -->
     <!-- Pagination -->
-    <div class="flex items-center justify-center gap-md py-xl">
-      <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-border-subtle hover:bg-surface-elevated transition-colors">
-        <span class="material-symbols-outlined">chevron_left</span>
+    <div id="exp-pagination" style="display:none;align-items:center;justify-content:center;gap:8px;padding:32px 0">
+      <button onclick="expChangePage(-1)" id="exp-prev" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid #1f2f1f;background:#111a11;color:#86efac;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#4be27740'" onmouseout="this.style.borderColor='#1f2f1f'">
+        <span class="material-symbols-outlined" style="font-size:20px">chevron_left</span>
       </button>
-      <div class="flex gap-sm">
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-on-primary font-bold">1</button>
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-border-subtle hover:bg-surface-elevated">2</button>
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-border-subtle hover:bg-surface-elevated">3</button>
-      </div>
-      <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-border-subtle hover:bg-surface-elevated transition-colors">
-        <span class="material-symbols-outlined">chevron_right</span>
+      <div id="exp-page-btns" style="display:flex;gap:6px"></div>
+      <button onclick="expChangePage(1)" id="exp-next" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid #1f2f1f;background:#111a11;color:#86efac;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='#4be27740'" onmouseout="this.style.borderColor='#1f2f1f'">
+        <span class="material-symbols-outlined" style="font-size:20px">chevron_right</span>
       </button>
     </div>
   </div>
 
-</div><!-- end page-explore -->
+
+  
+</div>
+<!-- end page-explore -->
 
 <script>
 // ── EXPLORE FILTERS ──────────────────────────────────────────
@@ -1213,29 +1107,132 @@ function expReset() {
   exploreFilter();
 }
 function exploreFilter() {
-  var cards = document.querySelectorAll('#exp-grid .group');
-  var term  = (document.getElementById('exp-search')||{value:''}).value.toLowerCase();
-  var wil   = (document.getElementById('exp-wilaya')||{value:''}).value.toLowerCase();
-  var vis   = 0;
-  cards.forEach(function(card) {
-    var title = (card.querySelector('h3')||{textContent:''}).textContent.toLowerCase();
-    var loc   = (card.querySelector('[data-icon="location_on"]')||card.querySelector('[data-icon="distance"]')||{parentElement:{textContent:''}}).parentElement.textContent.toLowerCase();
-    var catEl = card.querySelector('[class*="uppercase"]');
-    var cat   = catEl ? catEl.textContent.toLowerCase() : '';
-    var freeEl= card.querySelector('[class*="uppercase"]:last-child,[class*="font-bold tracking-tighter"]:last-of-type');
-    var isFree= card.innerHTML.toLowerCase().indexOf('free') > -1 || card.innerHTML.indexOf('Gratuit') > -1;
-
-    var termOk = !term || title.indexOf(term) > -1 || loc.indexOf(term) > -1;
-    var wilOk  = !wil  || loc.indexOf(wil) > -1 || title.indexOf(wil) > -1;
-    var catOk  = expActiveCat === 'all' || cat.indexOf(expActiveCat) > -1;
-    var priceOk= (!expFreeOnly && !expPaidOnly) || (expFreeOnly && isFree) || (expPaidOnly && !isFree);
-    var show   = termOk && wilOk && catOk && priceOk;
-    card.parentElement.style.display = show ? '' : 'none';
-    if (show) vis++;
-  });
-  var cnt = document.getElementById('exp-count');
-  if (cnt) cnt.textContent = vis + ' activité' + (vis > 1 ? 's' : '');
+  // This now re-renders the grid from MAP_EVENTS with filters
+  renderExpGrid();
 }
+
+// ── Explore grid state ──
+var expCurrentPage = 1;
+var expPerPage = 100;
+var expFilteredEvents = [];
+
+var EXP_CAT_COLORS = {sport:'#8b5cf6',cultural:'#06b6d4',workshop:'#f59e0b',volunteer:'#ec4899',program:'#f97316',event:'#22c55e',tech:'#4be277',health:'#f43f5e'};
+var EXP_CAT_LABELS = {sport:'Sport',cultural:'Culture',workshop:'Atelier',volunteer:'Benevolat',program:'Formation',event:'Evenement',tech:'Tech',health:'Sante'};
+var EXP_CAT_EMOJI = {sport:'\u{1F3C3}',cultural:'\u{1F3AD}',workshop:'\u{1F6E0}',volunteer:'\u2764\uFE0F',program:'\u{1F4CB}',event:'\u{1F389}',tech:'\u{1F4BB}',health:'\u{1F3E5}'};
+
+// Stock images for cards without images
+var EXP_STOCK_IMGS = [
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuBLlhxLtTcbcFzvDnMNl3s4b8E6X1ojQA_WDospRW7phiHCSF7u8wimqoTD_0Uu6W6dTxIk_SANXomWKDTE7h2pPBxk3uu5aR-W4IzFUl1ouycDRNcQwosXgxqMAmVYUIYnrbTZ3twS1w9GK_s_IUSBqYX0LfyZUAgfANWybg_eNMb0bs_OyEZDEdhedyyLY9FcTTtFLT-TkbXIYA_TX7psqZKUOSKerbENvboLs-5YYMMGLIwWnsY83A5lleu4-Z-b56owXiLmI7WV',
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuCfgPi6O4G-ZsgvCwur0V6HYTtsW0_slsBspl1bkBj8tQ7ymWFbx1tnRxWX5ITfo2wpgLh_jmXrIrVPsm2XrQkszC6HcfUJNqOeVDIrpP-Hc4ZFFShV2sWfe0VCE6m7ImEwkThmwEvsR8MeDRy0LJI23XmRwzxABKqMEmL-FoIqF_TA4cY8OT-06NYfGcscMl4Hvp0AcVa2_uYV1pzE7vMuJrbrx1P4tpl0sAAzsFBtqVE0ROeZSzmbbRyJGTE8zIuiahfOEL4tLzAO',
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuA8axxInQttOozN8rEP7MaC67I7HUwqMXYFRHKOXUqWXpLSCpN7gxO36Xp-OrYs1dsx0MKv4hy2pKaiZMyOGXQAu38LDBtCnFD_hyqq4dIumQ5HcNBIsFTYQLEgqDIROran-NbK_G6KoezmC78VnD-esbfG3Zz2edWp5nGD4JwozW7rEjrlZTRPIabjYeRusL1cuLr0u8S4JFg8jN6C99DVGGUCrzLOFMSIbRf9ET2VbmQmJk99xl2R0Xh7uV87GQ9KX4Gi-Pomer6k',
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuBgo2qBAHC0jo8-vTpfV5m2EF1Ir2abkxRGemuolO_sKoOAhm1YGVrXVqDZn3Gineb18T-vFNDXKSRl8-cBfVC1FPzY1g7nyytjMjAIvD3_sOci_X1CvubM4WRnToNfNuONI-R6RiMAPm0HmfynBJT7QEYlcYVV5dKQ_ZaIA0KXOhHJOkW9SIuQuS0nIZco0WYjg0qYsmRPc1yoRUySlHOPvZX9-D1dTDZihvSaIKPQUIryz-epILNX7cZrBIwlJe2LDzvQJzCxhfKJ',
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuBBH1NyFlZb9cOkyqZlTIdM2f5U0OxGeFRFyyqla3z4PuK0jLpIEeXjMUqyWNiD2_C-9CyuFZEI9jhDVHVeKGd2QVfs3u5bldMvzpWfYjpu4EY6kB52X8Z8DNj-14Fa7VdS1_lOVd3vnJSRKn9FTghBcnXgobi-eCqYu6qdW87fxcpqCxOzMrjJbQVgLWhVxE9o9SrmvmTAruiD28zhRxTJNqzSJQ1-0YqSxUm4elyVn66rewpYulNlN0D_GxuFKTPhupA4jdtC43ZM',
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuBE7bxo7lbQ4L_Xx-Kqn_sWzYsVVu5QkQ2YTMZnjeuDdScG7sBhLczn6-M2AoDFs05ReQE7JnAmFiCbvz-VVfcJWX4efpGNCaquXfwq_ICy5zuIQj8SQwHmCtEPAvkeDYJa1RyZ-P0WPzLsLZ7EfdyfI_1x30O57Q4kTIffS4sh0osqZubucOpEpvRkCw5etrreWabRnxKPw6fujNhQM2SN_z1h6TaYYfYRLh7yfAYNiq5MRCYYg411qWCos3ZfhyNU72hzaANQkh_v',
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuChCtfS2ZnlN5NwKgCZVz2V4tRwWc5XWP2tk9ndzggHnEariz07tMSegMy9N3vKj5UbNnErvbhixTXiNB4sq_orUXazK3RyhCrObANw9wY2US9XTdWoUDcRt05VY03AuNBqotWbF1Qh6MqZxWghxuDzqv3ijOnl5AO_SLkdgSUwwhw5pl44VNi9rJNwaXOcSz1_XdnVe-_1mLxYoaac0OAdJ8Yc7cNKz9E_KpuYqWo-B7IvOXmhtEf_hGv2xxbcYEUQI4whyYfM5n95'
+];
+
+function getExpFiltered() {
+  if (typeof MAP_EVENTS === 'undefined') return [];
+  var term = (document.getElementById('exp-search') || {value:''}).value.toLowerCase();
+  var wil = (document.getElementById('exp-wilaya') || {value:''}).value.toLowerCase();
+
+  var filtered = MAP_EVENTS.filter(function(ev) {
+    var termOk = !term || ev.title.toLowerCase().indexOf(term) > -1 || (ev.wilaya||'').toLowerCase().indexOf(term) > -1 || (ev.cat||'').toLowerCase().indexOf(term) > -1 || (ev.desc||'').toLowerCase().indexOf(term) > -1 || (ev.center||'').toLowerCase().indexOf(term) > -1;
+    var wilOk = !wil || (ev.wilaya||'').toLowerCase().indexOf(wil) > -1;
+    var catOk = typeof expActiveCat === 'undefined' || expActiveCat === 'all' || ev.cat === expActiveCat;
+    var priceOk = (!expFreeOnly && !expPaidOnly) || (expFreeOnly && ev.free) || (expPaidOnly && !ev.free);
+    return termOk && wilOk && catOk && priceOk;
+  });
+
+  if (typeof sortEventsByPreference === 'function') filtered = sortEventsByPreference(filtered);
+  return filtered;
+}
+
+function renderExpGrid() {
+  var grid = document.getElementById('exp-grid');
+  if (!grid) return;
+
+  expFilteredEvents = getExpFiltered();
+  var totalPages = Math.max(1, Math.ceil(expFilteredEvents.length / expPerPage));
+  if (expCurrentPage > totalPages) expCurrentPage = totalPages;
+
+  var startIdx = (expCurrentPage - 1) * expPerPage;
+  var pageEvents = expFilteredEvents.slice(startIdx, startIdx + expPerPage);
+
+  grid.innerHTML = pageEvents.map(function(ev, i) {
+    var c = EXP_CAT_COLORS[ev.cat] || '#22c55e';
+    var lbl = EXP_CAT_LABELS[ev.cat] || ev.cat;
+    var emoji = EXP_CAT_EMOJI[ev.cat] || '';
+    var img = ev.image_url || EXP_STOCK_IMGS[(startIdx + i) % EXP_STOCK_IMGS.length];
+    var dnaScore = ev.dna ? Math.min(99, Math.round(ev.dna / 6)) : 50;
+
+    return '<div class="group" style="border-radius:16px;overflow:hidden;border:1px solid #1f2f1f;background:#111a11;cursor:pointer;transition:border-color .2s,transform .2s;display:flex;flex-direction:column" '
+      + 'onmouseover="this.style.borderColor=\'#4be27750\';this.style.transform=\'translateY(-3px)\'" '
+      + 'onmouseout="this.style.borderColor=\'#1f2f1f\';this.style.transform=\'translateY(0)\'" '
+      + 'onclick="openEventDetail(\''+ev.id+'\',\'explore\')">'
+      + '<div style="height:200px;overflow:hidden;position:relative">'
+      + '<img src="'+img+'" alt="'+ev.title+'" style="width:100%;height:100%;object-fit:cover;transition:transform .5s" onmouseover="this.style.transform=\'scale(1.07)\'" onmouseout="this.style.transform=\'scale(1)\'"/>'
+      + '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,10,.75) 0%,transparent 55%)"></div>'
+      + '<div style="position:absolute;top:12px;left:12px;background:'+c+'cc;backdrop-filter:blur(6px);color:#fff;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;font-family:Inter">'+emoji+' '+lbl+'</div>'
+      + '<div style="position:absolute;top:12px;right:12px;background:#22c55e;color:#003915;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;font-family:Inter">DNA '+dnaScore+'%</div>'
+      + '<div style="position:absolute;bottom:10px;left:14px">'
+      + '<span style="background:'+(ev.free?'#22c55e20':'#f59e0b20')+';color:'+(ev.free?'#4be277':'#f59e0b')+';border:1px solid '+(ev.free?'#4be27740':'#f59e0b40')+';padding:2px 9px;border-radius:999px;font-size:10px;font-weight:700;font-family:Inter">'+(ev.free?'GRATUIT':'PAYANT')+'</span>'
+      + '</div></div>'
+      + '<div style="padding:16px 18px;flex:1;display:flex;flex-direction:column;gap:8px">'
+      + '<h3 style="font-family:Cairo;font-size:18px;font-weight:700;color:#f0fdf4;margin:0;line-height:1.3">'+ev.title+'</h3>'
+      + '<div style="display:flex;gap:14px;font-size:12px;color:#86efac;font-family:Inter;flex-wrap:wrap">'
+      + '<span>\u{1F4CD} '+(ev.wilaya||'')+(ev.center?' \u00B7 '+ev.center:'')+'</span><span>\u{1F4C5} '+ev.date+'</span>'
+      + '</div>'
+      + '<div style="margin-top:auto;padding-top:10px;border-top:1px solid #1f2f1f;display:flex;align-items:center;justify-content:space-between">'
+      + '<div>'
+      + '<span style="font-size:11px;color:#bccbb9;font-family:Inter">'+(ev.spots||0)+' places \u00A0\u00B7\u00A0 </span>'
+      + '<span style="font-size:13px;font-weight:700;color:#ffb95f;font-family:Inter">+'+(ev.dna||100)+' DNA</span>'
+      + '</div>'
+      + '<button onclick="event.stopPropagation();openEventDetail(\''+ev.id+'\',\'explore\')" style="background:linear-gradient(135deg,#22c55e,#16a34a);color:#003915;border:none;padding:7px 18px;border-radius:8px;font-size:12px;font-weight:700;font-family:Inter;cursor:pointer;transition:transform .15s" onmouseover="this.style.transform=\'scale(1.05)\'" onmouseout="this.style.transform=\'scale(1)\'">S\'inscrire \u2192</button>'
+      + '</div></div></div>';
+  }).join('');
+
+  // Update count
+  var cnt = document.getElementById('exp-count');
+  if (cnt) cnt.textContent = expFilteredEvents.length + ' activite' + (expFilteredEvents.length > 1 ? 's' : '');
+
+  // Render pagination
+  renderExpPagination(totalPages);
+}
+
+function renderExpPagination(totalPages) {
+  var btnsDiv = document.getElementById('exp-page-btns');
+  if (!btnsDiv) return;
+
+  btnsDiv.innerHTML = '';
+  for (var p = 1; p <= totalPages; p++) {
+    var isActive = p === expCurrentPage;
+    var btn = document.createElement('button');
+    btn.textContent = p;
+    btn.dataset.page = p;
+    btn.style.cssText = 'width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:14px;font-weight:700;font-family:Inter;cursor:pointer;transition:all .2s;border:1px solid ' + (isActive ? '#4be277' : '#1f2f1f') + ';background:' + (isActive ? '#4be277' : '#111a11') + ';color:' + (isActive ? '#003915' : '#86efac');
+    btn.onclick = (function(page) { return function() { expCurrentPage = page; renderExpGrid(); window.scrollTo({top: document.getElementById('exp-grid').offsetTop - 100, behavior:'smooth'}); }; })(p);
+    btnsDiv.appendChild(btn);
+  }
+
+  // Disable prev/next
+  var prev = document.getElementById('exp-prev');
+  var next = document.getElementById('exp-next');
+  if (prev) prev.style.opacity = expCurrentPage <= 1 ? '0.3' : '1';
+  if (next) next.style.opacity = expCurrentPage >= totalPages ? '0.3' : '1';
+}
+
+function expChangePage(delta) {
+  var totalPages = Math.max(1, Math.ceil(expFilteredEvents.length / expPerPage));
+  var newPage = expCurrentPage + delta;
+  if (newPage < 1 || newPage > totalPages) return;
+  expCurrentPage = newPage;
+  renderExpGrid();
+  window.scrollTo({top: document.getElementById('exp-grid').offsetTop - 100, behavior:'smooth'});
+}
+
+// Explore grid rendered via navCallbacks below
+
 </script>
 
 <!-- ===================== PAGE: ASSISTANT ===================== -->
@@ -2383,7 +2380,7 @@ function exploreFilter() {
             </div>
 
             <!-- Forgot password link -->
-            <a href="#" id="auth-forgot" onclick="alert('Lien de réinitialisation envoyé !'); return false;" 
+            <a href="#" id="auth-forgot" onclick="handleForgotPassword(); return false;" 
                style="align-self:flex-end;font-family:Inter;font-size:12px;color:#4be277;font-weight:600;text-decoration:none;transition:all .2s;margin-top:-6px" 
                onmouseover="this.style.color='#55e882';this.style.textDecoration='underline'" onmouseout="this.style.color='#4be277';this.style.textDecoration='none'">
               Mot de passe oublié ?
@@ -2616,48 +2613,229 @@ function togglePasswordVisibility(fieldId, btn) {
   }
 }
 
-function handleAuthSubmit(e) {
-  e.preventDefault();
-  const email = document.getElementById('auth-email').value;
-  const password = document.getElementById('auth-password').value;
-  
-  if (email && password) {
-    localStorage.setItem('nabda_logged_in', 'true');
-    alert(authTab === 'signin' ? 'Connexion réussie !' : 'Compte créé avec succès !');
-    
-    const hasProfile = localStorage.getItem('nabda_profile') !== null;
-    if (hasProfile) {
-      navigate('home');
-    } else {
-      navigate('onboarding');
-    }
-    document.getElementById('auth-form').reset();
+
+
+async function handleForgotPassword() {
+  var email = document.getElementById('auth-email').value.trim();
+  if (!email) { showAuthMessage('Entre ton email d\'abord.', 'error'); return; }
+  try {
+    var result = await _sb.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin });
+    if (result.error) throw result.error;
+    showAuthMessage('Lien de r\u00e9initialisation envoy\u00e9 \u00e0 ' + email, 'success');
+  } catch(err) {
+    showAuthMessage(err.message || 'Erreur lors de l\'envoi.', 'error');
   }
 }
 
-function handleSocialAuth(provider) {
-  localStorage.setItem('nabda_logged_in', 'true');
-  alert('Connexion via ' + provider + ' réussie !');
-  
-  const hasProfile = localStorage.getItem('nabda_profile') !== null;
-  if (hasProfile) {
-    navigate('home');
+function showAuthMessage(msg, type) {
+  var existing = document.getElementById('auth-toast');
+  if (existing) existing.remove();
+  var el = document.createElement('div');
+  el.id = 'auth-toast';
+  el.style.cssText = 'position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:9999;padding:14px 24px;border-radius:14px;font-family:Inter;font-size:14px;font-weight:600;backdrop-filter:blur(16px);box-shadow:0 8px 32px rgba(0,0,0,.5);animation:fadeSlide .3s ease both;max-width:420px;text-align:center;';
+  if (type === 'error') {
+    el.style.background = 'rgba(239,68,68,.15)';
+    el.style.border = '1px solid rgba(239,68,68,.4)';
+    el.style.color = '#fca5a5';
   } else {
-    navigate('onboarding');
+    el.style.background = 'rgba(75,226,119,.12)';
+    el.style.border = '1px solid rgba(75,226,119,.3)';
+    el.style.color = '#86efac';
+  }
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(function() { el.style.opacity = '0'; el.style.transition = 'opacity .4s'; setTimeout(function() { el.remove(); }, 400); }, 4000);
+}
+
+async function handleAuthSubmit(e) {
+  e.preventDefault();
+  var btn = document.getElementById('auth-btn-submit');
+  var email = document.getElementById('auth-email').value.trim();
+  var password = document.getElementById('auth-password').value;
+  var nameVal = (document.getElementById('auth-name') || {}).value || '';
+
+  if (!email || !password) return;
+
+  // Disable button + show loading
+  if (btn) { btn.disabled = true; btn.textContent = 'Chargement...'; btn.style.opacity = '0.7'; }
+
+  try {
+    if (authTab === 'signup') {
+      // ── SIGN UP ──
+      var result = await _sb.auth.signUp({
+        email: email,
+        password: password,
+        options: { data: { display_name: nameVal } }
+      });
+      if (result.error) throw result.error;
+
+      // Check if email confirmation required
+      if (result.data.user && result.data.user.identities && result.data.user.identities.length === 0) {
+        showAuthMessage('Un compte existe d\u00e9j\u00e0 avec cet email.', 'error');
+      } else if (result.data.session) {
+        // Auto-confirmed (dev mode)
+        showAuthMessage('Compte cr\u00e9\u00e9 !', 'success');
+        localStorage.setItem('nabda_logged_in', 'true');
+        localStorage.setItem('nabda_user_id', result.data.user.id);
+        localStorage.setItem('nabda_user_email', email);
+        document.getElementById('auth-form').reset();
+        navigate('onboarding');
+      } else {
+        showAuthMessage('V\u00e9rifie ton email pour confirmer ton compte.', 'success');
+      }
+
+    } else {
+      // ── SIGN IN ──
+      var result = await _sb.auth.signInWithPassword({ email: email, password: password });
+      if (result.error) throw result.error;
+
+      showAuthMessage('Connexion r\u00e9ussie !', 'success');
+      localStorage.setItem('nabda_logged_in', 'true');
+      localStorage.setItem('nabda_user_id', result.data.user.id);
+      localStorage.setItem('nabda_user_email', email);
+      document.getElementById('auth-form').reset();
+
+      var hasProfile = isOnboardingDone();
+      navigate(hasProfile ? 'home' : 'onboarding');
+    }
+  } catch (err) {
+    console.error('[Auth Error]', err);
+    var msg = err.message || 'Erreur de connexion';
+    // Translate common Supabase errors
+    if (msg.includes('Invalid login'))      msg = 'Email ou mot de passe incorrect.';
+    if (msg.includes('already registered')) msg = 'Cet email est d\u00e9j\u00e0 enregistr\u00e9.';
+    if (msg.includes('Password should'))    msg = 'Le mot de passe doit avoir au moins 6 caract\u00e8res.';
+    if (msg.includes('rate limit'))         msg = 'Trop de tentatives. R\u00e9essaye dans quelques minutes.';
+    showAuthMessage(msg, 'error');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = authTab === 'signin' ? 'Se Connecter' : 'Cr\u00e9er un compte'; btn.style.opacity = '1'; }
+  }
+}
+async function handleSocialAuth(provider) {
+  const providerMap = { Google: 'google', Apple: 'apple' };
+  const sbProvider  = providerMap[provider] || provider.toLowerCase();
+  const { error }   = await _sb.auth.signInWithOAuth({
+    provider: sbProvider,
+    options:  { redirectTo: window.location.href }
+  });
+  if (error) {
+    showAuthMessage(error.message || 'Social login failed.', 'error');
   }
 }
 
-function logout() {
+async function logout() {
+  try { await _sb.auth.signOut(); } catch(e) { console.warn('Logout error:', e); }
   localStorage.removeItem('nabda_logged_in');
   localStorage.removeItem('nabda_profile');
-  alert('Déconnexion réussie !');
+  localStorage.removeItem('nabda_user_id');
+  localStorage.removeItem('nabda_user_email');
   navigate('auth');
 }
 
 
+// ── Supabase: join event ──
+async function joinEvent(eventId) {
+  var userId = localStorage.getItem('nabda_user_id');
+  if (!userId) { showAuthMessage('Connecte-toi d\'abord !', 'error'); return; }
+  try {
+    var { error } = await _sb.from('event_participants').insert({ event_id: eventId, user_id: userId });
+    if (error) {
+      if (error.code === '23505') { showAuthMessage('Tu participes d\u00e9j\u00e0 !', 'error'); return; }
+      throw error;
+    }
+    showAuthMessage('Inscription confirm\u00e9e ! +DNA gagn\u00e9s', 'success');
+
+    // DB trigger auto-updates preference weights.
+    // Refresh local cache so next page views use new weights.
+    loadUserPreferences();
+  } catch(err) {
+    console.error('[Join Error]', err);
+    showAuthMessage(err.message || 'Erreur', 'error');
+  }
+}
+
+// ── User preferences cache (for client-side sorting) ──
+var userPrefs = null;
+
+async function loadUserPreferences() {
+  var userId = localStorage.getItem('nabda_user_id');
+  if (!userId || typeof _sb === 'undefined') return;
+  try {
+    var { data, error } = await _sb.from('user_profiles').select('*').eq('id', userId).single();
+    if (error) throw error;
+    if (data) {
+      userPrefs = data;
+      console.log('[Prefs] Loaded user preferences:', data.interests, '| wilaya:', data.wilaya);
+    }
+  } catch(e) { console.warn('[Prefs] Could not load:', e.message); }
+}
+
+// ── Sort events by user preferences ──
+function sortEventsByPreference(events) {
+  if (!userPrefs) return events;
+  return events.slice().sort(function(a, b) {
+    var prefA = userPrefs['pref_' + (a.cat || a.category)] || 0;
+    var prefB = userPrefs['pref_' + (b.cat || b.category)] || 0;
+    // Wilaya bonus: +0.5 for same wilaya
+    if (userPrefs.wilaya) {
+      if ((a.wilaya || '').toLowerCase() === userPrefs.wilaya.toLowerCase()) prefA += 0.5;
+      if ((b.wilaya || '').toLowerCase() === userPrefs.wilaya.toLowerCase()) prefB += 0.5;
+    }
+    return prefB - prefA; // highest preference first
+  });
+}
+
+// Load preferences on startup
+(async function() {
+  if (localStorage.getItem('nabda_logged_in') === 'true') {
+    setTimeout(loadUserPreferences, 1500);
+  }
+})();
+
+// ── Supabase: add comment ──
+async function addEventComment(eventId, content) {
+  var userId = localStorage.getItem('nabda_user_id');
+  if (!userId) { showAuthMessage('Connecte-toi d\'abord !', 'error'); return; }
+  try {
+    var { error } = await _sb.from('event_comments').insert({ event_id: eventId, user_id: userId, content: content });
+    if (error) throw error;
+    showAuthMessage('Commentaire ajout\u00e9 !', 'success');
+    return true;
+  } catch(err) {
+    console.error('[Comment Error]', err);
+    showAuthMessage(err.message || 'Erreur', 'error');
+    return false;
+  }
+}
+
+// ── Supabase: get current user ──
+async function getCurrentUser() {
+  try {
+    var { data, error } = await _sb.auth.getUser();
+    if (error) throw error;
+    return data.user;
+  } catch(e) {
+    return null;
+  }
+}
+
+// ── Supabase: check session on load ──
+(async function checkSession() {
+  if (typeof _sb === 'undefined') { console.log('[Supabase] _sb not ready yet for session check — auth listener will handle it'); return; }
+  try {
+    var { data } = await _sb.auth.getSession();
+    if (data.session) {
+      localStorage.setItem('nabda_logged_in', 'true');
+      localStorage.setItem('nabda_user_id', data.session.user.id);
+      localStorage.setItem('nabda_user_email', data.session.user.email);
+      console.log('[Supabase] Active session:', data.session.user.email);
+    }
+  } catch(e) { console.warn('[Supabase] Session check:', e); }
+})();
+
 function navigate(pageId) {
   const isLoggedIn = localStorage.getItem('nabda_logged_in') === 'true';
-  const hasProfile = localStorage.getItem('nabda_profile') !== null;
+  const hasProfile = isOnboardingDone();
   
   // Strict User Journey Routing
   if (!isLoggedIn) {
@@ -2692,6 +2870,9 @@ function navigate(pageId) {
     topNav.style.display = (pageId === 'auth' || pageId === 'onboarding') ? 'none' : '';
   }
   requestAnimationFrame(() => target.classList.add('page-transition'));
+
+  // ── Auto-render explore grid when navigating to explore ──
+  if (pageId === 'explore') { setTimeout(function(){ if(typeof renderExpGrid==='function'){ expActiveCat='all'; expFreeOnly=false; expPaidOnly=false; if(document.getElementById('exp-search')) document.getElementById('exp-search').value=''; renderExpGrid(); expCat('all'); } }, 100); }
   
   // Update nav active states
   updateNav(pageId);
@@ -2786,7 +2967,7 @@ function showMapPlaceholder() {
 // Handle hash routing on load
 window.addEventListener('load', () => {
   const isLoggedIn = localStorage.getItem('nabda_logged_in') === 'true';
-  const hasProfile = localStorage.getItem('nabda_profile') !== null;
+  const hasProfile = isOnboardingDone();
   
   let targetPage = 'home';
   if (!isLoggedIn) {
@@ -3121,7 +3302,52 @@ var detailRegistered = {};
 
 function openEventDetail(eventId, fromPage) {
   fromPage = fromPage || 'explore';
-  var ev = EVENTS_DETAIL.find(function(e){ return e.id === eventId; });
+  var ev = EVENTS_DETAIL.find(function(e){ return e.id === eventId || String(e.id) === String(eventId); });
+
+  // Fallback: build detail from MAP_EVENTS (Supabase data)
+  if (!ev && typeof MAP_EVENTS !== 'undefined') {
+    var mapEv = MAP_EVENTS.find(function(e){ return String(e.id) === String(eventId); });
+    if (mapEv) {
+      var CAT_COLORS_LOCAL = {sport:'#8b5cf6',cultural:'#06b6d4',workshop:'#f59e0b',volunteer:'#ec4899',program:'#f97316',event:'#22c55e',tech:'#4be277',health:'#f43f5e'};
+      var CAT_LABELS_LOCAL = {sport:'Sport',cultural:'Culture',workshop:'Atelier',volunteer:'Benevolat',program:'Formation',event:'Evenement',tech:'Tech',health:'Sante'};
+      ev = {
+        id: mapEv.id,
+        title: mapEv.title,
+        cat: mapEv.cat,
+        cat_label: CAT_LABELS_LOCAL[mapEv.cat] || mapEv.cat,
+        cat_color: CAT_COLORS_LOCAL[mapEv.cat] || '#22c55e',
+        dna: mapEv.dna ? (Math.min(99, Math.round(mapEv.dna / 6)) + '%') : '50%',
+        dna_pts: '+' + (mapEv.dna || 100) + ' DNA',
+        price: mapEv.free ? 'GRATUIT' : 'PAYANT',
+        price_color: mapEv.free ? '#4be277' : '#f59e0b',
+        date: mapEv.date || '',
+        time: '',
+        location: (mapEv.center || '') + ', ' + (mapEv.wilaya || ''),
+        address: mapEv.wilaya + ', Algerie',
+        spots: mapEv.spots || 0,
+        registered: 0,
+        lat: mapEv.lat,
+        lng: mapEv.lng,
+        organizer: mapEv.center || 'ODEJ',
+        desc: mapEv.desc || '',
+        what_to_bring: ['Piece identite', 'Bouteille eau'],
+        tips: ['Arriver 15 min avant'],
+        img_hero: (function(){
+          var STOCK={
+            sport:'https://lh3.googleusercontent.com/aida-public/AB6AXuBBH1NyFlZb9cOkyqZlTIdM2f5U0OxGeFRFyyqla3z4PuK0jLpIEeXjMUqyWNiD2_C-9CyuFZEI9jhDVHVeKGd2QVfs3u5bldMvzpWfYjpu4EY6kB52X8Z8DNj-14Fa7VdS1_lOVd3vnJSRKn9FTghBcnXgobi-eCqYu6qdW87fxcpqCxOzMrjJbQVgLWhVxE9o9SrmvmTAruiD28zhRxTJNqzSJQ1-0YqSxUm4elyVn66rewpYulNlN0D_GxuFKTPhupA4jdtC43ZM',
+            cultural:'https://lh3.googleusercontent.com/aida-public/AB6AXuChCtfS2ZnlN5NwKgCZVz2V4tRwWc5XWP2tk9ndzggHnEariz07tMSegMy9N3vKj5UbNnErvbhixTXiNB4sq_orUXazK3RyhCrObANw9wY2US9XTdWoUDcRt05VY03AuNBqotWbF1Qh6MqZxWghxuDzqv3ijOnl5AO_SLkdgSUwwhw5pl44VNi9rJNwaXOcSz1_XdnVe-_1mLxYoaac0OAdJ8Yc7cNKz9E_KpuYqWo-B7IvOXmhtEf_hGv2xxbcYEUQI4whyYfM5n95',
+            workshop:'https://lh3.googleusercontent.com/aida-public/AB6AXuCfgPi6O4G-ZsgvCwur0V6HYTtsW0_slsBspl1bkBj8tQ7ymWFbx1tnRxWX5ITfo2wpgLh_jmXrIrVPsm2XrQkszC6HcfUJNqOeVDIrpP-Hc4ZFFShV2sWfe0VCE6m7ImEwkThmwEvsR8MeDRy0LJI23XmRwzxABKqMEmL-FoIqF_TA4cY8OT-06NYfGcscMl4Hvp0AcVa2_uYV1pzE7vMuJrbrx1P4tpl0sAAzsFBtqVE0ROeZSzmbbRyJGTE8zIuiahfOEL4tLzAO',
+            volunteer:'https://lh3.googleusercontent.com/aida-public/AB6AXuA8axxInQttOozN8rEP7MaC67I7HUwqMXYFRHKOXUqWXpLSCpN7gxO36Xp-OrYs1dsx0MKv4hy2pKaiZMyOGXQAu38LDBtCnFD_hyqq4dIumQ5HcNBIsFTYQLEgqDIROran-NbK_G6KoezmC78VnD-esbfG3Zz2edWp5nGD4JwozW7rEjrlZTRPIabjYeRusL1cuLr0u8S4JFg8jN6C99DVGGUCrzLOFMSIbRf9ET2VbmQmJk99xl2R0Xh7uV87GQ9KX4Gi-Pomer6k',
+            program:'https://lh3.googleusercontent.com/aida-public/AB6AXuBE7bxo7lbQ4L_Xx-Kqn_sWzYsVVu5QkQ2YTMZnjeuDdScG7sBhLczn6-M2AoDFs05ReQE7JnAmFiCbvz-VVfcJWX4efpGNCaquXfwq_ICy5zuIQj8SQwHmCtEPAvkeDYJa1RyZ-P0WPzLsLZ7EfdyfI_1x30O57Q4kTIffS4sh0osqZubucOpEpvRkCw5etrreWabRnxKPw6fujNhQM2SN_z1h6TaYYfYRLh7yfAYNiq5MRCYYg411qWCos3ZfhyNU72hzaANQkh_v',
+            event:'https://lh3.googleusercontent.com/aida-public/AB6AXuBgo2qBAHC0jo8-vTpfV5m2EF1Ir2abkxRGemuolO_sKoOAhm1YGVrXVqDZn3Gineb18T-vFNDXKSRl8-cBfVC1FPzY1g7nyytjMjAIvD3_sOci_X1CvubM4WRnToNfNuONI-R6RiMAPm0HmfynBJT7QEYlcYVV5dKQ_ZaIA0KXOhHJOkW9SIuQuS0nIZco0WYjg0qYsmRPc1yoRUySlHOPvZX9-D1dTDZihvSaIKPQUIryz-epILNX7cZrBIwlJe2LDzvQJzCxhfKJ',
+            tech:'https://lh3.googleusercontent.com/aida-public/AB6AXuBLlhxLtTcbcFzvDnMNl3s4b8E6X1ojQA_WDospRW7phiHCSF7u8wimqoTD_0Uu6W6dTxIk_SANXomWKDTE7h2pPBxk3uu5aR-W4IzFUl1ouycDRNcQwosXgxqMAmVYUIYnrbTZ3twS1w9GK_s_IUSBqYX0LfyZUAgfANWybg_eNMb0bs_OyEZDEdhedyyLY9FcTTtFLT-TkbXIYA_TX7psqZKUOSKerbENvboLs-5YYMMGLIwWnsY83A5lleu4-Z-b56owXiLmI7WV'
+          };
+          return STOCK[mapEv.cat] || STOCK.event;
+        })(),
+        gallery: []
+      };
+    }
+  }
   if (!ev) return;
   currentDetailEvent = ev;
 
@@ -3134,7 +3360,17 @@ function openEventDetail(eventId, fromPage) {
 
   // Hero image
   var hero = document.getElementById('detail-hero-img');
-  if (hero) { hero.src = ev.img_hero; hero.alt = ev.title; }
+  if (hero) {
+    if (ev.img_hero) {
+      hero.src = ev.img_hero;
+    } else {
+      // No image — hide img tag and use gradient on wrapper
+      hero.src = '';
+      hero.style.display = 'none';
+      var wrap = document.getElementById('detail-hero-wrap');
+      if (wrap) wrap.style.background = 'linear-gradient(135deg, ' + (ev.cat_color || '#22c55e') + '30, #0a0f0a)';
+    }
+  }
 
   // Title overlay
   var t = document.getElementById('detail-title');
@@ -3143,7 +3379,7 @@ function openEventDetail(eventId, fromPage) {
   // Badges
   var bd = document.getElementById('detail-badges');
   if (bd) bd.innerHTML =
-    '<span style="background:'+ev.cat_color+'cc;backdrop-filter:blur(6px);color:#fff;padding:5px 14px;border-radius:999px;font-size:12px;font-weight:700;font-family:Inter">'+ev.cat+'</span>' +
+    '<span style="background:'+ev.cat_color+'cc;backdrop-filter:blur(6px);color:#fff;padding:5px 14px;border-radius:999px;font-size:12px;font-weight:700;font-family:Inter">'+(ev.cat_label||ev.cat)+'</span>' +
     '<span style="background:'+ev.price_bg+'20;color:'+ev.price_color+';border:1px solid '+ev.price_color+'50;padding:5px 14px;border-radius:999px;font-size:12px;font-weight:700;font-family:Inter;backdrop-filter:blur(6px)">'+ev.price+'</span>';
   // DNA badge
   var db = document.getElementById('detail-dna-badge');
@@ -3320,6 +3556,15 @@ function initDetailMiniMap(lat, lng, title) {
   });
 })();
 
+
+// ── Render Supabase events on Explore page ──
+
+
+// Explore search
+
+
+
+
 // Also hook navigate to handle event-detail page
 (function(){
   var origNav = window.navigate;
@@ -3354,7 +3599,7 @@ var CAT_LABELS={
 };
 
 // 20 events across Algeria
-var MAP_EVENTS=[
+var MAP_EVENTS_FALLBACK=[
   {id:1, title:"Tournoi de Football Jeunesse",     cat:"sport",     lat:36.7538,lng:3.0588,  wilaya:"Alger",       date:"15 juin 2026", spots:22, free:true,  dna:150, center:"ODEJ Alger Centre",   desc:"Competition de football inter-wilayas pour les 16-25 ans."},
   {id:2, title:"Atelier Solaire DIY",               cat:"workshop",  lat:35.6969,lng:-0.6331, wilaya:"Oran",        date:"18 juin 2026", spots:15, free:true,  dna:200, center:"ODEJ Oran",           desc:"Construisez un panneau solaire de 50W avec des materiaux recycles."},
   {id:3, title:"Nettoyage des Plages de Tipaza",    cat:"volunteer", lat:36.5894,lng:2.4476,  wilaya:"Tipaza",      date:"20 juin 2026", spots:45, free:true,  dna:180, center:"ODEJ Tipaza",         desc:"Operation de nettoyage de la plage de Tipaza."},
@@ -3365,17 +3610,52 @@ var MAP_EVENTS=[
   {id:8, title:"Reboisement Foret du Chrea",        cat:"volunteer", lat:36.4700,lng:2.8300,  wilaya:"Blida",       date:"5 juil 2026",  spots:60, free:true,  dna:300, center:"Foret du Chrea",      desc:"Plantation de 1000 cedres en partenariat avec la DGF."},
   {id:9, title:"Programme Leadership National",     cat:"program",   lat:36.7638,lng:3.0988,  wilaya:"Alger",       date:"8 juil 2026",  spots:25, free:false, dna:600, center:"ODEJ Ben Aknoun",     desc:"Formation intensive sur 5 jours en leadership."},
   {id:10,title:"Journee Benevolat Bejaia",          cat:"volunteer", lat:36.7515,lng:5.0560,  wilaya:"Bejaia",      date:"10 juil 2026", spots:80, free:true,  dna:200, center:"ODEJ Bejaia",         desc:"Actions solidaires dans 5 quartiers de Bejaia."},
-  {id:11,title:"Atelier Photo & Environnement",     cat:"cultural",  lat:35.6669,lng:-0.5831, wilaya:"Oran",        date:"12 juil 2026", spots:20, free:true,  dna:100, center:"Centre Jeunesse Oran", desc:"Photographier la nature et l'environnement urbain."},
+  {id:11,title:"Atelier Photo & Environnement",     cat:"cultural",  lat:35.6669,lng:-0.5831, wilaya:"Oran",        date:"12 juil 2026", spots:20, free:true,  dna:100, center:"Centre Jeunesse Oran", desc:"Photographier la nature et l environnement urbain."},
   {id:12,title:"Tournoi Handball Inter-Wilayas",    cat:"sport",     lat:36.8050,lng:3.0788,  wilaya:"Alger",       date:"15 juil 2026", spots:40, free:true,  dna:150, center:"ODEJ Bab Ezzouar",    desc:"Championnat de handball jeunes U21."},
   {id:13,title:"Formation Entrepreneuriat",         cat:"program",   lat:34.8500,lng:5.7333,  wilaya:"Biskra",      date:"18 juil 2026", spots:30, free:false, dna:400, center:"ODEJ Biskra",         desc:"4 jours de formation business plan et financement."},
-  {id:14,title:"Camp Decouverte Sahara",            cat:"event",     lat:32.4800,lng:3.6700,  wilaya:"Ghardaia",    date:"20 juil 2026", spots:50, free:false, dna:350, center:"ODEJ Ghardaia",       desc:"7 jours d'exploration du desert."},
-  {id:15,title:"Musique Malouf Constantinois",      cat:"cultural",  lat:36.3850,lng:6.6547,  wilaya:"Constantine", date:"22 juil 2026", spots:25, free:true,  dna:90,  center:"Institut Culturel Cst","desc":"Initiation au malouf avec des musiciens."},
+  {id:14,title:"Camp Decouverte Sahara",            cat:"event",     lat:32.4800,lng:3.6700,  wilaya:"Ghardaia",    date:"20 juil 2026", spots:50, free:false, dna:350, center:"ODEJ Ghardaia",       desc:"7 jours d exploration du desert."},
+  {id:15,title:"Musique Malouf Constantinois",      cat:"cultural",  lat:36.3850,lng:6.6547,  wilaya:"Constantine", date:"22 juil 2026", spots:25, free:true,  dna:90,  center:"Institut Culturel Cst",desc:"Initiation au malouf avec des musiciens."},
   {id:16,title:"Yoga & Meditation Tipaza",          cat:"sport",     lat:36.5994,lng:2.4876,  wilaya:"Tipaza",      date:"25 juil 2026", spots:30, free:true,  dna:60,  center:"Parc Archeologique",  desc:"Seance de yoga face aux ruines romaines."},
   {id:17,title:"Eco-Conscience Tamanrasset",        cat:"volunteer", lat:22.7851,lng:5.5228,  wilaya:"Tamanrasset", date:"28 juil 2026", spots:40, free:true,  dna:280, center:"ODEJ Tamanrasset",    desc:"Sensibilisation au Hoggar."},
-  {id:18,title:"Exposition Arts Plastiques",        cat:"cultural",  lat:36.7269,lng:4.0897,  wilaya:"Tizi Ouzou", date:"30 juil 2026", spots:100,free:true,  dna:70,  center:"Galerie des Arts TO",  desc:"Exposition d'artistes algeriens emergents."},
+  {id:18,title:"Exposition Arts Plastiques",        cat:"cultural",  lat:36.7269,lng:4.0897,  wilaya:"Tizi Ouzou", date:"30 juil 2026", spots:100,free:true,  dna:70,  center:"Galerie des Arts TO",  desc:"Exposition d artistes algeriens emergents."},
   {id:19,title:"Stage Cinema Jeunesse",             cat:"program",   lat:36.7438,lng:3.0488,  wilaya:"Alger",       date:"2 aout 2026",  spots:15, free:false, dna:450, center:"Cine-Club Alger",     desc:"10 jours de cinema, realisation et montage."},
   {id:20,title:"Championnat National Echecs",       cat:"event",     lat:36.1698,lng:5.4008,  wilaya:"Setif",       date:"5 aout 2026",  spots:64, free:true,  dna:120, center:"ODEJ Setif",          desc:"Tournoi open tous niveaux, format suisse 9 rondes."}
 ];
+var MAP_EVENTS = MAP_EVENTS_FALLBACK.slice();
+
+// ── Fetch events from Supabase (override fallback if available) ──
+async function loadEventsFromSupabase() {
+  if (typeof _sb === 'undefined') { console.log('[Supabase] _sb not ready — using fallback events'); return; }
+  try {
+    var { data, error } = await _sb.from('events').select('*');
+    if (error) throw error;
+    if (data && data.length > 0) {
+      MAP_EVENTS = data.map(function(ev) {
+        return {
+          id:      ev.id,
+          title:   ev.title,
+          cat:     ev.category || 'event',
+          lat:     ev.lat || 36.75,
+          lng:     ev.lng || 3.05,
+          wilaya:  ev.wilaya || '',
+          date:    ev.start_date ? new Date(ev.start_date).toLocaleDateString('fr-FR', {day:'numeric',month:'long',year:'numeric'}) : '',
+          spots:   ev.max_participants || 0,
+          free:    ev.is_free !== false,
+          dna:     ev.dna_reward || 100,
+          center:  ev.center || '',
+          desc:    ev.description || ''
+        };
+      });
+      console.log('[Supabase] Loaded ' + data.length + ' events from DB');
+      if (typeof renderMapMarkers === 'function') renderMapMarkers();
+    } else {
+      console.log('[Supabase] No events in DB — using fallback data');
+    }
+  } catch(err) {
+    console.warn('[Supabase] Events fetch failed, using fallback:', err.message);
+  }
+}
+loadEventsFromSupabase()
 
 // ─── SVG Marker ───────────────────────────────────────────────
 function mkIcon(cat, highlight) {
@@ -3420,7 +3700,7 @@ function renderMapMarkers() {
   if (!nabdaMap || !clusterGroup) return;
   clusterGroup.clearLayers();
   allMapMarkers = {};
-  var filtered = getFilteredMapEvents();
+  var filtered = sortEventsByPreference(getFilteredMapEvents());
 
   // Update counter
   var lbl = document.getElementById('map-count-label');
@@ -3440,7 +3720,7 @@ function renderMapMarkers() {
       +'<div style="font-size:11px;color:#bccbb9;margin-bottom:8px">📍 '+ev.wilaya+'&nbsp;&nbsp;📅 '+ev.date+'</div>'
       +'<div style="display:flex;justify-content:space-between;align-items:center">'
       +'<span style="font-size:12px;color:#ffb95f;font-weight:700">+'+ev.dna+' DNA</span>'
-      +'<button onclick="mapSelectEvent('+ev.id+')" style="background:#22c55e;color:#003915;border:none;padding:5px 12px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer">Details →</button>'
+      +'<button onclick="mapSelectEvent(\''+ev.id+'\')" style="background:#22c55e;color:#003915;border:none;padding:5px 12px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer">Details →</button>'
       +'</div></div>',
       { maxWidth:250, closeButton:true }
     );
@@ -3454,6 +3734,7 @@ function renderMapMarkers() {
 
 // ─── Select event ─────────────────────────────────────────────
 function mapSelectEvent(id) {
+  id = String(id); // normalize UUID
   selectedMapId = id;
   var item = allMapMarkers[id];
   if (!item) return;
@@ -3508,7 +3789,7 @@ function renderMapDetailPanel(ev) {
     +'</div>'
     // buttons
     +'<div style="display:flex;flex-direction:column;gap:8px">'
-    +'<button onclick="openEventDetail('+ev.id+',\'map\')" style="width:100%;padding:12px;border-radius:12px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#003915;font-weight:800;font-size:14px;font-family:Cairo;border:none;cursor:pointer;transition:transform .15s" onmouseover="this.style.transform=\'scale(1.02)\'" onmouseout="this.style.transform=\'scale(1)\'">Voir le detail complet</button>'
+    +'<button onclick="openEventDetail(\''+ev.id+'\',\'map\')" style="width:100%;padding:12px;border-radius:12px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#003915;font-weight:800;font-size:14px;font-family:Cairo;border:none;cursor:pointer;transition:transform .15s" onmouseover="this.style.transform=\'scale(1.02)\'" onmouseout="this.style.transform=\'scale(1)\'">Voir le detail complet</button>'
     +'<button onclick="nabdaMap.flyTo(['+ev.lat+','+ev.lng+'],16,{duration:.6})" style="width:100%;padding:10px;border-radius:12px;background:#1c211b;color:#4be277;font-weight:700;font-size:12px;font-family:Inter;border:1px solid #4be27740;cursor:pointer">Zoomer sur la carte</button>'
     +'</div>'
     +'</div>';
@@ -3573,7 +3854,7 @@ function showMapResultsPanel(events, title) {
       plist.innerHTML = events.map(function(ev) {
         var c = CAT_COLORS[ev.cat] || '#22c55e';
         var lbl = CAT_LABELS[ev.cat] || ev.cat;
-        return '<div onclick="mapSelectEvent('+ev.id+')" style="margin:4px;padding:10px 12px;border-radius:10px;border:1px solid #1f2f1f;background:#1c211b;cursor:pointer;transition:all .15s" '
+        return '<div onclick="mapSelectEvent(\''+ev.id+'\')" style="margin:4px;padding:10px 12px;border-radius:10px;border:1px solid #1f2f1f;background:#1c211b;cursor:pointer;transition:all .15s" '
           +'onmouseover="this.style.borderColor=\'#4be27740\';this.style.background=\'#263226\'" '
           +'onmouseout="this.style.borderColor=\'#1f2f1f\';this.style.background=\'#1c211b\'">'
           +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">'
@@ -4108,6 +4389,42 @@ function obFinish() {
   obProfile.createdAt = new Date().toISOString();
   localStorage.setItem('nabda_profile', JSON.stringify(obProfile));
 
+  // ── Save profile to Supabase ──
+  (async function() {
+    var userId = localStorage.getItem('nabda_user_id');
+    if (!userId || typeof _sb === 'undefined') { console.warn('[Onboarding] No user or _sb — skipped Supabase save'); return; }
+    try {
+      // Build initial preference weights from interests
+      var prefWeights = {};
+      var cats = ['sport','cultural','workshop','volunteer','program','event','tech','health'];
+      var intCount = obProfile.interests.length || 1;
+      cats.forEach(function(c) {
+        prefWeights['pref_' + c] = obProfile.interests.indexOf(c) > -1 ? (1.0 / intCount) : 0;
+      });
+
+      var profileData = {
+        id:              userId,
+        display_name:    obProfile.wilaya ? 'Nabda ' + obProfile.wilaya : 'Utilisateur Nabda',
+        lang:            obProfile.lang,
+        wilaya:          obProfile.wilaya,
+        age_range:       obProfile.age,
+        interests:       obProfile.interests,
+        availability:    obProfile.availability,
+        goal:            obProfile.goal,
+        dna_points:      obProfile.dna,
+        onboarding_done: true
+      };
+      // Merge preference weights
+      Object.keys(prefWeights).forEach(function(k) { profileData[k] = prefWeights[k]; });
+
+      var { error } = await _sb.from('user_profiles').upsert(profileData, { onConflict: 'id' });
+      if (error) throw error;
+      console.log('[Onboarding] Profile saved to Supabase');
+    } catch(err) {
+      console.warn('[Onboarding] Supabase save failed (will use localStorage):', err.message);
+    }
+  })();
+
   // Reset onboarding state
   obCurrentStep = 1;
 
@@ -4189,9 +4506,11 @@ function obFinish() {
     <div class="dna-icon-wrap">
       <span class="material-symbols-outlined" style="font-size:20px;color:#0a0f0a;font-variation-settings:'FILL' 1">energy_savings_leaf</span>
     </div>
-    <div class="dna-label">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;line-height:1;color:#4be277;letter-spacing:.04em">2,450 DNA</div>
-      <div style="font-size:10px;color:#86efac;font-family:Inter;margin-top:1px">Voir le solde</div>
+    <div class="dna-label-wrap">
+      <div class="dna-label">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;line-height:1;color:#4be277;letter-spacing:.04em">2,450 DNA</div>
+        <div style="font-size:10px;color:#86efac;font-family:Inter;margin-top:1px">Voir le solde</div>
+      </div>
     </div>
   </button>
 
