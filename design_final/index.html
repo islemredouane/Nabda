@@ -367,11 +367,30 @@ img { filter: none !important; }
         localStorage.setItem('nabda_logged_in', 'true');
         localStorage.setItem('nabda_user_id', session.user.id);
         localStorage.setItem('nabda_user_email', session.user.email);
-        if (typeof navigate === 'function') navigate(isOnboardingDone() ? 'home' : 'onboarding');
+        // Fetch profile from Supabase and cache in localStorage
+        _sb.from('user_profiles').select('*').eq('id', session.user.id).single().then(function(res) {
+          if (res.data) {
+            var cached = JSON.parse(localStorage.getItem('nabda_profile') || '{}');
+            // Merge DB data into local cache (DB is source of truth)
+            var merged = Object.assign(cached, {
+              onboardingComplete: res.data.onboarding_done,
+              wilaya:      res.data.wilaya,
+              lang:        res.data.lang,
+              age:         res.data.age_range,
+              interests:   res.data.interests,
+              availability:res.data.availability,
+              goal:        res.data.goal,
+              dna:         res.data.dna_points
+            });
+            localStorage.setItem('nabda_profile', JSON.stringify(merged));
+          }
+          if (typeof navigate === 'function') navigate(window.isOnboardingDone() ? 'home' : 'onboarding');
+        });
       } else if (event === 'SIGNED_OUT') {
         localStorage.removeItem('nabda_logged_in');
         localStorage.removeItem('nabda_user_id');
         localStorage.removeItem('nabda_user_email');
+        // Keep nabda_profile as offline cache but mark as logged out
         if (typeof navigate === 'function') navigate('auth');
       }
     });
@@ -1416,14 +1435,32 @@ function switchAuthTab(tab) {
   if(tab==='signin'){ si.style.display='block'; su.style.display='none'; }
   else { si.style.display='none'; su.style.display='block'; }
 }
-function handleSignup(e) {
+async function handleSignup(e) {
   e.preventDefault();
-  const email = document.getElementById('signup-email').value;
-  const password = document.getElementById('signup-password').value;
-  if (email && password) {
-    localStorage.setItem('nabda_logged_in','true');
-    showToast('Compte créé avec succès !', 'success');
-    navigate('onboarding');
+  var email    = document.getElementById('signup-email').value.trim();
+  var password = document.getElementById('signup-password').value;
+  var btn      = e.target.querySelector('button[type="submit"]');
+  if (!email || !password) return;
+  if (btn) { btn.disabled = true; btn.textContent = 'Création...'; btn.style.opacity = '0.7'; }
+  try {
+    var result = await _sb.auth.signUp({ email, password });
+    if (result.error) throw result.error;
+    if (result.data.session) {
+      localStorage.setItem('nabda_logged_in', 'true');
+      localStorage.setItem('nabda_user_id', result.data.user.id);
+      localStorage.setItem('nabda_user_email', email);
+      showToast('Compte créé ! Bienvenue sur Nabda 🌱', 'success');
+      navigate('onboarding');
+    } else {
+      showToast('Vérifie ton email pour confirmer ton compte.', 'success');
+    }
+  } catch(err) {
+    var msg = err.message || 'Erreur';
+    if (msg.includes('already registered')) msg = 'Cet email est déjà enregistré.';
+    if (msg.includes('Password should'))    msg = 'Mot de passe trop court (min. 6 caractères).';
+    showToast(msg, 'error');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Créer mon compte'; btn.style.opacity = '1'; }
   }
 }
 
